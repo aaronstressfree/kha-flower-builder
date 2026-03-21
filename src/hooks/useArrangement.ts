@@ -1,70 +1,81 @@
 import { useCallback, useState } from "react";
-import type { ArrangementState, SlotPosition } from "../types/canvas";
+import type { ArrangementState } from "../types/canvas";
+import { standConfigs } from "../data/stands";
 
-const initial: ArrangementState = {
-  back: { productId: null },
-  frontLeft: { productId: null },
-  frontRight: { productId: null },
-  selectedSlot: null,
-  standId: "triple-green-lotus",
-};
+function makeInitial(standIndex: number): ArrangementState {
+  const flowers: Record<string, string | null> = {};
+  for (const slot of standConfigs[standIndex].slots) {
+    flowers[slot.key] = null;
+  }
+  return { flowers, selectedSlot: null, standIndex };
+}
 
 export function useArrangement() {
-  const [state, setState] = useState<ArrangementState>(initial);
+  const [state, setState] = useState<ArrangementState>(makeInitial(0));
 
-  const selectSlot = useCallback((slot: SlotPosition | null) => {
-    setState((s) => ({ ...s, selectedSlot: slot }));
+  const stand = standConfigs[state.standIndex];
+
+  const selectSlot = useCallback((slotKey: string | null) => {
+    setState((s) => ({ ...s, selectedSlot: slotKey }));
   }, []);
 
   const placeFlower = useCallback((productId: string) => {
     setState((s) => {
-      // If a slot is selected, replace that slot
-      if (s.selectedSlot) {
+      const currentStand = standConfigs[s.standIndex];
+
+      // If a slot is selected, place into that slot
+      if (s.selectedSlot && s.selectedSlot in s.flowers) {
         return {
           ...s,
-          [s.selectedSlot]: { productId },
+          flowers: { ...s.flowers, [s.selectedSlot]: productId },
           selectedSlot: null,
         };
       }
 
-      // Otherwise fill the first empty slot: back first, then frontLeft, frontRight
-      if (!s.back.productId) {
-        return { ...s, back: { productId }, selectedSlot: null };
-      }
-      if (!s.frontLeft.productId) {
-        return { ...s, frontLeft: { productId }, selectedSlot: null };
-      }
-      if (!s.frontRight.productId) {
-        return { ...s, frontRight: { productId }, selectedSlot: null };
+      // Otherwise fill the first empty slot
+      for (const slot of currentStand.slots) {
+        if (!s.flowers[slot.key]) {
+          return {
+            ...s,
+            flowers: { ...s.flowers, [slot.key]: productId },
+            selectedSlot: null,
+          };
+        }
       }
 
-      // All slots full — replace back by default
-      return { ...s, back: { productId }, selectedSlot: null };
+      // All full — replace the first slot
+      const firstKey = currentStand.slots[0].key;
+      return {
+        ...s,
+        flowers: { ...s.flowers, [firstKey]: productId },
+        selectedSlot: null,
+      };
     });
   }, []);
 
-  const removeFlower = useCallback((slot: SlotPosition) => {
+  const removeFlower = useCallback((slotKey: string) => {
     setState((s) => ({
       ...s,
-      [slot]: { productId: null },
+      flowers: { ...s.flowers, [slotKey]: null },
       selectedSlot: null,
     }));
   }, []);
 
-  const setStand = useCallback((standId: string) => {
-    setState((s) => ({ ...s, standId }));
+  const setStandIndex = useCallback((index: number) => {
+    setState(() => makeInitial(index));
   }, []);
 
   const clearAll = useCallback(() => {
-    setState(initial);
+    setState((s) => makeInitial(s.standIndex));
   }, []);
 
   return {
     state,
+    stand,
     selectSlot,
     placeFlower,
     removeFlower,
-    setStand,
+    setStandIndex,
     clearAll,
   };
 }

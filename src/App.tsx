@@ -8,13 +8,15 @@ import { useCart } from "./hooks/useCart";
 export default function App() {
   const {
     state,
+    stand,
     selectSlot,
     placeFlower,
     removeFlower,
+    setStandIndex,
     clearAll,
   } = useArrangement();
 
-  const { total, filledCount, checkout } = useCart(state);
+  const { total, filledCount, checkout } = useCart(state, stand);
 
   return (
     <AppLayout
@@ -27,8 +29,10 @@ export default function App() {
       canvas={
         <ArrangementCanvas
           state={state}
+          stand={stand}
           onSelectSlot={selectSlot}
           onRemoveFlower={removeFlower}
+          onChangeStand={setStandIndex}
         />
       }
       cartBar={
