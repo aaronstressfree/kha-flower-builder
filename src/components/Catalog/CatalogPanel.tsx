@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { flowers, stands, categoryLabels } from "../../data/catalog";
-import type { FlowerCategory } from "../../types/product";
 import { FlowerCard } from "./FlowerCard";
 import { StandCard } from "./StandCard";
 import "./CatalogPanel.css";
