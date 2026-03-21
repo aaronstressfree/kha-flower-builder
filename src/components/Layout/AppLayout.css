@@ -1,0 +1,85 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 24px;
+  background: var(--color-text);
+  color: var(--color-bg);
+  flex-shrink: 0;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.app-subtitle {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--color-panel);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.app-canvas {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-canvas);
+}
+
+.app-cart-bar {
+  flex-shrink: 0;
+  height: var(--cart-height);
+  border-top: 1px solid var(--color-border);
+  background: white;
+}
+
+@media (max-width: 768px) {
+  .app-body {
+    flex-direction: column-reverse;
+  }
+
+  .app-sidebar {
+    width: 100%;
+    max-height: 40vh;
+    border-right: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .app-header {
+    padding: 8px 16px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
+  .app-subtitle {
+    font-size: 13px;
+  }
+}

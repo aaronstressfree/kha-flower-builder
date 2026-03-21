@@ -1,0 +1,51 @@
+:root {
+  --color-bg: #fcfcfc;
+  --color-panel: #f5f0eb;
+  --color-text: #2e4431;
+  --color-text-light: #6b7c6f;
+  --color-accent: #b8860b;
+  --color-accent-hover: #9a7209;
+  --color-border: #e8e0d8;
+  --color-selection: #b8860b;
+  --color-canvas: #faf8f5;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  --sidebar-width: 340px;
+  --cart-height: 64px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
