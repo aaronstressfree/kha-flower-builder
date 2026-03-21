@@ -23,7 +23,11 @@ export default function App() {
       sidebar={
         <CatalogPanel
           onAddFlower={placeFlower}
-          onAddStand={() => {}}
+          selectedSlotLabel={
+            state.selectedSlot
+              ? stand.slots.find((s) => s.key === state.selectedSlot)?.label ?? null
+              : null
+          }
         />
       }
       canvas={

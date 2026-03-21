@@ -5,10 +5,10 @@ import "./CatalogPanel.css";
 
 interface Props {
   onAddFlower: (productId: string) => void;
-  onAddStand: (productId: string) => void;
+  selectedSlotLabel: string | null;
 }
 
-export function CatalogPanel({ onAddFlower }: Props) {
+export function CatalogPanel({ onAddFlower, selectedSlotLabel }: Props) {
   const [category, setCategory] = useState<string>("all");
 
   const categories = ["all", ...new Set(flowers.map((f) => f.category))];
@@ -22,7 +22,15 @@ export function CatalogPanel({ onAddFlower }: Props) {
     <div className="catalog-panel">
       <div className="catalog-header">
         <h2 className="catalog-title">Choose Your Flowers</h2>
-        <p className="catalog-subtitle">Click a flower to place it in your arrangement</p>
+        {selectedSlotLabel ? (
+          <p className="catalog-subtitle swap-mode">
+            Pick a flower for the <strong>{selectedSlotLabel}</strong> slot
+          </p>
+        ) : (
+          <p className="catalog-subtitle">
+            Click a flower to add it to your arrangement
+          </p>
+        )}
       </div>
       <div className="category-filter">
         {categories.map((cat) => (
