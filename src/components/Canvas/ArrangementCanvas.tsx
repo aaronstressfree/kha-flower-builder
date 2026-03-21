@@ -105,7 +105,7 @@ function FlowerInSlot({
   onRemove,
 }: {
   slot: (typeof standConfigs)[0]["slots"][0];
-  product: ReturnType<typeof catalog.find>;
+  product: ReturnType<typeof catalog.find> | null;
   isSelected: boolean;
   zIndex: number;
   onSelect: () => void;

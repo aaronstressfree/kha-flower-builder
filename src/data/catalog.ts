@@ -2,6 +2,7 @@ import type { FlowerProduct, StandProduct } from "../types/product";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0918/1478/9427/files";
 
+// Only flowers with clean single-flower cutout images (no pair photos)
 export const flowers: FlowerProduct[] = [
   {
     id: "aqua-blossoms",
@@ -17,71 +18,6 @@ export const flowers: FlowerProduct[] = [
     },
   },
   {
-    id: "blue-anemone",
-    name: "Blue Anemone",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558785052979", price: 37.35 },
-      sm: { variantId: "52558865137971", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Blue_Anemone.jpg`,
-      cutout: `${CDN}/Blue_Anemone.jpg`,
-    },
-  },
-  {
-    id: "blossom-peacock-amaryllis",
-    name: "Blossom Peacock Amaryllis",
-    category: "amaryllis",
-    variants: {
-      lg: { variantId: "52558784856371", price: 37.35 },
-      sm: { variantId: "52558873788723", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/BlossomPeacockAmaryllis-LargeSingleFlowerKHA-159.jpg`,
-      cutout: `${CDN}/BlossomPeacockAmaryllis-LargeSingleFlowerKHA-159.jpg`,
-    },
-  },
-  {
-    id: "cafe-au-lait-dahlia",
-    name: "Cafe Au Lait Dahlia",
-    category: "dahlia",
-    variants: {
-      lg: { variantId: "52558785642803", price: 37.35 },
-      sm: { variantId: "52558865301811", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Cafe_Au_Lait_Dahlia.jpg`,
-      cutout: `${CDN}/Cafe_Au_Lait_Dahlia.jpg`,
-    },
-  },
-  {
-    id: "carmine-peony",
-    name: "Carmine Peony",
-    category: "peony",
-    variants: {
-      lg: { variantId: "52558785937715", price: 37.35 },
-      sm: { variantId: "52558865465651", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Carmine_Peony.jpg`,
-      cutout: `${CDN}/Carmine_Peony.jpg`,
-    },
-  },
-  {
-    id: "chrysanthemum",
-    name: "Chrysanthemum",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558786134323", price: 37.35 },
-      sm: { variantId: "52558871822643", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Chrysanthemum.jpg`,
-      cutout: `${CDN}/Chrysanthemum.jpg`,
-    },
-  },
-  {
     id: "classic-fern",
     name: "Classic Fern",
     category: "fern",
@@ -92,19 +28,6 @@ export const flowers: FlowerProduct[] = [
     images: {
       thumbnail: `${CDN}/ClassicFern-SmallAcrylicSingleFlower-KHA-010.jpg`,
       cutout: `${CDN}/Classic_Fern_5feee426-8982-43bc-8b6d-bc0b9fd84ed0.jpg`,
-    },
-  },
-  {
-    id: "cockscomb",
-    name: "Cockscomb",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558786527539", price: 37.35 },
-      sm: { variantId: "52558871986483", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Cockscomb.jpg`,
-      cutout: `${CDN}/Cockscomb.jpg`,
     },
   },
   {
@@ -212,19 +135,6 @@ export const flowers: FlowerProduct[] = [
     },
   },
   {
-    id: "hydrangea-light",
-    name: "Hydrangea Light",
-    category: "hydrangea",
-    variants: {
-      lg: { variantId: "52558789247283", price: 37.35 },
-      sm: { variantId: "52558867104051", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Hydrangea_Light.jpg`,
-      cutout: `${CDN}/Hydrangea_Light.jpg`,
-    },
-  },
-  {
     id: "hydrangea-royal-blue",
     name: "Hydrangea Royal Blue",
     category: "hydrangea",
@@ -248,45 +158,6 @@ export const flowers: FlowerProduct[] = [
     images: {
       thumbnail: `${CDN}/Lavender_Peony.jpg`,
       cutout: `${CDN}/Lavender_Peony.jpg`,
-    },
-  },
-  {
-    id: "lotus-flower",
-    name: "Lotus Flower",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558789902643", price: 37.35 },
-      sm: { variantId: "52558872150323", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Lotus_Flower.jpg`,
-      cutout: `${CDN}/Lotus_Flower.jpg`,
-    },
-  },
-  {
-    id: "magnolia",
-    name: "Magnolia",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558790295859", price: 37.35 },
-      sm: { variantId: "52558867824947", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Magnolia.jpg`,
-      cutout: `${CDN}/Magnolia.jpg`,
-    },
-  },
-  {
-    id: "magenta-anemone",
-    name: "Magenta Anemone",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558790099251", price: 37.35 },
-      sm: { variantId: "52558867628339", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Magenta_Anemone.jpg`,
-      cutout: `${CDN}/Magenta_Anemone.jpg`,
     },
   },
   {
@@ -342,32 +213,6 @@ export const flowers: FlowerProduct[] = [
     },
   },
   {
-    id: "pale-yellow-iceland-poppy",
-    name: "Pale Yellow Iceland Poppy",
-    category: "poppy",
-    variants: {
-      lg: { variantId: "52558791278899", price: 37.35 },
-      sm: { variantId: "52558872314163", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Pale_Yellow_Iceland_Poppy.jpg`,
-      cutout: `${CDN}/Pale_Yellow_Iceland_Poppy.jpg`,
-    },
-  },
-  {
-    id: "passion-flowers",
-    name: "Passion Flowers",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558791508275", price: 37.35 },
-      sm: { variantId: "52558872478003", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Passion_Flowers.jpg`,
-      cutout: `${CDN}/Passion_Flowers.jpg`,
-    },
-  },
-  {
     id: "peach-blossoms",
     name: "Peach Blossoms",
     category: "blossom",
@@ -407,45 +252,6 @@ export const flowers: FlowerProduct[] = [
     },
   },
   {
-    id: "purple-clematis",
-    name: "Purple Clematis",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558792622387", price: 37.35 },
-      sm: { variantId: "52558872641843", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/PurpleClemetis-SmallSingleAcrylicFlower-KHA-140.jpg`,
-      cutout: `${CDN}/PurpleClemetis-SmallSingleAcrylicFlower-KHA-140.jpg`,
-    },
-  },
-  {
-    id: "red-iceland-poppy",
-    name: "Red Iceland Poppy",
-    category: "poppy",
-    variants: {
-      lg: { variantId: "52558792818995", price: 37.35 },
-      sm: { variantId: "52558872805683", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Red_Iceland_Poppy.jpg`,
-      cutout: `${CDN}/Red_Iceland_Poppy.jpg`,
-    },
-  },
-  {
-    id: "red-star-amaryllis",
-    name: "Red Star Amaryllis",
-    category: "amaryllis",
-    variants: {
-      lg: { variantId: "52558793212211", price: 37.35 },
-      sm: { variantId: "52558873133363", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/RedStarAmaryllis-LargeAcrylicSingleFlowerKHA-151.jpg`,
-      cutout: `${CDN}/RedStarAmaryllis-LargeAcrylicSingleFlowerKHA-151.jpg`,
-    },
-  },
-  {
     id: "red-zinnia",
     name: "Red Zinnia",
     category: "zinnia",
@@ -471,71 +277,6 @@ export const flowers: FlowerProduct[] = [
       cutout: `${CDN}/KHA-155_Ruffle_Amaryllis_7ff0fe5d-a82c-43a6-9862-6c5f15d35a70.jpg`,
     },
   },
-  {
-    id: "scarlet-mauve-peony",
-    name: "Scarlet Mauve Peony",
-    category: "peony",
-    variants: {
-      lg: { variantId: "52558793802035", price: 37.35 },
-      sm: { variantId: "52558869496115", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/scarlet_mauve_peony_acrylic_pair.jpg`,
-      cutout: `${CDN}/scarlet_mauve_peony_acrylic_pair.jpg`,
-    },
-  },
-  {
-    id: "small-iceland-poppy",
-    name: "Small Iceland Poppy",
-    category: "poppy",
-    variants: {
-      lg: { variantId: "52558793998643", price: 37.35 },
-      sm: { variantId: "52558872969523", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/small_iceland_poppy_acrylic_pair.jpg`,
-      cutout: `${CDN}/small_iceland_poppy_acrylic_pair.jpg`,
-    },
-  },
-  {
-    id: "sonic-bloom-dahlia",
-    name: "Sonic Bloom Dahlia",
-    category: "dahlia",
-    variants: {
-      lg: { variantId: "52558794195251", price: 37.35 },
-      sm: { variantId: "52558869659955", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/sonic_bloom_dahlia_acrylic_pair.jpg`,
-      cutout: `${CDN}/sonic_bloom_dahlia_acrylic_pair.jpg`,
-    },
-  },
-  {
-    id: "tulips",
-    name: "Tulips",
-    category: "other",
-    variants: {
-      lg: { variantId: "52558796030259", price: 37.35 },
-      sm: { variantId: "52558871200051", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/Tulips_acrylic_pair.jpg`,
-      cutout: `${CDN}/Tulips_acrylic_pair.jpg`,
-    },
-  },
-  {
-    id: "white-amaryllis",
-    name: "White Amaryllis",
-    category: "amaryllis",
-    variants: {
-      lg: { variantId: "52558796226867", price: 37.35 },
-      sm: { variantId: "52558873624883", price: 19.35 },
-    },
-    images: {
-      thumbnail: `${CDN}/5201097.jpg`,
-      cutout: `${CDN}/5201097.jpg`,
-    },
-  },
 ];
 
 export const stands: StandProduct[] = [
@@ -545,20 +286,6 @@ export const stands: StandProduct[] = [
     variantId: "51468138643763",
     price: 19.35,
     image: `${CDN}/KHA-S005_Single_Stand_SM.jpg`,
-  },
-  {
-    id: "sm-spiral-vine",
-    name: "SM Single Stand Spiral Vine",
-    variantId: "51468139594035",
-    price: 19.35,
-    image: `${CDN}/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg`,
-  },
-  {
-    id: "sm-pine-pattern",
-    name: "SM Pine Pattern Stand",
-    variantId: "51766600139059",
-    price: 19.35,
-    image: `${CDN}/1_Pine_Pattern_Stand-Small_Acrylic_Base_KHA-SO13.jpg`,
   },
   {
     id: "lg-leaf",
@@ -573,13 +300,6 @@ export const stands: StandProduct[] = [
     variantId: "51468138905907",
     price: 23.85,
     image: `${CDN}/KHA-S004_Single_Stand_LG_Lotus.jpg`,
-  },
-  {
-    id: "lg-clear",
-    name: "LG Single Stand Clear",
-    variantId: "51468139659571",
-    price: 23.85,
-    image: `${CDN}/KHA-S006_Single_Stand_LG.jpg`,
   },
   {
     id: "triple-green-lotus",
