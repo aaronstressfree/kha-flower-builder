@@ -9,7 +9,7 @@ interface Props {
   product: StandProduct;
   isSelected: boolean;
   onSelect: () => void;
-  onDrag: (clientX: number, clientY: number) => void;
+  onMove: (x: number, y: number) => void;
   onRemove: () => void;
 }
 
@@ -18,12 +18,13 @@ export function PlacedStand({
   product,
   isSelected,
   onSelect,
-  onDrag,
+  onMove,
   onRemove,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
+  const startMouse = useRef({ x: 0, y: 0 });
+  const startPos = useRef({ x: 0, y: 0 });
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
@@ -31,10 +32,8 @@ export function PlacedStand({
       e.preventDefault();
       onSelect();
       dragging.current = true;
-      offset.current = {
-        x: e.clientX - stand.position.x,
-        y: e.clientY - stand.position.y,
-      };
+      startMouse.current = { x: e.clientX, y: e.clientY };
+      startPos.current = { x: stand.position.x, y: stand.position.y };
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
     },
     [onSelect, stand.position.x, stand.position.y]
@@ -44,9 +43,11 @@ export function PlacedStand({
     (e: React.PointerEvent) => {
       if (!dragging.current) return;
       e.preventDefault();
-      onDrag(e.clientX - offset.current.x, e.clientY - offset.current.y);
+      const dx = e.clientX - startMouse.current.x;
+      const dy = e.clientY - startMouse.current.y;
+      onMove(startPos.current.x + dx, startPos.current.y + dy);
     },
-    [onDrag]
+    [onMove]
   );
 
   const handlePointerUp = useCallback(() => {

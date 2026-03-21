@@ -9,7 +9,7 @@ interface Props {
   product: FlowerProduct;
   isSelected: boolean;
   onSelect: () => void;
-  onDrag: (clientX: number, clientY: number) => void;
+  onMove: (x: number, y: number) => void;
   onToggleSize: () => void;
   onRotate: (degrees: number) => void;
   onFlip: () => void;
@@ -22,7 +22,7 @@ export function PlacedFlower({
   product,
   isSelected,
   onSelect,
-  onDrag,
+  onMove,
   onToggleSize,
   onRotate,
   onFlip,
@@ -31,7 +31,8 @@ export function PlacedFlower({
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
+  const startMouse = useRef({ x: 0, y: 0 });
+  const startPos = useRef({ x: 0, y: 0 });
 
   const size = flower.size === "LG" ? 160 : 110;
 
@@ -41,10 +42,8 @@ export function PlacedFlower({
       e.preventDefault();
       onSelect();
       dragging.current = true;
-      offset.current = {
-        x: e.clientX - flower.position.x,
-        y: e.clientY - flower.position.y,
-      };
+      startMouse.current = { x: e.clientX, y: e.clientY };
+      startPos.current = { x: flower.position.x, y: flower.position.y };
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
     },
     [onSelect, flower.position.x, flower.position.y]
@@ -54,9 +53,11 @@ export function PlacedFlower({
     (e: React.PointerEvent) => {
       if (!dragging.current) return;
       e.preventDefault();
-      onDrag(e.clientX - offset.current.x, e.clientY - offset.current.y);
+      const dx = e.clientX - startMouse.current.x;
+      const dy = e.clientY - startMouse.current.y;
+      onMove(startPos.current.x + dx, startPos.current.y + dy);
     },
-    [onDrag]
+    [onMove]
   );
 
   const handlePointerUp = useCallback(() => {

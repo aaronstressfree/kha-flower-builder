@@ -37,18 +37,6 @@ export function ArrangementCanvas({
     [onSelect]
   );
 
-  const handleDrag = useCallback(
-    (id: string, clientX: number, clientY: number) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-      onMove(id, x, y);
-    },
-    [onMove]
-  );
-
   const isEmpty = state.flowers.length === 0 && state.stands.length === 0;
 
   return (
@@ -78,7 +66,7 @@ export function ArrangementCanvas({
             product={product}
             isSelected={state.selectedId === stand.instanceId}
             onSelect={() => onSelect(stand.instanceId)}
-            onDrag={(cx, cy) => handleDrag(stand.instanceId, cx, cy)}
+            onMove={(x, y) => onMove(stand.instanceId, x, y)}
             onRemove={() => onRemove(stand.instanceId)}
           />
         );
@@ -94,7 +82,7 @@ export function ArrangementCanvas({
             product={product}
             isSelected={state.selectedId === flower.instanceId}
             onSelect={() => onSelect(flower.instanceId)}
-            onDrag={(cx, cy) => handleDrag(flower.instanceId, cx, cy)}
+            onMove={(x, y) => onMove(flower.instanceId, x, y)}
             onToggleSize={() => onToggleSize(flower.instanceId)}
             onRotate={(deg) => onRotate(flower.instanceId, deg)}
             onFlip={() => onFlip(flower.instanceId)}
