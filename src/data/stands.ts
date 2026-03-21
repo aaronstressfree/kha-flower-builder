@@ -10,7 +10,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468138742067",
     price: 23.85,
     image: `${CDN}/KHA-S003_Triple_Stand_Green_Lotus.jpg`,
-    baseWidth: 300,
+    baseWidth: 200,
     slots: [
       { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 0, flowerHeight: 300 },
       { key: "frontLeft", label: "Small (Left)", size: "SM", x: 30, y: 0, flowerHeight: 190 },
@@ -23,7 +23,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468139528499",
     price: 23.85,
     image: `${CDN}/KHA-S007_Triple_Stand.jpg`,
-    baseWidth: 300,
+    baseWidth: 200,
     slots: [
       { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 0, flowerHeight: 300 },
       { key: "frontLeft", label: "Small (Left)", size: "SM", x: 30, y: 0, flowerHeight: 190 },
@@ -37,7 +37,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468122423603",
     price: 23.85,
     image: `${CDN}/KHA-S008_Double_Stand.jpg`,
-    baseWidth: 220,
+    baseWidth: 160,
     slots: [
       { key: "left", label: "Large", size: "LG", x: 38, y: 0, flowerHeight: 300 },
       { key: "right", label: "Small", size: "SM", x: 68, y: 0, flowerHeight: 190 },
@@ -49,7 +49,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "52858369376563",
     price: 23.85,
     image: `${CDN}/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg`,
-    baseWidth: 220,
+    baseWidth: 160,
     slots: [
       { key: "left", label: "Large", size: "LG", x: 38, y: 0, flowerHeight: 300 },
       { key: "right", label: "Small", size: "SM", x: 68, y: 0, flowerHeight: 190 },

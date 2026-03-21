@@ -9,14 +9,10 @@
 }
 
 .cart-disclaimer {
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
+  font-size: 11px;
   color: #b0a89e;
   white-space: nowrap;
-  pointer-events: none;
+  font-style: italic;
 }
 
 .cart-info {

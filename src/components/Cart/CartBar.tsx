@@ -11,7 +11,6 @@ interface Props {
 export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
   return (
     <div className="cart-bar">
-      <span className="cart-disclaimer">This is a simulation. Actual product may vary slightly.</span>
       <div className="cart-info">
         <ShoppingCart size={18} />
         <span className="cart-count">
@@ -20,6 +19,7 @@ export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
         <span className="cart-total">${total.toFixed(2)}</span>
       </div>
       <div className="cart-actions">
+        <span className="cart-disclaimer">Simulation only. Actual product may vary.</span>
         {itemCount > 0 && (
           <button className="cart-clear" onClick={onClear}>
             <Trash2 size={14} />
