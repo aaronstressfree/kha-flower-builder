@@ -13,10 +13,10 @@
 /* ---------- Composition ---------- */
 .composition {
   position: relative;
-  width: 80%;
-  max-width: 600px;
-  height: 75vh;
-  max-height: 600px;
+  width: 95%;
+  max-width: 800px;
+  height: 85vh;
+  max-height: 750px;
 }
 
 /* ---------- Stand ---------- */
@@ -27,8 +27,8 @@
   transform: translateX(-50%);
   z-index: 5;
   pointer-events: none;
-  width: 50%;
-  max-width: 260px;
+  width: 55%;
+  max-width: 300px;
 }
 
 .stand-constructed {

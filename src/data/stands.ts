@@ -11,8 +11,8 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S003_Triple_Stand_Green_Lotus.jpg`,
     slots: [
       { key: "back", label: "Back", size: "LG", x: 50, y: 10, flowerHeight: 420 },
-      { key: "frontLeft", label: "Front Left", size: "SM", x: 25, y: 8, flowerHeight: 280 },
-      { key: "frontRight", label: "Front Right", size: "SM", x: 75, y: 8, flowerHeight: 280 },
+      { key: "frontLeft", label: "Front Left", size: "SM", x: 35, y: 8, flowerHeight: 280 },
+      { key: "frontRight", label: "Front Right", size: "SM", x: 65, y: 8, flowerHeight: 280 },
     ],
   },
   {
@@ -23,8 +23,8 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S007_Triple_Stand.jpg`,
     slots: [
       { key: "back", label: "Back", size: "LG", x: 50, y: 10, flowerHeight: 420 },
-      { key: "frontLeft", label: "Front Left", size: "SM", x: 25, y: 8, flowerHeight: 280 },
-      { key: "frontRight", label: "Front Right", size: "SM", x: 75, y: 8, flowerHeight: 280 },
+      { key: "frontLeft", label: "Front Left", size: "SM", x: 35, y: 8, flowerHeight: 280 },
+      { key: "frontRight", label: "Front Right", size: "SM", x: 65, y: 8, flowerHeight: 280 },
     ],
   },
   {
