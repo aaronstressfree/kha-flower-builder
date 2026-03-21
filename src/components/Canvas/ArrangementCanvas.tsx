@@ -22,94 +22,137 @@ export function ArrangementCanvas({
 }: Props) {
   return (
     <div className="arrangement-canvas" onClick={() => onSelectSlot(null)}>
-      {/* Composition area */}
       <div className="composition">
-        {/* Flowers layer — behind the stand at the base */}
-        <div className="flowers-layer">
-          {stand.slots.map((slot) => {
+        {/* Back flowers (behind stand) */}
+        {stand.slots
+          .filter((s) => s.key === "back" || stand.slots.length === 1)
+          .map((slot) => {
             const productId = state.flowers[slot.key];
-            const product = productId
-              ? catalog.find((f) => f.id === productId)
-              : null;
+            const product = productId ? catalog.find((f) => f.id === productId) : null;
             const isSelected = state.selectedSlot === slot.key;
-
             return (
-              <div
+              <FlowerInSlot
                 key={slot.key}
-                className={`flower-position ${isSelected ? "selected" : ""} ${product ? "filled" : "empty"}`}
-                style={{
-                  left: `${slot.x}%`,
-                  bottom: `${slot.y}%`,
-                  height: slot.flowerHeight,
-                  width: slot.size === "LG" ? 180 : 140,
-                  zIndex: slot.key === "back" ? 1 : 3,
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectSlot(slot.key);
-                }}
-              >
-                {product ? (
-                  <>
-                    <img
-                      src={product.images.cutout}
-                      alt={product.name}
-                      className="flower-image"
-                    />
-                    <div className="flower-label">
-                      <span className="flower-label-name">{product.name}</span>
-                      <span className="flower-label-size">{slot.size}</span>
-                    </div>
-                    {isSelected && (
-                      <button
-                        className="flower-remove"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onRemoveFlower(slot.key);
-                        }}
-                      >
-                        <X size={12} />
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  <div className={`empty-slot ${isSelected ? "active" : ""}`}>
-                    <span className="empty-slot-label">{slot.label}</span>
-                    <span className="empty-slot-size">{slot.size}</span>
-                    <span className="empty-slot-hint">
-                      {isSelected ? "Pick a flower" : "Click to fill"}
-                    </span>
-                  </div>
-                )}
-              </div>
+                slot={slot}
+                product={product}
+                isSelected={isSelected}
+                zIndex={2}
+                onSelect={() => onSelectSlot(slot.key)}
+                onRemove={() => onRemoveFlower(slot.key)}
+              />
             );
           })}
-        </div>
 
-        {/* Stand layer — in front of flower stems */}
-        <div className="stand-layer">
+        {/* Stand */}
+        <div className="stand-base">
           <img
-            src={stand.image}
+            src={`/stands/${stand.id}.png`}
             alt={stand.name}
-            className="stand-image"
+            className="stand-img"
           />
+          <div className="stand-shadow" />
         </div>
+
+        {/* Front flowers (in front of stand) */}
+        {stand.slots
+          .filter((s) => s.key !== "back" && stand.slots.length > 1)
+          .map((slot) => {
+            const productId = state.flowers[slot.key];
+            const product = productId ? catalog.find((f) => f.id === productId) : null;
+            const isSelected = state.selectedSlot === slot.key;
+            return (
+              <FlowerInSlot
+                key={slot.key}
+                slot={slot}
+                product={product}
+                isSelected={isSelected}
+                zIndex={8}
+                onSelect={() => onSelectSlot(slot.key)}
+                onRemove={() => onRemoveFlower(slot.key)}
+              />
+            );
+          })}
       </div>
 
-      {/* Stand selector */}
-      <div className="stand-selector" onClick={(e) => e.stopPropagation()}>
-        <span className="stand-selector-label">Stand:</span>
-        {standConfigs.map((sc, i) => (
-          <button
-            key={sc.id}
-            className={`stand-option ${state.standIndex === i ? "active" : ""}`}
-            onClick={() => onChangeStand(i)}
-            title={sc.name}
-          >
-            <img src={sc.image} alt={sc.name} />
-          </button>
-        ))}
+      {/* Stand picker */}
+      <div className="stand-picker" onClick={(e) => e.stopPropagation()}>
+        <span className="stand-picker-label">Choose Stand</span>
+        <div className="stand-picker-options">
+          {standConfigs.map((sc, i) => (
+            <button
+              key={sc.id}
+              className={`stand-pick ${state.standIndex === i ? "active" : ""}`}
+              onClick={() => onChangeStand(i)}
+              title={sc.name}
+            >
+              <img src={`/stands/${sc.id}.png`} alt={sc.name} />
+              <span className="stand-pick-name">{sc.name}</span>
+            </button>
+          ))}
+        </div>
       </div>
+    </div>
+  );
+}
+
+/* Individual flower in a slot */
+function FlowerInSlot({
+  slot,
+  product,
+  isSelected,
+  zIndex,
+  onSelect,
+  onRemove,
+}: {
+  slot: (typeof standConfigs)[0]["slots"][0];
+  product: ReturnType<typeof catalog.find>;
+  isSelected: boolean;
+  zIndex: number;
+  onSelect: () => void;
+  onRemove: () => void;
+}) {
+  return (
+    <div
+      className={`slot-area ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty-slot"}`}
+      style={{
+        left: `${slot.x}%`,
+        bottom: `${slot.y}%`,
+        height: slot.flowerHeight,
+        width: slot.size === "LG" ? 200 : 150,
+        zIndex,
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
+    >
+      {product ? (
+        <>
+          <img
+            src={`/flowers/${product.id}.png`}
+            alt={product.name}
+            className="slot-flower-img"
+          />
+          {isSelected && (
+            <button
+              className="slot-remove"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove();
+              }}
+            >
+              <X size={12} />
+            </button>
+          )}
+          <span className="slot-flower-tag">{product.name}</span>
+        </>
+      ) : (
+        <div className={`slot-placeholder ${isSelected ? "active" : ""}`}>
+          <div className="slot-placeholder-icon">+</div>
+          <span className="slot-placeholder-label">{slot.label}</span>
+          <span className="slot-placeholder-size">{slot.size}</span>
+        </div>
+      )}
     </div>
   );
 }

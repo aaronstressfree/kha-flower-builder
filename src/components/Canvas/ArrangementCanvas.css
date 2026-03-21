@@ -5,81 +5,92 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #faf8f5 0%, #f0ece6 100%);
+  background: linear-gradient(180deg, #faf8f5 0%, #ede8e1 100%);
   overflow: hidden;
   position: relative;
 }
 
-/* --- Composition --- */
+/* ---------- Composition ---------- */
 .composition {
   position: relative;
-  width: 420px;
-  height: 480px;
+  width: 450px;
+  height: 520px;
 }
 
-/* Flowers positioned absolutely within composition */
-.flowers-layer {
+/* ---------- Stand ---------- */
+.stand-base {
   position: absolute;
-  inset: 0;
-}
-
-.flower-position {
-  position: absolute;
+  bottom: 40px;
+  left: 50%;
   transform: translateX(-50%);
-  cursor: pointer;
-  transition: transform 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.flower-position.filled:hover {
-  transform: translateX(-50%) scale(1.03);
-}
-
-.flower-position.selected {
-  filter: drop-shadow(0 0 8px rgba(184, 134, 11, 0.4));
-}
-
-.flower-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  z-index: 5;
   pointer-events: none;
 }
 
-.flower-label {
-  position: absolute;
-  bottom: -24px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2px 8px;
-  border-radius: 10px;
-  white-space: nowrap;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+.stand-img {
+  width: 260px;
+  height: auto;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
+  transform: perspective(500px) rotateX(20deg);
 }
 
-.flower-label-name {
+.stand-shadow {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 20px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* ---------- Flower Slots ---------- */
+.slot-area {
+  position: absolute;
+  transform: translateX(-50%);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.slot-area.has-flower:hover {
+  filter: brightness(1.05);
+  transform: translateX(-50%) scale(1.02);
+}
+
+.slot-area.selected {
+  filter: drop-shadow(0 0 12px rgba(184, 134, 11, 0.5));
+}
+
+.slot-flower-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.slot-flower-tag {
+  position: absolute;
+  bottom: -8px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 2px 10px;
+  border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
   color: var(--color-text);
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
 }
 
-.flower-label-size {
-  font-size: 10px;
-  color: var(--color-text-light);
-  background: var(--color-panel);
-  padding: 0 4px;
-  border-radius: 4px;
-}
-
-.flower-remove {
+.slot-remove {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 8px;
+  right: 8px;
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -88,161 +99,153 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   border: 2px solid white;
   z-index: 20;
 }
 
-.flower-remove:hover {
+.slot-remove:hover {
   background: #c0392b;
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
-/* Empty slot indicator */
-.empty-slot {
-  width: 80px;
-  height: 100px;
-  border: 2px dashed var(--color-border);
-  border-radius: 12px;
+/* ---------- Empty Slot Placeholder ---------- */
+.slot-placeholder {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 90px;
+  border: 2px dashed rgba(46, 68, 49, 0.25);
+  border-radius: 50% 50% 8px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  background: rgba(255, 255, 255, 0.5);
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(4px);
-  transition: all 0.2s;
-  position: absolute;
-  bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
+  transition: all 0.25s;
 }
 
-.empty-slot:hover {
+.slot-placeholder:hover,
+.slot-placeholder.active {
   border-color: var(--color-accent);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(184, 134, 11, 0.06);
 }
 
-.empty-slot.active {
-  border-color: var(--color-accent);
+.slot-placeholder.active {
   border-style: solid;
-  background: rgba(184, 134, 11, 0.08);
-  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.12);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
 }
 
-.empty-slot-label {
-  font-size: 12px;
-  font-weight: 600;
+.slot-placeholder-icon {
+  font-size: 22px;
+  font-weight: 300;
   color: var(--color-text-light);
+  opacity: 0.5;
+  line-height: 1;
 }
 
-.empty-slot-size {
-  font-size: 10px;
+.slot-placeholder.active .slot-placeholder-icon {
   color: var(--color-accent);
-  font-weight: 700;
-  background: rgba(184, 134, 11, 0.1);
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-
-.empty-slot-hint {
-  font-size: 10px;
-  color: var(--color-text-light);
-  font-style: italic;
-  opacity: 0.7;
-}
-
-.empty-slot.active .empty-slot-hint {
-  color: var(--color-accent);
-  font-style: normal;
-  font-weight: 600;
   opacity: 1;
 }
 
-/* Stand layer sits in front of flower stems */
-.stand-layer {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) perspective(600px) rotateX(25deg);
-  z-index: 5;
-  pointer-events: none;
+.slot-placeholder-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-light);
 }
 
-.stand-image {
-  width: 280px;
-  height: auto;
-  mix-blend-mode: multiply;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+.slot-placeholder-size {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: rgba(184, 134, 11, 0.1);
+  padding: 0 5px;
+  border-radius: 3px;
 }
 
-/* --- Stand selector --- */
-.stand-selector {
+/* ---------- Stand Picker ---------- */
+.stand-picker {
   position: absolute;
   bottom: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
   background: white;
-  padding: 8px 14px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 10px 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--color-border);
 }
 
-.stand-selector-label {
-  font-size: 13px;
+.stand-picker-label {
+  font-size: 12px;
   font-weight: 600;
   color: var(--color-text-light);
-  margin-right: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.stand-option {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
+.stand-picker-options {
+  display: flex;
+  gap: 6px;
+}
+
+.stand-pick {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
   overflow: hidden;
   border: 2px solid transparent;
-  padding: 3px;
+  padding: 4px;
   background: var(--color-panel);
   transition: all 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
-.stand-option img {
+.stand-pick img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  mix-blend-mode: multiply;
 }
 
-.stand-option:hover {
+.stand-pick-name {
+  display: none;
+}
+
+.stand-pick:hover {
   border-color: var(--color-text-light);
+  transform: scale(1.05);
 }
 
-.stand-option.active {
+.stand-pick.active {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
 }
 
 @media (max-width: 768px) {
   .composition {
-    width: 320px;
-    height: 380px;
+    width: 340px;
+    height: 420px;
   }
 
-  .stand-image {
+  .stand-img {
     width: 200px;
   }
 
-  .stand-selector {
+  .stand-picker {
     bottom: 8px;
-    padding: 6px 10px;
-    gap: 6px;
+    padding: 8px 12px;
   }
 
-  .stand-option {
-    width: 36px;
-    height: 36px;
+  .stand-pick {
+    width: 40px;
+    height: 40px;
   }
 }

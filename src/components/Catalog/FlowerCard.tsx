@@ -12,7 +12,7 @@ export function FlowerCard({ flower, onAdd }: Props) {
     <div className="flower-card" onClick={onAdd}>
       <div className="flower-card-image">
         <img
-          src={flower.images.cutout}
+          src={`/flowers/${flower.id}.png`}
           alt={flower.name}
         />
         <button className="flower-card-add" aria-label={`Add ${flower.name}`}>
