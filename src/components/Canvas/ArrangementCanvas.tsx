@@ -11,6 +11,7 @@ interface Props {
   stand: StandConfig;
   onSelectSlot: (slotKey: string | null) => void;
   onRemoveFlower: (slotKey: string) => void;
+  onChangeStand: (index: number) => void;
 }
 
 export function ArrangementCanvas({
@@ -18,6 +19,7 @@ export function ArrangementCanvas({
   stand,
   onSelectSlot,
   onRemoveFlower,
+  onChangeStand,
 }: Props) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -99,6 +101,23 @@ export function ArrangementCanvas({
             </div>
           </div>
           <div className="stand-shadow" />
+        </div>
+      </div>
+
+      {/* Floating stand picker */}
+      <div className="stand-float" onClick={(e) => e.stopPropagation()}>
+        <span className="stand-float-label">Stand</span>
+        <div className="stand-float-options">
+          {standConfigs.map((sc, i) => (
+            <button
+              key={sc.id}
+              className={`stand-float-pick ${state.standIndex === i ? "active" : ""}`}
+              onClick={() => onChangeStand(i)}
+              title={sc.name}
+            >
+              <img src={`/stands/${sc.id}.png`} alt={sc.name} />
+            </button>
+          ))}
         </div>
       </div>
     </div>
