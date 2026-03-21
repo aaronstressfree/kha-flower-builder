@@ -28,17 +28,20 @@
   align-items: center;
 }
 
-/* Layered layout for triple stands: back flower behind front row */
+/* Layered layout for triple stands: back flower centered behind front row */
 .flowers-layered {
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .flowers-layered .is-back {
   z-index: 1;
-  margin-bottom: -50%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .front-flowers-row {
@@ -48,8 +51,6 @@
   align-items: flex-end;
   justify-content: center;
   gap: 0;
-  margin-left: -10px;
-  margin-right: -10px;
 }
 
 /* Simple row for single/double stands */
