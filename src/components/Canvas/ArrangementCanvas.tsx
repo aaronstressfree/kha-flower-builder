@@ -1,96 +1,104 @@
-import { useRef, useCallback } from "react";
-import type { ArrangementState } from "../../types/canvas";
+import type { ArrangementState, SlotPosition } from "../../types/canvas";
 import { flowers as catalog, stands as standCatalog } from "../../data/catalog";
-import { PlacedFlower } from "./PlacedFlower";
-import { PlacedStand } from "./PlacedStand";
+import { FlowerSlotView } from "./FlowerSlotView";
 import "./ArrangementCanvas.css";
 
 interface Props {
   state: ArrangementState;
-  onSelect: (id: string | null) => void;
-  onMove: (id: string, x: number, y: number) => void;
-  onToggleSize: (id: string) => void;
-  onRotate: (id: string, degrees: number) => void;
-  onFlip: (id: string) => void;
-  onBringToFront: (id: string) => void;
-  onRemove: (id: string) => void;
+  onSelectSlot: (slot: SlotPosition | null) => void;
+  onRemoveFlower: (slot: SlotPosition) => void;
 }
 
 export function ArrangementCanvas({
   state,
-  onSelect,
-  onMove,
-  onToggleSize,
-  onRotate,
-  onFlip,
-  onBringToFront,
-  onRemove,
+  onSelectSlot,
+  onRemoveFlower,
 }: Props) {
-  const canvasRef = useRef<HTMLDivElement>(null);
-
-  const handleCanvasClick = useCallback(
-    (e: React.MouseEvent) => {
-      if (e.target === canvasRef.current) {
-        onSelect(null);
-      }
-    },
-    [onSelect]
-  );
-
-  const isEmpty = state.flowers.length === 0 && state.stands.length === 0;
+  const stand = standCatalog.find((s) => s.id === state.standId);
+  const backFlower = state.back.productId
+    ? catalog.find((f) => f.id === state.back.productId)
+    : null;
+  const frontLeftFlower = state.frontLeft.productId
+    ? catalog.find((f) => f.id === state.frontLeft.productId)
+    : null;
+  const frontRightFlower = state.frontRight.productId
+    ? catalog.find((f) => f.id === state.frontRight.productId)
+    : null;
 
   return (
     <div
       className="arrangement-canvas"
-      ref={canvasRef}
-      onClick={handleCanvasClick}
+      onClick={() => onSelectSlot(null)}
     >
-      {isEmpty && (
-        <div className="canvas-empty">
-          <p className="canvas-empty-text">
-            Click a flower to add it to your arrangement
-          </p>
-          <p className="canvas-empty-hint">
-            Then drag, resize, rotate, and flip to create your perfect display
-          </p>
+      <div className="arrangement-display">
+        {/* Back slot — large flower */}
+        <div className="slot-back">
+          <FlowerSlotView
+            flower={backFlower}
+            size="LG"
+            isSelected={state.selectedSlot === "back"}
+            isEmpty={!state.back.productId}
+            label="Large (Back)"
+            onSelect={(e) => {
+              e.stopPropagation();
+              onSelectSlot("back");
+            }}
+            onRemove={(e) => {
+              e.stopPropagation();
+              onRemoveFlower("back");
+            }}
+          />
         </div>
-      )}
 
-      {state.stands.map((stand) => {
-        const product = standCatalog.find((s) => s.id === stand.productId);
-        if (!product) return null;
-        return (
-          <PlacedStand
-            key={stand.instanceId}
-            stand={stand}
-            product={product}
-            isSelected={state.selectedId === stand.instanceId}
-            onSelect={() => onSelect(stand.instanceId)}
-            onMove={(x, y) => onMove(stand.instanceId, x, y)}
-            onRemove={() => onRemove(stand.instanceId)}
-          />
-        );
-      })}
+        {/* Front row — two small flowers */}
+        <div className="slot-front-row">
+          <div className="slot-front-left">
+            <FlowerSlotView
+              flower={frontLeftFlower}
+              size="SM"
+              isSelected={state.selectedSlot === "frontLeft"}
+              isEmpty={!state.frontLeft.productId}
+              label="Small (Left)"
+              onSelect={(e) => {
+                e.stopPropagation();
+                onSelectSlot("frontLeft");
+              }}
+              onRemove={(e) => {
+                e.stopPropagation();
+                onRemoveFlower("frontLeft");
+              }}
+            />
+          </div>
+          <div className="slot-front-right">
+            <FlowerSlotView
+              flower={frontRightFlower}
+              size="SM"
+              isSelected={state.selectedSlot === "frontRight"}
+              isEmpty={!state.frontRight.productId}
+              label="Small (Right)"
+              onSelect={(e) => {
+                e.stopPropagation();
+                onSelectSlot("frontRight");
+              }}
+              onRemove={(e) => {
+                e.stopPropagation();
+                onRemoveFlower("frontRight");
+              }}
+            />
+          </div>
+        </div>
 
-      {state.flowers.map((flower) => {
-        const product = catalog.find((f) => f.id === flower.productId);
-        if (!product) return null;
-        return (
-          <PlacedFlower
-            key={flower.instanceId}
-            flower={flower}
-            product={product}
-            isSelected={state.selectedId === flower.instanceId}
-            onSelect={() => onSelect(flower.instanceId)}
-            onMove={(x, y) => onMove(flower.instanceId, x, y)}
-            onToggleSize={() => onToggleSize(flower.instanceId)}
-            onRotate={(deg) => onRotate(flower.instanceId, deg)}
-            onFlip={() => onFlip(flower.instanceId)}
-            onBringToFront={() => onBringToFront(flower.instanceId)}
-            onRemove={() => onRemove(flower.instanceId)}
-          />
-        );
-      })}
+        {/* Stand image */}
+        <div className="stand-display">
+          {stand && (
+            <img
+              src={stand.image}
+              alt={stand.name}
+              className="stand-image"
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

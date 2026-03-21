@@ -14,11 +14,9 @@ export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
       <div className="cart-info">
         <ShoppingCart size={18} />
         <span className="cart-count">
-          {itemCount} {itemCount === 1 ? "item" : "items"}
+          {itemCount} {itemCount === 1 ? "flower" : "flowers"} + stand
         </span>
-        {itemCount > 0 && (
-          <span className="cart-total">${total.toFixed(2)}</span>
-        )}
+        <span className="cart-total">${total.toFixed(2)}</span>
       </div>
       <div className="cart-actions">
         {itemCount > 0 && (

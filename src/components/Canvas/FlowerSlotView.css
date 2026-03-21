@@ -1,0 +1,114 @@
+.flower-slot {
+  position: relative;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.flower-slot.empty {
+  border: 2px dashed var(--color-border);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.flower-slot.empty:hover {
+  border-color: var(--color-accent);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.flower-slot.empty.selected {
+  border-color: var(--color-accent);
+  border-style: solid;
+  background: rgba(184, 134, 11, 0.06);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+}
+
+.flower-slot.filled {
+  background: transparent;
+}
+
+.flower-slot.filled:hover {
+  transform: scale(1.03);
+}
+
+.flower-slot.filled.selected {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.flower-slot-image {
+  width: 100%;
+  height: 70%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.flower-slot-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.flower-slot-price {
+  font-size: 11px;
+  color: var(--color-text-light);
+}
+
+.flower-slot-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  padding: 12px;
+}
+
+.flower-slot-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-light);
+}
+
+.flower-slot-hint {
+  font-size: 12px;
+  color: var(--color-text-light);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.flower-slot.selected .flower-slot-hint {
+  color: var(--color-accent);
+  opacity: 1;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.flower-slot-remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e74c3c;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  border: 2px solid white;
+}
+
+.flower-slot-remove:hover {
+  background: #c0392b;
+  transform: scale(1.1);
+}

@@ -1,23 +1,13 @@
-export interface CanvasFlower {
-  instanceId: string;
-  productId: string;
-  size: "LG" | "SM";
-  position: { x: number; y: number };
-  zIndex: number;
-  rotation: number;
-  flipped: boolean;
-}
-
-export interface CanvasStand {
-  instanceId: string;
-  productId: string;
-  position: { x: number; y: number };
-  zIndex: number;
+export interface FlowerSlot {
+  productId: string | null;
 }
 
 export interface ArrangementState {
-  flowers: CanvasFlower[];
-  stands: CanvasStand[];
-  nextZIndex: number;
-  selectedId: string | null;
+  back: FlowerSlot;
+  frontLeft: FlowerSlot;
+  frontRight: FlowerSlot;
+  selectedSlot: SlotPosition | null;
+  standId: string;
 }
+
+export type SlotPosition = "back" | "frontLeft" | "frontRight";

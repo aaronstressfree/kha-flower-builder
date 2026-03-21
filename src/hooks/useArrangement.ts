@@ -1,121 +1,58 @@
 import { useCallback, useState } from "react";
-import type { ArrangementState, CanvasFlower, CanvasStand } from "../types/canvas";
-
-let nextId = 1;
-function genId() {
-  return `item-${nextId++}`;
-}
+import type { ArrangementState, SlotPosition } from "../types/canvas";
 
 const initial: ArrangementState = {
-  flowers: [],
-  stands: [],
-  nextZIndex: 1,
-  selectedId: null,
+  back: { productId: null },
+  frontLeft: { productId: null },
+  frontRight: { productId: null },
+  selectedSlot: null,
+  standId: "triple-green-lotus",
 };
 
 export function useArrangement() {
   const [state, setState] = useState<ArrangementState>(initial);
 
-  const addFlower = useCallback((productId: string, x: number, y: number) => {
+  const selectSlot = useCallback((slot: SlotPosition | null) => {
+    setState((s) => ({ ...s, selectedSlot: slot }));
+  }, []);
+
+  const placeFlower = useCallback((productId: string) => {
     setState((s) => {
-      const flower: CanvasFlower = {
-        instanceId: genId(),
-        productId,
-        size: "LG",
-        position: { x, y },
-        zIndex: s.nextZIndex,
-        rotation: 0,
-        flipped: false,
-      };
-      return {
-        ...s,
-        flowers: [...s.flowers, flower],
-        nextZIndex: s.nextZIndex + 1,
-        selectedId: flower.instanceId,
-      };
+      // If a slot is selected, replace that slot
+      if (s.selectedSlot) {
+        return {
+          ...s,
+          [s.selectedSlot]: { productId },
+          selectedSlot: null,
+        };
+      }
+
+      // Otherwise fill the first empty slot: back first, then frontLeft, frontRight
+      if (!s.back.productId) {
+        return { ...s, back: { productId }, selectedSlot: null };
+      }
+      if (!s.frontLeft.productId) {
+        return { ...s, frontLeft: { productId }, selectedSlot: null };
+      }
+      if (!s.frontRight.productId) {
+        return { ...s, frontRight: { productId }, selectedSlot: null };
+      }
+
+      // All slots full — replace back by default
+      return { ...s, back: { productId }, selectedSlot: null };
     });
   }, []);
 
-  const addStand = useCallback((productId: string, x: number, y: number) => {
-    setState((s) => {
-      const stand: CanvasStand = {
-        instanceId: genId(),
-        productId,
-        position: { x, y },
-        zIndex: 0,
-      };
-      return {
-        ...s,
-        stands: [...s.stands, stand],
-        selectedId: stand.instanceId,
-      };
-    });
-  }, []);
-
-  const select = useCallback((id: string | null) => {
-    setState((s) => ({ ...s, selectedId: id }));
-  }, []);
-
-  const moveItem = useCallback((id: string, x: number, y: number) => {
+  const removeFlower = useCallback((slot: SlotPosition) => {
     setState((s) => ({
       ...s,
-      flowers: s.flowers.map((f) =>
-        f.instanceId === id ? { ...f, position: { x, y } } : f
-      ),
-      stands: s.stands.map((st) =>
-        st.instanceId === id ? { ...st, position: { x, y } } : st
-      ),
+      [slot]: { productId: null },
+      selectedSlot: null,
     }));
   }, []);
 
-  const toggleSize = useCallback((id: string) => {
-    setState((s) => ({
-      ...s,
-      flowers: s.flowers.map((f) =>
-        f.instanceId === id
-          ? { ...f, size: f.size === "LG" ? "SM" : "LG" }
-          : f
-      ),
-    }));
-  }, []);
-
-  const rotate = useCallback((id: string, degrees: number) => {
-    setState((s) => ({
-      ...s,
-      flowers: s.flowers.map((f) =>
-        f.instanceId === id
-          ? { ...f, rotation: (f.rotation + degrees) % 360 }
-          : f
-      ),
-    }));
-  }, []);
-
-  const flip = useCallback((id: string) => {
-    setState((s) => ({
-      ...s,
-      flowers: s.flowers.map((f) =>
-        f.instanceId === id ? { ...f, flipped: !f.flipped } : f
-      ),
-    }));
-  }, []);
-
-  const bringToFront = useCallback((id: string) => {
-    setState((s) => ({
-      ...s,
-      flowers: s.flowers.map((f) =>
-        f.instanceId === id ? { ...f, zIndex: s.nextZIndex } : f
-      ),
-      nextZIndex: s.nextZIndex + 1,
-    }));
-  }, []);
-
-  const removeItem = useCallback((id: string) => {
-    setState((s) => ({
-      ...s,
-      flowers: s.flowers.filter((f) => f.instanceId !== id),
-      stands: s.stands.filter((st) => st.instanceId !== id),
-      selectedId: s.selectedId === id ? null : s.selectedId,
-    }));
+  const setStand = useCallback((standId: string) => {
+    setState((s) => ({ ...s, standId }));
   }, []);
 
   const clearAll = useCallback(() => {
@@ -124,15 +61,10 @@ export function useArrangement() {
 
   return {
     state,
-    addFlower,
-    addStand,
-    select,
-    moveItem,
-    toggleSize,
-    rotate,
-    flip,
-    bringToFront,
-    removeItem,
+    selectSlot,
+    placeFlower,
+    removeFlower,
+    setStand,
     clearAll,
   };
 }
