@@ -45,11 +45,16 @@ export function ArrangementCanvas({
 
         {/* Stand */}
         <div className="stand-base">
-          <img
-            src={`/stands/${stand.id}.png`}
-            alt={stand.name}
-            className="stand-img"
-          />
+          <div
+            className="stand-constructed"
+            style={{ backgroundImage: `url(/stands/${stand.id}.png)` }}
+          >
+            <div className="stand-slots-indicator">
+              {stand.slots.map((s) => (
+                <div key={s.key} className="stand-slot-mark" />
+              ))}
+            </div>
+          </div>
           <div className="stand-shadow" />
         </div>
 

@@ -25,15 +25,52 @@
   transform: translateX(-50%);
   z-index: 5;
   pointer-events: none;
+  width: 300px;
 }
 
-.stand-img {
-  width: 280px;
-  height: 50px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 30px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+.stand-constructed {
+  width: 100%;
+  height: 44px;
+  border-radius: 24px;
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.08),
+    0 6px 16px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  position: relative;
+}
+
+/* Acrylic edge highlight on top */
+.stand-constructed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  border-radius: 2px;
+}
+
+/* Slot indicators */
+.stand-slots-indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.stand-slot-mark {
+  width: 22px;
+  height: 6px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.08);
 }
 
 .stand-shadow {
@@ -41,9 +78,9 @@
   bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 260px;
+  width: 280px;
   height: 14px;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.10) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(0,0,0,0.08) 0%, transparent 70%);
   border-radius: 50%;
 }
 
@@ -174,62 +211,73 @@
 /* ---------- Stand Picker ---------- */
 .stand-picker {
   position: absolute;
-  bottom: 16px;
+  bottom: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: white;
-  padding: 10px 16px;
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 14px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--color-border);
 }
 
 .stand-picker-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-light);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .stand-picker-options {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .stand-pick {
-  width: 50px;
-  height: 50px;
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
   border-radius: 10px;
   overflow: hidden;
   border: 2px solid transparent;
-  padding: 4px;
+  padding: 6px;
   background: var(--color-panel);
   transition: all 0.2s;
   cursor: pointer;
-  position: relative;
 }
 
 .stand-pick img {
-  width: 100%;
-  height: 100%;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
 .stand-pick-name {
-  display: none;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-align: center;
+  line-height: 1.1;
 }
 
 .stand-pick:hover {
   border-color: var(--color-text-light);
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
 .stand-pick.active {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+  background: rgba(184, 134, 11, 0.04);
+}
+
+.stand-pick.active .stand-pick-name {
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {
