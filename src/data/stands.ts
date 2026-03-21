@@ -12,9 +12,9 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S003_Triple_Stand_Green_Lotus.jpg`,
     baseWidth: 300,
     slots: [
-      { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 0, flowerHeight: 400 },
-      { key: "frontLeft", label: "Small (Left)", size: "SM", x: 30, y: 0, flowerHeight: 250 },
-      { key: "frontRight", label: "Small (Right)", size: "SM", x: 70, y: 0, flowerHeight: 250 },
+      { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 0, flowerHeight: 300 },
+      { key: "frontLeft", label: "Small (Left)", size: "SM", x: 30, y: 0, flowerHeight: 190 },
+      { key: "frontRight", label: "Small (Right)", size: "SM", x: 70, y: 0, flowerHeight: 190 },
     ],
   },
   {
@@ -25,9 +25,9 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S007_Triple_Stand.jpg`,
     baseWidth: 300,
     slots: [
-      { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 0, flowerHeight: 400 },
-      { key: "frontLeft", label: "Small (Left)", size: "SM", x: 30, y: 0, flowerHeight: 250 },
-      { key: "frontRight", label: "Small (Right)", size: "SM", x: 70, y: 0, flowerHeight: 250 },
+      { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 0, flowerHeight: 300 },
+      { key: "frontLeft", label: "Small (Left)", size: "SM", x: 30, y: 0, flowerHeight: 190 },
+      { key: "frontRight", label: "Small (Right)", size: "SM", x: 70, y: 0, flowerHeight: 190 },
     ],
   },
   // --- Double stands (1 LG + 1 SM) ---
@@ -39,8 +39,8 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S008_Double_Stand.jpg`,
     baseWidth: 220,
     slots: [
-      { key: "left", label: "Large", size: "LG", x: 38, y: 0, flowerHeight: 400 },
-      { key: "right", label: "Small", size: "SM", x: 68, y: 0, flowerHeight: 250 },
+      { key: "left", label: "Large", size: "LG", x: 38, y: 0, flowerHeight: 300 },
+      { key: "right", label: "Small", size: "SM", x: 68, y: 0, flowerHeight: 190 },
     ],
   },
   {
@@ -51,8 +51,8 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg`,
     baseWidth: 220,
     slots: [
-      { key: "left", label: "Large", size: "LG", x: 38, y: 0, flowerHeight: 400 },
-      { key: "right", label: "Small", size: "SM", x: 68, y: 0, flowerHeight: 250 },
+      { key: "left", label: "Large", size: "LG", x: 38, y: 0, flowerHeight: 300 },
+      { key: "right", label: "Small", size: "SM", x: 68, y: 0, flowerHeight: 190 },
     ],
   },
   // --- Single LG stands ---
@@ -64,7 +64,7 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S002_Single_Stand_LG_Leaf.jpg`,
     baseWidth: 140,
     slots: [
-      { key: "center", label: "Large", size: "LG", x: 50, y: 0, flowerHeight: 400 },
+      { key: "center", label: "Large", size: "LG", x: 50, y: 0, flowerHeight: 300 },
     ],
   },
   {
@@ -75,7 +75,7 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S004_Single_Stand_LG_Lotus.jpg`,
     baseWidth: 140,
     slots: [
-      { key: "center", label: "Large", size: "LG", x: 50, y: 0, flowerHeight: 400 },
+      { key: "center", label: "Large", size: "LG", x: 50, y: 0, flowerHeight: 300 },
     ],
   },
   // --- Single SM stands ---
@@ -87,7 +87,7 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S005_Single_Stand_SM.jpg`,
     baseWidth: 100,
     slots: [
-      { key: "center", label: "Small", size: "SM", x: 50, y: 0, flowerHeight: 250 },
+      { key: "center", label: "Small", size: "SM", x: 50, y: 0, flowerHeight: 190 },
     ],
   },
   {
@@ -98,7 +98,7 @@ export const standConfigs: StandConfig[] = [
     image: `${CDN}/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg`,
     baseWidth: 100,
     slots: [
-      { key: "center", label: "Small", size: "SM", x: 50, y: 0, flowerHeight: 250 },
+      { key: "center", label: "Small", size: "SM", x: 50, y: 0, flowerHeight: 190 },
     ],
   },
 ];

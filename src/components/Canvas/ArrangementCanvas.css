@@ -4,39 +4,58 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   background: linear-gradient(180deg, #faf8f5 0%, #ede8e1 100%);
   overflow: hidden;
   position: relative;
-  padding-bottom: 100px;
 }
 
 /* ---------- Composition ---------- */
 .composition {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  width: 100%;
+  justify-content: center;
   flex: 1;
   min-height: 0;
+  padding-bottom: 140px;
 }
 
 /* ---------- Arrangement (flowers + base) ---------- */
 .arrangement-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Layered layout for triple stands: back flower behind front row */
+.flowers-layered {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.flowers-row {
+.flowers-layered .is-back {
+  z-index: 1;
+  margin-bottom: -30px;
+}
+
+.front-flowers-row {
   position: relative;
+  z-index: 3;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 0;
+  gap: 8px;
+}
+
+/* Simple row for single/double stands */
+.flowers-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
 }
 
 /* ---------- Stand Base ---------- */
@@ -126,8 +145,9 @@
   object-fit: contain;
   object-position: bottom center;
   pointer-events: none;
-  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.08))
-         contrast(1.08) brightness(1.02);
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.08));
+  /* Clip the outermost 2% to remove faint edge artifacts */
+  clip-path: inset(1%);
 }
 
 .slot-flower-tag {
