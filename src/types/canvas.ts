@@ -9,6 +9,7 @@ export interface StandConfig {
   variantId: string;
   price: number;
   image: string;
+  baseWidth: number; // px width of the constructed base strip
   slots: SlotDef[];
 }
 
