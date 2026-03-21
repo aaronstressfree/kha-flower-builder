@@ -11,6 +11,7 @@ interface Props {
 export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
   return (
     <div className="cart-bar">
+      <span className="cart-disclaimer">This is a simulation. Actual product may vary slightly.</span>
       <div className="cart-info">
         <ShoppingCart size={18} />
         <span className="cart-count">

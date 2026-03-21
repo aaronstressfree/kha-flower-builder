@@ -15,18 +15,18 @@
   bottom: 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.85);
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 8px 16px;
-  border-radius: 16px;
+  padding: 12px 20px;
+  border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .stand-float-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--color-text-light);
   text-transform: uppercase;
@@ -35,15 +35,15 @@
 
 .stand-float-options {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .stand-float-pick {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
   border: 2px solid transparent;
-  padding: 3px;
+  padding: 4px;
   background: rgba(255, 255, 255, 0.6);
   transition: all 0.2s;
   cursor: pointer;
@@ -61,12 +61,13 @@
 .stand-float-pick:hover {
   border-color: var(--color-text-light);
   background: white;
+  transform: translateY(-2px);
 }
 
 .stand-float-pick.active {
   border-color: var(--color-accent);
   background: white;
-  box-shadow: 0 0 0 1px rgba(184, 134, 11, 0.15);
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
 }
 
 /* ---------- Arrangement (flowers + base) ---------- */
@@ -101,8 +102,8 @@
 }
 
 .front-flowers-row > .slot-area {
-  margin-left: -8px;
-  margin-right: -8px;
+  margin-left: -15px;
+  margin-right: -15px;
 }
 
 /* Simple row for single/double stands */
@@ -113,8 +114,8 @@
 }
 
 .flowers-row > .slot-area {
-  margin-left: -6px;
-  margin-right: -6px;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
 /* ---------- Stand Base ---------- */
@@ -302,3 +303,23 @@
   border-radius: 3px;
 }
 
+
+@media (max-width: 768px) {
+  .stand-float {
+    bottom: 8px;
+    padding: 8px 12px;
+    gap: 8px;
+    max-width: 90vw;
+    overflow-x: auto;
+  }
+
+  .stand-float-pick {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .stand-float-label {
+    font-size: 10px;
+  }
+}

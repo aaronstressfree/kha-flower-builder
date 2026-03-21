@@ -5,6 +5,18 @@
   padding: 8px 24px;
   border-top: 1px solid var(--color-border);
   background: white;
+  position: relative;
+}
+
+.cart-disclaimer {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #b0a89e;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .cart-info {
