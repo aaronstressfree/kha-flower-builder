@@ -134,8 +134,8 @@
 
 .slot-remove {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 30%;
+  right: 0;
   width: 22px;
   height: 22px;
   border-radius: 50%;
