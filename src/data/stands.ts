@@ -3,6 +3,7 @@ import type { StandConfig } from "../types/canvas";
 const CDN = "https://cdn.shopify.com/s/files/1/0918/1478/9427/files";
 
 export const standConfigs: StandConfig[] = [
+  // --- Triple stands (1 LG back + 2 SM front) ---
   {
     id: "triple-green-lotus",
     name: "Triple Green Lotus",
@@ -10,9 +11,9 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S003_Triple_Stand_Green_Lotus.jpg`,
     slots: [
-      { key: "back", label: "Back", size: "LG", x: 50, y: 10, flowerHeight: 420 },
-      { key: "frontLeft", label: "Front Left", size: "SM", x: 35, y: 8, flowerHeight: 280 },
-      { key: "frontRight", label: "Front Right", size: "SM", x: 65, y: 8, flowerHeight: 280 },
+      { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 10, flowerHeight: 400 },
+      { key: "frontLeft", label: "Small (Left)", size: "SM", x: 35, y: 8, flowerHeight: 250 },
+      { key: "frontRight", label: "Small (Right)", size: "SM", x: 65, y: 8, flowerHeight: 250 },
     ],
   },
   {
@@ -22,11 +23,12 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S007_Triple_Stand.jpg`,
     slots: [
-      { key: "back", label: "Back", size: "LG", x: 50, y: 10, flowerHeight: 420 },
-      { key: "frontLeft", label: "Front Left", size: "SM", x: 35, y: 8, flowerHeight: 280 },
-      { key: "frontRight", label: "Front Right", size: "SM", x: 65, y: 8, flowerHeight: 280 },
+      { key: "back", label: "Large (Back)", size: "LG", x: 50, y: 10, flowerHeight: 400 },
+      { key: "frontLeft", label: "Small (Left)", size: "SM", x: 35, y: 8, flowerHeight: 250 },
+      { key: "frontRight", label: "Small (Right)", size: "SM", x: 65, y: 8, flowerHeight: 250 },
     ],
   },
+  // --- Double stands (1 LG + 1 SM) ---
   {
     id: "grasses-double",
     name: "Grasses Double",
@@ -34,8 +36,8 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S008_Double_Stand.jpg`,
     slots: [
-      { key: "left", label: "Left", size: "LG", x: 38, y: 9, flowerHeight: 400 },
-      { key: "right", label: "Right", size: "SM", x: 62, y: 8, flowerHeight: 280 },
+      { key: "left", label: "Large", size: "LG", x: 40, y: 9, flowerHeight: 400 },
+      { key: "right", label: "Small", size: "SM", x: 60, y: 8, flowerHeight: 250 },
     ],
   },
   {
@@ -45,28 +47,50 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg`,
     slots: [
-      { key: "left", label: "Left", size: "LG", x: 38, y: 9, flowerHeight: 400 },
-      { key: "right", label: "Right", size: "SM", x: 62, y: 8, flowerHeight: 280 },
+      { key: "left", label: "Large", size: "LG", x: 40, y: 9, flowerHeight: 400 },
+      { key: "right", label: "Small", size: "SM", x: 60, y: 8, flowerHeight: 250 },
     ],
   },
+  // --- Single LG stands ---
   {
     id: "lg-leaf",
-    name: "Single Leaf",
+    name: "Single Leaf (LG)",
     variantId: "51468139004211",
     price: 23.85,
     image: `${CDN}/KHA-S002_Single_Stand_LG_Leaf.jpg`,
     slots: [
-      { key: "center", label: "Flower", size: "LG", x: 50, y: 9, flowerHeight: 420 },
+      { key: "center", label: "Large", size: "LG", x: 50, y: 9, flowerHeight: 400 },
     ],
   },
   {
     id: "lg-lotus",
-    name: "Single Lotus",
+    name: "Single Lotus (LG)",
     variantId: "51468138905907",
     price: 23.85,
     image: `${CDN}/KHA-S004_Single_Stand_LG_Lotus.jpg`,
     slots: [
-      { key: "center", label: "Flower", size: "LG", x: 50, y: 9, flowerHeight: 420 },
+      { key: "center", label: "Large", size: "LG", x: 50, y: 9, flowerHeight: 400 },
+    ],
+  },
+  // --- Single SM stands ---
+  {
+    id: "sm-clear",
+    name: "Single Clear (SM)",
+    variantId: "51468138643763",
+    price: 19.35,
+    image: `${CDN}/KHA-S005_Single_Stand_SM.jpg`,
+    slots: [
+      { key: "center", label: "Small", size: "SM", x: 50, y: 9, flowerHeight: 250 },
+    ],
+  },
+  {
+    id: "sm-spiral-vine",
+    name: "Single Vine (SM)",
+    variantId: "51468139594035",
+    price: 19.35,
+    image: `${CDN}/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg`,
+    slots: [
+      { key: "center", label: "Small", size: "SM", x: 50, y: 9, flowerHeight: 250 },
     ],
   },
 ];

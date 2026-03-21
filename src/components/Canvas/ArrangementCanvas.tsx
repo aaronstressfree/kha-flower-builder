@@ -120,7 +120,7 @@ function FlowerInSlot({
         left: `${slot.x}%`,
         bottom: `${slot.y}%`,
         height: slot.flowerHeight,
-        width: slot.size === "LG" ? 240 : 170,
+        width: slot.size === "LG" ? 240 : 145,
         zIndex,
       }}
       onClick={(e) => {

@@ -57,6 +57,8 @@ const standImages = [
   { id: "clover-moss-double", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg" },
   { id: "lg-leaf", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S002_Single_Stand_LG_Leaf.jpg" },
   { id: "lg-lotus", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S004_Single_Stand_LG_Lotus.jpg" },
+  { id: "sm-clear", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S005_Single_Stand_SM.jpg" },
+  { id: "sm-spiral-vine", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg" },
 ];
 
 async function downloadImage(url) {
