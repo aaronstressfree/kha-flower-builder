@@ -11,7 +11,6 @@ interface Props {
   stand: StandConfig;
   onSelectSlot: (slotKey: string | null) => void;
   onRemoveFlower: (slotKey: string) => void;
-  onChangeStand: (index: number) => void;
 }
 
 export function ArrangementCanvas({
@@ -19,7 +18,6 @@ export function ArrangementCanvas({
   stand,
   onSelectSlot,
   onRemoveFlower,
-  onChangeStand,
 }: Props) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -28,9 +26,9 @@ export function ArrangementCanvas({
     const measure = () => {
       if (!canvasRef.current) return;
       const h = canvasRef.current.clientHeight;
-      const available = h - 200; // reserve for picker + padding
+      const available = h - 40; // just a small padding
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const s = Math.min((available * 0.75) / maxFlower, 1.5);
+      const s = Math.min((available * 0.85) / maxFlower, 1.8);
       setScale(Math.max(s, 0.5));
     };
     measure();
@@ -38,31 +36,31 @@ export function ArrangementCanvas({
     return () => window.removeEventListener("resize", measure);
   }, [stand]);
 
-  const backSlot = stand.slots.find((s) => s.key === "back" || s.key === "center" || s.key === "left");
-  const frontSlots = stand.slots.filter((s) => s !== backSlot);
   const hasBackAndFront = stand.slots.length > 1 && stand.slots.some((s) => s.key === "back");
 
   return (
     <div ref={canvasRef} className="arrangement-canvas" onClick={() => onSelectSlot(null)}>
-      <div className="composition">
-        <div className="arrangement-group">
-          {hasBackAndFront ? (
-            /* Triple/multi-slot: back flower centered behind front flowers */
-            <div className="flowers-layered">
-              {/* Back flower — centered, taller */}
-              {backSlot && (
+      <div className="arrangement-group">
+        {hasBackAndFront ? (
+          <div className="flowers-layered">
+            {/* Back flower centered behind front */}
+            {stand.slots
+              .filter((s) => s.key === "back")
+              .map((slot) => (
                 <SlotView
-                  slot={backSlot}
+                  key={slot.key}
+                  slot={slot}
                   state={state}
                   scale={scale}
                   isBack
                   onSelectSlot={onSelectSlot}
                   onRemoveFlower={onRemoveFlower}
                 />
-              )}
-              {/* Front flowers row */}
-              <div className="front-flowers-row">
-                {frontSlots.map((slot) => (
+              ))}
+            <div className="front-flowers-row">
+              {stand.slots
+                .filter((s) => s.key !== "back")
+                .map((slot) => (
                   <SlotView
                     key={slot.key}
                     slot={slot}
@@ -72,63 +70,41 @@ export function ArrangementCanvas({
                     onRemoveFlower={onRemoveFlower}
                   />
                 ))}
-              </div>
             </div>
-          ) : (
-            /* Single or double without "back" key */
-            <div className="flowers-row">
-              {stand.slots.map((slot) => (
-                <SlotView
-                  key={slot.key}
-                  slot={slot}
-                  state={state}
-                  scale={scale}
-                  onSelectSlot={onSelectSlot}
-                  onRemoveFlower={onRemoveFlower}
-                />
+          </div>
+        ) : (
+          <div className="flowers-row">
+            {stand.slots.map((slot) => (
+              <SlotView
+                key={slot.key}
+                slot={slot}
+                state={state}
+                scale={scale}
+                onSelectSlot={onSelectSlot}
+                onRemoveFlower={onRemoveFlower}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="stand-base">
+          <div
+            className="stand-constructed"
+            style={{ width: stand.baseWidth * scale }}
+          >
+            <div className="stand-slots-indicator">
+              {stand.slots.map((s) => (
+                <div key={s.key} className="stand-slot-mark" />
               ))}
             </div>
-          )}
-
-          {/* Stand base */}
-          <div className="stand-base">
-            <div
-              className="stand-constructed"
-              style={{ width: stand.baseWidth * scale }}
-            >
-              <div className="stand-slots-indicator">
-                {stand.slots.map((s) => (
-                  <div key={s.key} className="stand-slot-mark" />
-                ))}
-              </div>
-            </div>
-            <div className="stand-shadow" />
           </div>
-        </div>
-      </div>
-
-      {/* Stand picker */}
-      <div className="stand-picker" onClick={(e) => e.stopPropagation()}>
-        <span className="stand-picker-label">Choose Stand</span>
-        <div className="stand-picker-options">
-          {standConfigs.map((sc, i) => (
-            <button
-              key={sc.id}
-              className={`stand-pick ${state.standIndex === i ? "active" : ""}`}
-              onClick={() => onChangeStand(i)}
-              title={sc.name}
-            >
-              <img src={`/stands/${sc.id}.png`} alt={sc.name} />
-              <span className="stand-pick-name">{sc.name}</span>
-            </button>
-          ))}
+          <div className="stand-shadow" />
         </div>
       </div>
     </div>
   );
 }
 
-/* Reusable slot component */
 function SlotView({
   slot,
   state,

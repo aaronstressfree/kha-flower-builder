@@ -54,7 +54,6 @@
 
 .app-cart-bar {
   flex-shrink: 0;
-  height: var(--cart-height);
   border-top: 1px solid var(--color-border);
   background: white;
 }

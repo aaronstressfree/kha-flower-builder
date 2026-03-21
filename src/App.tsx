@@ -2,6 +2,7 @@ import { AppLayout } from "./components/Layout/AppLayout";
 import { CatalogPanel } from "./components/Catalog/CatalogPanel";
 import { ArrangementCanvas } from "./components/Canvas/ArrangementCanvas";
 import { CartBar } from "./components/Cart/CartBar";
+import { StandPicker } from "./components/Cart/StandPicker";
 import { useArrangement } from "./hooks/useArrangement";
 import { useCart } from "./hooks/useCart";
 
@@ -36,16 +37,21 @@ export default function App() {
           stand={stand}
           onSelectSlot={selectSlot}
           onRemoveFlower={removeFlower}
-          onChangeStand={setStandIndex}
         />
       }
       cartBar={
-        <CartBar
-          itemCount={filledCount}
-          total={total}
-          onCheckout={checkout}
-          onClear={clearAll}
-        />
+        <>
+          <StandPicker
+            standIndex={state.standIndex}
+            onChangeStand={setStandIndex}
+          />
+          <CartBar
+            itemCount={filledCount}
+            total={total}
+            onCheckout={checkout}
+            onClear={clearAll}
+          />
+        </>
       }
     />
   );
