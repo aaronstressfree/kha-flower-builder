@@ -45,10 +45,7 @@ export function ArrangementCanvas({
 
         {/* Stand */}
         <div className="stand-base">
-          <div
-            className="stand-constructed"
-            style={{ backgroundImage: `url(/stands/${stand.id}.png)` }}
-          >
+          <div className="stand-constructed">
             <div className="stand-slots-indicator">
               {stand.slots.map((s) => (
                 <div key={s.key} className="stand-slot-mark" />
@@ -71,7 +68,7 @@ export function ArrangementCanvas({
                 slot={slot}
                 product={product}
                 isSelected={isSelected}
-                zIndex={8}
+                zIndex={4}
                 onSelect={() => onSelectSlot(slot.key)}
                 onRemove={() => onRemoveFlower(slot.key)}
               />
@@ -123,7 +120,7 @@ function FlowerInSlot({
         left: `${slot.x}%`,
         bottom: `${slot.y}%`,
         height: slot.flowerHeight,
-        width: slot.size === "LG" ? 220 : 165,
+        width: slot.size === "LG" ? 240 : 170,
         zIndex,
       }}
       onClick={(e) => {
@@ -149,7 +146,7 @@ function FlowerInSlot({
               <X size={12} />
             </button>
           )}
-          <span className="slot-flower-tag">{product.name}</span>
+          {isSelected && <span className="slot-flower-tag">{product.name}</span>}
         </>
       ) : (
         <div className={`slot-placeholder ${isSelected ? "active" : ""}`}>
