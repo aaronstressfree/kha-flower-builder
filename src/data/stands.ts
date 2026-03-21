@@ -10,9 +10,9 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S003_Triple_Stand_Green_Lotus.jpg`,
     slots: [
-      { key: "back", label: "Back", size: "LG", x: 50, y: 18, flowerHeight: 300 },
-      { key: "frontLeft", label: "Front Left", size: "SM", x: 30, y: 8, flowerHeight: 220 },
-      { key: "frontRight", label: "Front Right", size: "SM", x: 70, y: 8, flowerHeight: 220 },
+      { key: "back", label: "Back", size: "LG", x: 50, y: 16, flowerHeight: 340 },
+      { key: "frontLeft", label: "Front Left", size: "SM", x: 34, y: 6, flowerHeight: 240 },
+      { key: "frontRight", label: "Front Right", size: "SM", x: 66, y: 6, flowerHeight: 240 },
     ],
   },
   {
@@ -22,9 +22,9 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S007_Triple_Stand.jpg`,
     slots: [
-      { key: "back", label: "Back", size: "LG", x: 50, y: 18, flowerHeight: 300 },
-      { key: "frontLeft", label: "Front Left", size: "SM", x: 30, y: 8, flowerHeight: 220 },
-      { key: "frontRight", label: "Front Right", size: "SM", x: 70, y: 8, flowerHeight: 220 },
+      { key: "back", label: "Back", size: "LG", x: 50, y: 16, flowerHeight: 340 },
+      { key: "frontLeft", label: "Front Left", size: "SM", x: 34, y: 6, flowerHeight: 240 },
+      { key: "frontRight", label: "Front Right", size: "SM", x: 66, y: 6, flowerHeight: 240 },
     ],
   },
   {
@@ -34,8 +34,8 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S008_Double_Stand.jpg`,
     slots: [
-      { key: "left", label: "Left", size: "LG", x: 40, y: 14, flowerHeight: 280 },
-      { key: "right", label: "Right", size: "SM", x: 60, y: 8, flowerHeight: 220 },
+      { key: "left", label: "Left", size: "LG", x: 42, y: 12, flowerHeight: 320 },
+      { key: "right", label: "Right", size: "SM", x: 58, y: 6, flowerHeight: 240 },
     ],
   },
   {
@@ -45,8 +45,8 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg`,
     slots: [
-      { key: "left", label: "Left", size: "LG", x: 40, y: 14, flowerHeight: 280 },
-      { key: "right", label: "Right", size: "SM", x: 60, y: 8, flowerHeight: 220 },
+      { key: "left", label: "Left", size: "LG", x: 42, y: 12, flowerHeight: 320 },
+      { key: "right", label: "Right", size: "SM", x: 58, y: 6, flowerHeight: 240 },
     ],
   },
   {
@@ -56,7 +56,7 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S002_Single_Stand_LG_Leaf.jpg`,
     slots: [
-      { key: "center", label: "Flower", size: "LG", x: 50, y: 14, flowerHeight: 300 },
+      { key: "center", label: "Flower", size: "LG", x: 50, y: 12, flowerHeight: 340 },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const standConfigs: StandConfig[] = [
     price: 23.85,
     image: `${CDN}/KHA-S004_Single_Stand_LG_Lotus.jpg`,
     slots: [
-      { key: "center", label: "Flower", size: "LG", x: 50, y: 14, flowerHeight: 300 },
+      { key: "center", label: "Flower", size: "LG", x: 50, y: 12, flowerHeight: 340 },
     ],
   },
 ];

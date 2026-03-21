@@ -20,7 +20,7 @@
 /* ---------- Stand ---------- */
 .stand-base {
   position: absolute;
-  bottom: 10px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
@@ -28,20 +28,22 @@
 }
 
 .stand-img {
-  width: 240px;
-  height: auto;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
-  transform: perspective(500px) rotateX(18deg);
+  width: 280px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 30px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .stand-shadow {
   position: absolute;
-  bottom: -8px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 220px;
-  height: 20px;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.12) 0%, transparent 70%);
+  width: 260px;
+  height: 14px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.10) 0%, transparent 70%);
   border-radius: 50%;
 }
 
