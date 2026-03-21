@@ -20,7 +20,7 @@
 /* ---------- Stand ---------- */
 .stand-base {
   position: absolute;
-  bottom: 40px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
@@ -28,10 +28,10 @@
 }
 
 .stand-img {
-  width: 260px;
+  width: 240px;
   height: auto;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
-  transform: perspective(500px) rotateX(20deg);
+  transform: perspective(500px) rotateX(18deg);
 }
 
 .stand-shadow {
@@ -69,6 +69,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: bottom center;
   pointer-events: none;
   filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.1));
 }
