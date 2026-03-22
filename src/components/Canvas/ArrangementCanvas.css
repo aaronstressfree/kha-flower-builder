@@ -75,35 +75,49 @@
 .stand-float-preview {
   display: none;
   position: absolute;
-  bottom: calc(100% + 12px);
+  bottom: calc(100% + 20px);
   left: 50%;
   transform: translateX(-50%);
   background: white;
-  border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
   border: 1px solid var(--color-border);
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   white-space: nowrap;
-  z-index: 100;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.stand-float-preview::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .stand-float-preview img {
-  width: 120px;
-  height: 120px;
+  width: 240px;
+  height: 240px;
   object-fit: contain;
 }
 
 .stand-float-preview span {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-text);
 }
 
 .stand-float-preview-slots {
-  font-size: 11px !important;
+  font-size: 13px !important;
   font-weight: 500 !important;
   color: var(--color-text-light) !important;
 }

@@ -277,6 +277,32 @@ export const flowers: FlowerProduct[] = [
       cutout: `${CDN}/KHA-155_Ruffle_Amaryllis_7ff0fe5d-a82c-43a6-9862-6c5f15d35a70.jpg`,
     },
   },
+  {
+    id: "periwinkle-blossoms",
+    name: "Periwinkle Blossoms",
+    category: "blossom",
+    variants: {
+      lg: { variantId: "52558792393011", price: 37.35 },
+      sm: { variantId: "52558869168435", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Periwinkle_Blossoms_712b4e19-31cd-42ff-a347-af73b2228204.jpg`,
+      cutout: `${CDN}/Periwinkle_Blossoms_712b4e19-31cd-42ff-a347-af73b2228204.jpg`,
+    },
+  },
+  {
+    id: "aphrodite-orchid",
+    name: "Aphrodite Orchid",
+    category: "other",
+    variants: {
+      lg: { variantId: "52858353058099", price: 37.35 },
+      sm: { variantId: "52858353090867", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/KHA-480_Aphrodite_Orchid_SM_29d69fbe-b333-4c83-84d1-972a67eb0ca9.jpg`,
+      cutout: `${CDN}/KHA-480_Aphrodite_Orchid_SM_29d69fbe-b333-4c83-84d1-972a67eb0ca9.jpg`,
+    },
+  },
 ];
 
 export const stands: StandProduct[] = [

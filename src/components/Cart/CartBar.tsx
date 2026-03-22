@@ -19,7 +19,9 @@ export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
         <span className="cart-total">${total.toFixed(2)}</span>
       </div>
       <div className="cart-actions">
-        <span className="cart-disclaimer">Simulation only. Actual product may vary.</span>
+        <span className="cart-disclaimer">
+          Simulation only. Actual product may vary. <a href="https://www.kimberlyhodges.com" target="_blank" rel="noopener noreferrer">kimberlyhodges.com</a>
+        </span>
         {itemCount > 0 && (
           <button className="cart-clear" onClick={onClear}>
             <Trash2 size={14} />
