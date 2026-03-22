@@ -113,9 +113,18 @@ export function ArrangementCanvas({
               key={sc.id}
               className={`stand-float-pick ${state.standIndex === i ? "active" : ""}`}
               onClick={() => onChangeStand(i)}
-              title={sc.name}
             >
               <img src={`/stands/${sc.id}.png`} alt={sc.name} />
+              <div className="stand-float-preview">
+                <img src={`/stands/${sc.id}.png`} alt={sc.name} />
+                <span>{sc.name}</span>
+                <span className="stand-float-preview-slots">
+                  {sc.slots.length === 1
+                    ? sc.slots[0].size === "LG" ? "1 Large flower" : "1 Small flower"
+                    : sc.slots.filter(s => s.size === "LG").length + " Large + " +
+                      sc.slots.filter(s => s.size === "SM").length + " Small"}
+                </span>
+              </div>
             </button>
           ))}
         </div>
