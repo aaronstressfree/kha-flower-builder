@@ -14,7 +14,7 @@
 .stand-float {
   position: absolute;
   bottom: 16px;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -91,7 +91,7 @@
   white-space: nowrap;
   z-index: 99999;
   pointer-events: none;
-  min-width: 280px;
+  min-width: 320px;
 }
 
 .stand-float-preview::after {
