@@ -129,8 +129,8 @@ function SlotView({
   const isSelected = state.selectedSlot === slot.key;
 
   // Scale flower proportionally based on real-world height
-  // The tallest LG flower is ~14.4" — use slot.flowerHeight as the max container
-  const maxRealHeight = slot.size === "LG" ? 14.4 : 10.0;
+  // Use 14.4" (tallest flower) as reference for all slots
+  const maxRealHeight = 14.4;
   const realHeight = product?.dimensions?.height ?? maxRealHeight;
   const heightRatio = Math.min(realHeight / maxRealHeight, 1);
   const flowerHeight = slot.flowerHeight * scale * heightRatio;
