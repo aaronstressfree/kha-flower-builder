@@ -28,55 +28,34 @@ export function ArrangementCanvas({
     const measure = () => {
       if (!canvasRef.current) return;
       const h = canvasRef.current.clientHeight;
-      const available = h - 40; // just a small padding
+      // Reserve space for stand bar + stand picker + padding-bottom
+      const reserved = window.innerWidth <= 768 ? 100 : 80;
+      const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
       const s = Math.min((available * 0.85) / maxFlower, 1.8);
-      setScale(Math.max(s, 0.5));
+      setScale(Math.max(s, 0.4));
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, [stand]);
 
-  const hasBackAndFront = stand.slots.length > 1 && stand.slots.some((s) => s.key === "back");
-
   return (
     <div ref={canvasRef} className="arrangement-canvas" onClick={() => onSelectSlot(null)}>
       <div className="arrangement-group">
-        {hasBackAndFront ? (
-          <div className="flowers-layered">
-            {/* Back flower centered behind front */}
-            {stand.slots
-              .filter((s) => s.key === "back")
-              .map((slot) => (
-                <SlotView
-                  key={slot.key}
-                  slot={slot}
-                  state={state}
-                  scale={scale}
-                  isBack
-                  onSelectSlot={onSelectSlot}
-                  onRemoveFlower={onRemoveFlower}
-                />
-              ))}
-            <div className="front-flowers-row">
-              {stand.slots
-                .filter((s) => s.key !== "back")
-                .map((slot) => (
-                  <SlotView
-                    key={slot.key}
-                    slot={slot}
-                    state={state}
-                    scale={scale}
-                    onSelectSlot={onSelectSlot}
-                    onRemoveFlower={onRemoveFlower}
-                  />
-                ))}
-            </div>
-          </div>
-        ) : (
           <div className="flowers-row">
-            {stand.slots.map((slot) => (
+            {(() => {
+              // For triple: reorder to SM, LG, SM (big flower in center)
+              const slots = [...stand.slots];
+              if (slots.length === 3) {
+                const lg = slots.find(s => s.size === "LG");
+                const sms = slots.filter(s => s.size === "SM");
+                if (lg && sms.length === 2) {
+                  return [sms[0], lg, sms[1]];
+                }
+              }
+              return slots;
+            })().map((slot) => (
               <SlotView
                 key={slot.key}
                 slot={slot}
@@ -87,7 +66,6 @@ export function ArrangementCanvas({
               />
             ))}
           </div>
-        )}
 
         <div className="stand-base">
           <div
@@ -137,14 +115,12 @@ function SlotView({
   slot,
   state,
   scale,
-  isBack,
   onSelectSlot,
   onRemoveFlower,
 }: {
   slot: (typeof standConfigs)[0]["slots"][0];
   state: ArrangementState;
   scale: number;
-  isBack?: boolean;
   onSelectSlot: (key: string | null) => void;
   onRemoveFlower: (key: string) => void;
 }) {
@@ -152,11 +128,19 @@ function SlotView({
   const product = productId ? catalog.find((f) => f.id === productId) : null;
   const isSelected = state.selectedSlot === slot.key;
 
+  // Scale flower proportionally based on real-world height
+  // The tallest LG flower is ~14.4" — use slot.flowerHeight as the max container
+  const maxRealHeight = slot.size === "LG" ? 14.4 : 10.0;
+  const realHeight = product?.dimensions?.height ?? maxRealHeight;
+  const heightRatio = Math.min(realHeight / maxRealHeight, 1);
+  const flowerHeight = slot.flowerHeight * scale * heightRatio;
+  const slotHeight = slot.flowerHeight * scale; // container stays full size for alignment
+
   return (
     <div
-      className={`slot-area ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty-slot"} ${isBack ? "is-back" : ""}`}
+      className={`slot-area ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty-slot"}`}
       style={{
-        height: slot.flowerHeight * scale,
+        height: slotHeight,
         width: (slot.size === "LG" ? 160 : 110) * scale,
       }}
       onClick={(e) => {
@@ -170,6 +154,7 @@ function SlotView({
             src={`/flowers/${product.id}.png`}
             alt={product.name}
             className="slot-flower-img"
+            style={{ maxHeight: flowerHeight }}
           />
           {isSelected && (
             <>

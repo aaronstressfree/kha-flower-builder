@@ -28,6 +28,12 @@ export default function App() {
               ? stand.slots.find((s) => s.key === state.selectedSlot)?.label ?? null
               : null
           }
+          selectedSlotSize={
+            state.selectedSlot
+              ? stand.slots.find((s) => s.key === state.selectedSlot)?.size ?? null
+              : null
+          }
+          availableSizes={stand.slots.map((s) => s.size)}
         />
       }
       canvas={

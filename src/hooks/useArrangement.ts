@@ -1,6 +1,16 @@
 import { useCallback, useState } from "react";
 import type { ArrangementState } from "../types/canvas";
+import type { SlotDef } from "../types/canvas";
 import { standConfigs } from "../data/stands";
+import { flowers as catalog } from "../data/catalog";
+
+/** Check if a flower has the variant required by a slot's size */
+function canFitSlot(productId: string, slot: SlotDef): boolean {
+  const product = catalog.find((f) => f.id === productId);
+  if (!product) return false;
+  const sizeKey = slot.size.toLowerCase() as "lg" | "sm";
+  return !!product.variants[sizeKey];
+}
 
 function makeInitial(standIndex: number): ArrangementState {
   const flowers: Record<string, string | null> = {};
@@ -23,18 +33,23 @@ export function useArrangement() {
     setState((s) => {
       const currentStand = standConfigs[s.standIndex];
 
-      // If a slot is selected, place into that slot
+      // If a slot is selected, place into that slot (only if flower fits)
       if (s.selectedSlot && s.selectedSlot in s.flowers) {
-        return {
-          ...s,
-          flowers: { ...s.flowers, [s.selectedSlot]: productId },
-          selectedSlot: null,
-        };
+        const slot = currentStand.slots.find((sl) => sl.key === s.selectedSlot);
+        if (slot && canFitSlot(productId, slot)) {
+          return {
+            ...s,
+            flowers: { ...s.flowers, [s.selectedSlot]: productId },
+            selectedSlot: null,
+          };
+        }
+        // Flower doesn't fit this slot — ignore
+        return s;
       }
 
-      // Otherwise fill the first empty slot
+      // Otherwise fill the first empty slot that this flower can fit
       for (const slot of currentStand.slots) {
-        if (!s.flowers[slot.key]) {
+        if (!s.flowers[slot.key] && canFitSlot(productId, slot)) {
           return {
             ...s,
             flowers: { ...s.flowers, [slot.key]: productId },
@@ -43,13 +58,19 @@ export function useArrangement() {
         }
       }
 
-      // All full — replace the first slot
-      const firstKey = currentStand.slots[0].key;
-      return {
-        ...s,
-        flowers: { ...s.flowers, [firstKey]: productId },
-        selectedSlot: null,
-      };
+      // All compatible slots full — replace the first compatible slot
+      for (const slot of currentStand.slots) {
+        if (canFitSlot(productId, slot)) {
+          return {
+            ...s,
+            flowers: { ...s.flowers, [slot.key]: productId },
+            selectedSlot: null,
+          };
+        }
+      }
+
+      // No compatible slots at all — do nothing
+      return s;
     });
   }, []);
 

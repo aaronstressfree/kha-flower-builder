@@ -6,9 +6,34 @@ import "./CatalogPanel.css";
 interface Props {
   onAddFlower: (productId: string) => void;
   selectedSlotLabel: string | null;
+  selectedSlotSize: "LG" | "SM" | null;
+  availableSizes: ("LG" | "SM")[];
 }
 
-export function CatalogPanel({ onAddFlower, selectedSlotLabel }: Props) {
+/** Check if a flower can fit into the current slot context */
+function canFlowerFit(
+  flower: (typeof flowers)[0],
+  selectedSlotSize: "LG" | "SM" | null,
+  availableSizes: ("LG" | "SM")[]
+): boolean {
+  // If a specific slot is selected, flower must have that size variant
+  if (selectedSlotSize) {
+    const key = selectedSlotSize.toLowerCase() as "lg" | "sm";
+    return !!flower.variants[key];
+  }
+  // Otherwise, flower must fit at least one available slot size
+  return availableSizes.some((size) => {
+    const key = size.toLowerCase() as "lg" | "sm";
+    return !!flower.variants[key];
+  });
+}
+
+export function CatalogPanel({
+  onAddFlower,
+  selectedSlotLabel,
+  selectedSlotSize,
+  availableSizes,
+}: Props) {
   const [category, setCategory] = useState<string>("all");
 
   const categories = ["all", ...new Set(flowers.map((f) => f.category))];
@@ -44,13 +69,22 @@ export function CatalogPanel({ onAddFlower, selectedSlotLabel }: Props) {
         ))}
       </div>
       <div className="catalog-grid">
-        {filtered.map((flower) => (
-          <FlowerCard
-            key={flower.id}
-            flower={flower}
-            onAdd={() => onAddFlower(flower.id)}
-          />
-        ))}
+        {filtered.map((flower) => {
+          const compatible = canFlowerFit(flower, selectedSlotSize, availableSizes);
+          return (
+            <FlowerCard
+              key={flower.id}
+              flower={flower}
+              onAdd={() => onAddFlower(flower.id)}
+              disabled={!compatible}
+              sizeLabel={
+                !flower.variants.sm ? "LG only" :
+                !flower.variants.lg ? "SM only" :
+                undefined
+              }
+            />
+          );
+        })}
       </div>
     </div>
   );

@@ -46,12 +46,20 @@ public/
 Each flower has:
 - `id` — matches the PNG filename in `public/flowers/`
 - `name` — display name
-- `category` — for filtering (peony, dahlia, zinnia, poppy, hydrangea, fern, blossom, amaryllis, other)
-- `variants.lg` — Shopify variant ID + price ($37.35) for Large size
-- `variants.sm` — Shopify variant ID + price ($19.35) for Small size
+- `category` — for filtering (peony, dahlia, zinnia, poppy, hydrangea, fern, blossom, amaryllis, holiday, other)
+- `variants.lg` — Shopify variant ID + price ($37.35) for Large size (optional)
+- `variants.sm` — Shopify variant ID + price ($19.35) for Small size (optional)
 - `images.thumbnail` / `images.cutout` — Shopify CDN URLs (kept for reference, app uses local PNGs)
 
-**Every flower comes in both LG and SM.** The stand's slot determines which size is used.
+**At least one of `lg` or `sm` must be present.** Most flowers have both. The stand's slot determines which size variant is used.
+
+### Size Compatibility Rules
+
+- A flower with both `lg` and `sm` variants can go in any slot.
+- A flower with only `lg` can only go in LG slots (e.g., Hellebore, Cardinal).
+- A flower with only `sm` can only go in SM slots.
+- The `canFitSlot()` function in `useArrangement.ts` enforces this at placement time.
+- The cart and price display handle optional variants gracefully.
 
 ### Stands (`src/data/stands.ts`)
 
@@ -132,12 +140,16 @@ This preserves light-colored petals that a global threshold would remove.
 
 ### Adding New Flowers
 1. Find the product on kimberlyhodges.com
-2. Get the UUID-suffixed cutout image URL (4th image on product page usually)
+2. Get the UUID-suffixed cutout image URL (4th image on product page usually) — must be a **single flower on white background**, not a pair or lifestyle photo
 3. Get LG/No Stand and SM/No Stand variant IDs from the page source
-4. Add to `scripts/final-clean.mjs` flowers array and run it
+   - If the product only has LG (no SM variant), omit `sm` from the `variants` object — the app will restrict it to LG-only slots
+   - If the product only has SM (no LG variant), omit `lg` — it will be restricted to SM-only slots
+4. Add to `scripts/final-clean.mjs` flowers array with `{ id, url }` and run it
 5. Run `node scripts/center-stems.mjs` to center the stem
-6. Add entry to `src/data/catalog.ts`
+6. Add entry to `src/data/catalog.ts` with appropriate category
 7. Verify the PNG looks good: `open public/flowers/new-flower.png`
+
+**Categories:** peony, dahlia, zinnia, poppy, hydrangea, fern, blossom, amaryllis, holiday, other
 
 ### Adding New Stands
 1. Get the stand product image URL and variant ID from the site

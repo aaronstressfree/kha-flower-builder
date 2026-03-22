@@ -59,6 +59,9 @@ const standImages = [
   { id: "lg-lotus", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S004_Single_Stand_LG_Lotus.jpg" },
   { id: "sm-clear", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S005_Single_Stand_SM.jpg" },
   { id: "sm-spiral-vine", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg" },
+  // Holiday stands
+  { id: "sm-pine-pattern", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/1_Pine_Pattern_Stand-Small_Acrylic_Base_KHA-SO13.jpg" },
+  { id: "lg-pinecone-holly", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/1_-_Pinecone_Holly_Large_Stand_KHA-S011_1.jpg" },
 ];
 
 async function downloadImage(url) {

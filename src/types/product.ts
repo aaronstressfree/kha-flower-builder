@@ -7,6 +7,7 @@ export type FlowerCategory =
   | "fern"
   | "blossom"
   | "amaryllis"
+  | "holiday"
   | "other";
 
 export interface FlowerProduct {
@@ -14,12 +15,17 @@ export interface FlowerProduct {
   name: string;
   category: FlowerCategory;
   variants: {
-    lg: { variantId: string; price: number };
-    sm: { variantId: string; price: number };
+    lg?: { variantId: string; price: number };
+    sm?: { variantId: string; price: number };
   };
   images: {
     thumbnail: string;
     cutout: string;
+  };
+  /** Real-world dimensions in inches (LG size) */
+  dimensions?: {
+    height: number;
+    width: number;
   };
 }
 

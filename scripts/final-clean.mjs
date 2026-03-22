@@ -24,6 +24,23 @@ const flowers = [
   { id: "peach-iceland-poppy", url: `${CDN}/Peach_Iceland_Poppy_53fd4d76-fa55-4e1f-8d3c-57d5ac5621e5.jpg` },
   { id: "red-zinnia", url: `${CDN}/Red_Zinnia_65f52925-6911-43c7-a1f4-b38962c9db8d.jpg` },
   { id: "ruffle-amaryllis", url: `${CDN}/KHA-155_Ruffle_Amaryllis_7ff0fe5d-a82c-43a6-9862-6c5f15d35a70.jpg` },
+  // Holiday collection
+  { id: "red-orange-amaryllis", url: `${CDN}/KHA-153_Red_Orange_Amaryllis_fc696643-b1b4-40c8-a9e5-4288730a34ef.jpg` },
+  { id: "red-star-amaryllis", url: `${CDN}/KHA-151_Red_Star_Amaryllis_bf9ab0d2-d8bd-4f0b-9b9e-fed948471c7a.jpg` },
+  { id: "white-amaryllis", url: `${CDN}/White_Amaryllis_LG_KHA-157_c8d11664-a12d-4a92-abe3-81e579241b70.jpg` },
+  { id: "blossom-peacock-amaryllis", url: `${CDN}/KHA-159_Small_Amaryllis_a20bd175-13e4-449d-91fa-86dedb18b508.jpg` },
+  { id: "holly-greenery", url: `${CDN}/Holly_Greenery_LG_KHA-212_21314970-c817-4767-b1cb-5c5c15018d7a.jpg` },
+  { id: "brewer-spruce", url: `${CDN}/KHA-188_Brewer_Spruce_d13b16ee-a3b2-4dca-9455-089b009d6b85.jpg` },
+  { id: "hellebore-flower", url: `${CDN}/KHA-168_Hellebore_Flower_eecfa4cd-f918-42f4-b9d9-d9b575e4a400.jpg` },
+  { id: "cardinal-with-pine-cones", url: `${CDN}/Cardinal_with_Pine_Cones_LG_KHA-210_e2143269-79e9-44f9-8bdf-7306604e50db.jpg` },
+  // Botanical/Florals — new additions
+  { id: "strawflower", url: `${CDN}/5201064.jpg` },
+  { id: "tall-magenta-peony", url: `${CDN}/Tall_Magenta_Peony_LG_KHA-071.jpg` },
+  { id: "foxglove-flower", url: `${CDN}/KHA-515_Foxglove_Flower_SM_1dcb31d5-7a16-4ee4-879a-02bb975600b7.jpg` },
+  { id: "striped-anemone", url: `${CDN}/Striped_Anemone_LG_KHA-065.jpg` },
+  { id: "vanda-orchid", url: `${CDN}/KHA-495_Vanda_Orchid_LG_48436e70-86af-4243-a5d3-a7253acc9aea.jpg` },
+  { id: "thistle-zinnia", url: `${CDN}/Thistle_Zinnia_bc7dcd30-d1d8-4431-9aa2-a4634b9abfb8.jpg` },
+  { id: "yellow-ranunculus", url: `${CDN}/Yellow_Ranunculus_LG_KHA-077.jpg` },
 ];
 
 function isBackground(r, g, b) {

@@ -12,7 +12,8 @@ export function useCart(state: ArrangementState, stand: StandConfig) {
       if (pid) {
         const product = catalog.find((f) => f.id === pid);
         if (product) {
-          sum += slot.size === "LG" ? product.variants.lg.price : product.variants.sm.price;
+          const variant = slot.size === "LG" ? product.variants.lg : product.variants.sm;
+          if (variant) sum += variant.price;
         }
       }
     }
@@ -31,10 +32,10 @@ export function useCart(state: ArrangementState, stand: StandConfig) {
       if (pid) {
         const product = catalog.find((f) => f.id === pid);
         if (product) {
-          const vid = slot.size === "LG"
-            ? product.variants.lg.variantId
-            : product.variants.sm.variantId;
-          counts.set(vid, (counts.get(vid) || 0) + 1);
+          const variant = slot.size === "LG" ? product.variants.lg : product.variants.sm;
+          if (variant) {
+            counts.set(variant.variantId, (counts.get(variant.variantId) || 0) + 1);
+          }
         }
       }
     }
