@@ -143,8 +143,8 @@
 }
 
 .flowers-row > .slot-area {
-  margin-left: -32px;
-  margin-right: -32px;
+  margin-left: -52px;
+  margin-right: -52px;
 }
 
 /* ---------- Stand Base ---------- */
@@ -152,7 +152,7 @@
   position: relative;
   z-index: 5;
   pointer-events: none;
-  margin-top: -28px;
+  margin-top: -38px;
 }
 
 .stand-constructed {
