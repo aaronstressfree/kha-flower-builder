@@ -113,9 +113,15 @@
   justify-content: center;
 }
 
+.flowers-row {
+  gap: 0;
+  margin-left: -20%;
+  margin-right: -20%;
+}
+
 .flowers-row > .slot-area {
-  margin-left: -22px;
-  margin-right: -22px;
+  margin-left: -15%;
+  margin-right: -15%;
 }
 
 /* ---------- Stand Base ---------- */
@@ -206,7 +212,6 @@
   object-fit: contain;
   object-position: bottom center;
   pointer-events: none;
-  mix-blend-mode: multiply;
   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.06));
 }
 
@@ -261,6 +266,7 @@
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(4px);
   transition: all 0.25s;
+  margin-top: auto;
   margin-bottom: 10px;
 }
 

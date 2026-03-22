@@ -148,7 +148,7 @@ function SlotView({
       className={`slot-area ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty-slot"} ${isBack ? "is-back" : ""}`}
       style={{
         height: slot.flowerHeight * scale,
-        width: (slot.size === "LG" ? 180 : 115) * scale,
+        width: (slot.size === "LG" ? 160 : 110) * scale,
       }}
       onClick={(e) => {
         e.stopPropagation();
