@@ -128,13 +128,7 @@ function SlotView({
   const product = productId ? catalog.find((f) => f.id === productId) : null;
   const isSelected = state.selectedSlot === slot.key;
 
-  // Scale flower proportionally based on real-world height
-  // Use 14.4" (tallest flower) as reference for all slots
-  const maxRealHeight = 14.4;
-  const realHeight = product?.dimensions?.height ?? maxRealHeight;
-  const heightRatio = Math.min(realHeight / maxRealHeight, 1);
-  const flowerHeight = slot.flowerHeight * scale * heightRatio;
-  const slotHeight = slot.flowerHeight * scale; // container stays full size for alignment
+  const slotHeight = slot.flowerHeight * scale;
 
   return (
     <div
@@ -154,7 +148,6 @@ function SlotView({
             src={`/flowers/${product.id}.png`}
             alt={product.name}
             className="slot-flower-img"
-            style={{ maxHeight: flowerHeight }}
           />
           {isSelected && (
             <>
