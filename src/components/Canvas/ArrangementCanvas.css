@@ -137,7 +137,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 /* Row layout for all stands (single, double, triple) */
@@ -148,8 +148,8 @@
 }
 
 .flowers-row > .slot-area {
-  margin-left: -40px;
-  margin-right: -40px;
+  margin-left: -58px;
+  margin-right: -58px;
 }
 
 /* ---------- Stand Base ---------- */
@@ -163,8 +163,8 @@
 }
 
 .stand-constructed {
-  height: 18px;
-  border-radius: 10px;
+  height: 24px;
+  border-radius: 12px;
   background: linear-gradient(180deg, #e8e3db 0%, #d5cfc5 100%);
   box-shadow:
     0 2px 0 rgba(0, 0, 0, 0.08),
