@@ -1,0 +1,21 @@
+## Deck Context
+
+**Session context:** Recent prompts from previous session:
+- Tell me a story
+- test
+Pick up where we left off if relevant.
+
+**Other tabs:**
+- aaronstevens (Shell) in `aaronstevens`
+- Tell me a story (Claude Code) in `square-web` — Recent prompts from previous session:
+- tell me a joke
+Pick up where we left off if relevant.
+- Tell me a joke (Claude Code) in `square-web` — Recent prompts from previous session:
+- tell me a joke
+Pick up where we left off if relevant.
+
+Coordinate with other tabs. Don't duplicate their work.
+
+**Browser (Cmd+B):** localhost preview. **User:** product designer, visual output focus.
+
+**IMPORTANT:** Always open URLs with `$BROWSER "<url>"` instead of `open <url>`. Deck intercepts $BROWSER to show previews in its built-in browser pane.

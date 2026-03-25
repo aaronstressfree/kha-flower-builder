@@ -41,31 +41,35 @@ export function ArrangementCanvas({
   }, [stand]);
 
   return (
-    <div ref={canvasRef} className="arrangement-canvas" onClick={() => onSelectSlot(null)}>
+    <div
+      ref={canvasRef}
+      className="arrangement-canvas"
+      onClick={() => onSelectSlot(null)}
+    >
       <div className="arrangement-group">
-          <div className="flowers-row">
-            {(() => {
-              // For triple: reorder to SM, LG, SM (big flower in center)
-              const slots = [...stand.slots];
-              if (slots.length === 3) {
-                const lg = slots.find(s => s.size === "LG");
-                const sms = slots.filter(s => s.size === "SM");
-                if (lg && sms.length === 2) {
-                  return [sms[0], lg, sms[1]];
-                }
+        <div className="flowers-row">
+          {(() => {
+            // For triple: reorder to SM, LG, SM (big flower in center)
+            const slots = [...stand.slots];
+            if (slots.length === 3) {
+              const lg = slots.find((s) => s.size === "LG");
+              const sms = slots.filter((s) => s.size === "SM");
+              if (lg && sms.length === 2) {
+                return [sms[0], lg, sms[1]];
               }
-              return slots;
-            })().map((slot) => (
-              <SlotView
-                key={slot.key}
-                slot={slot}
-                state={state}
-                scale={scale}
-                onSelectSlot={onSelectSlot}
-                onRemoveFlower={onRemoveFlower}
-              />
-            ))}
-          </div>
+            }
+            return slots;
+          })().map((slot) => (
+            <SlotView
+              key={slot.key}
+              slot={slot}
+              state={state}
+              scale={scale}
+              onSelectSlot={onSelectSlot}
+              onRemoveFlower={onRemoveFlower}
+            />
+          ))}
+        </div>
 
         <div className="stand-base">
           <div
@@ -98,9 +102,13 @@ export function ArrangementCanvas({
                 <span>{sc.name}</span>
                 <span className="stand-float-preview-slots">
                   {sc.slots.length === 1
-                    ? sc.slots[0].size === "LG" ? "1 Large flower" : "1 Small flower"
-                    : sc.slots.filter(s => s.size === "LG").length + " Large + " +
-                      sc.slots.filter(s => s.size === "SM").length + " Small"}
+                    ? sc.slots[0].size === "LG"
+                      ? "1 Large flower"
+                      : "1 Small flower"
+                    : sc.slots.filter((s) => s.size === "LG").length +
+                      " Large + " +
+                      sc.slots.filter((s) => s.size === "SM").length +
+                      " Small"}
                 </span>
               </div>
             </button>
@@ -135,7 +143,7 @@ function SlotView({
       className={`slot-area ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty-slot"}`}
       style={{
         height: slotHeight,
-        width: (slot.size === "LG" ? 160 : 110) * scale,
+        width: (slot.size === "LG" ? 135 : 81) * scale,
       }}
       onClick={(e) => {
         e.stopPropagation();

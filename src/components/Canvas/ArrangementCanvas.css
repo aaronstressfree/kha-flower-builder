@@ -14,7 +14,7 @@
 .stand-float {
   position: absolute;
   bottom: 16px;
-  z-index: 100;
+  z-index: 9999;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -82,20 +82,20 @@
   transform: translateX(-50%);
   background: white;
   border-radius: 18px;
-  padding: 20px 28px;
+  padding: 24px 32px;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
   border: 1px solid var(--color-border);
   flex-direction: column;
   align-items: center;
   gap: 12px;
   white-space: nowrap;
-  z-index: 99999;
+  z-index: 999999;
   pointer-events: none;
   min-width: 320px;
 }
 
 .stand-float-preview::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -8px;
   left: 50%;
@@ -109,9 +109,9 @@
 
 .stand-float-preview img {
   width: 100%;
-  max-width: 260px;
+  max-width: 320px;
   height: auto;
-  max-height: 180px;
+  max-height: 220px;
   object-fit: contain;
 }
 
@@ -167,21 +167,26 @@
   border-radius: 10px;
   background: linear-gradient(180deg, #e8e3db 0%, #d5cfc5 100%);
   box-shadow:
-    0 2px 0 rgba(0,0,0,0.08),
-    0 4px 12px rgba(0,0,0,0.12),
-    inset 0 1px 1px rgba(255,255,255,0.5);
-  border: 1px solid rgba(180,170,155,0.5);
+    0 2px 0 rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(180, 170, 155, 0.5);
   position: relative;
 }
 
 .stand-constructed::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 1px;
   left: 10px;
   right: 10px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
   border-radius: 2px;
 }
 
@@ -198,9 +203,9 @@
 .stand-slot-mark {
   width: 10px;
   height: 2px;
-  background: rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.35);
   border-radius: 2px;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .stand-shadow {
@@ -210,7 +215,7 @@
   transform: translateX(-50%);
   width: 90%;
   height: 10px;
-  background: radial-gradient(ellipse, rgba(0,0,0,0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.08) 0%, transparent 70%);
   border-radius: 50%;
 }
 
@@ -221,7 +226,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: filter 0.2s, transform 0.2s;
+  transition:
+    filter 0.2s,
+    transform 0.2s;
   flex-shrink: 0;
   overflow: visible;
   background: transparent;
@@ -242,11 +249,8 @@
   object-fit: contain;
   object-position: bottom center;
   pointer-events: none;
-  filter:
-    drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
-    drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.06))
-    saturate(1.25)
-    brightness(1.08);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
+    drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.06)) saturate(1.25) brightness(1.08);
 }
 
 .slot-flower-tag {
@@ -266,10 +270,10 @@
 
 .slot-remove {
   position: absolute;
-  top: 25%;
-  right: 0;
-  width: 22px;
-  height: 22px;
+  top: 10%;
+  right: -4px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #e74c3c;
   color: white;
@@ -342,7 +346,6 @@
   padding: 0 4px;
   border-radius: 3px;
 }
-
 
 @media (max-width: 768px) {
   /* Placeholders — touch-friendly */
