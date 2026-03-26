@@ -6,6 +6,21 @@ import { standConfigs } from "../../data/stands";
 import { X } from "lucide-react";
 import "./ArrangementCanvas.css";
 
+function getSlotWidths(viewportWidth: number) {
+  if (viewportWidth <= 768) return { lg: 100, sm: 60 };
+  return { lg: 160, sm: 96 };
+}
+
+function getOverlapMargin(
+  slotCount: number,
+  scale: number,
+  wide: boolean,
+): number {
+  if (slotCount === 1) return 0;
+  if (slotCount === 2) return -(wide ? 40 : 18) * scale;
+  return -(wide ? 55 : 25) * scale;
+}
+
 interface Props {
   state: ArrangementState;
   stand: StandConfig;
@@ -23,22 +38,39 @@ export function ArrangementCanvas({
 }: Props) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const [canvasWidth, setCanvasWidth] = useState(800);
 
   useEffect(() => {
     const measure = () => {
       if (!canvasRef.current) return;
       const h = canvasRef.current.clientHeight;
-      // Reserve space for stand bar + stand picker + padding-bottom
-      const reserved = window.innerWidth <= 768 ? 100 : 80;
+      const vw = window.innerWidth;
+      const reserved = vw <= 768 ? 70 : 80;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const s = Math.min((available * 0.85) / maxFlower, 1.8);
-      setScale(Math.max(s, 0.4));
+      const s = Math.min((available * 0.95) / maxFlower, 2.5);
+      setScale(Math.max(s, 0.5));
+      setCanvasWidth(vw);
     };
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, [stand]);
+
+  const isWide = canvasWidth > 768;
+  const slotWidths = getSlotWidths(canvasWidth);
+  const slotCount = stand.slots.length;
+  const overlapMargin = getOverlapMargin(slotCount, scale, isWide);
+
+  // For double stands (LG+SM), the wider LG slot shifts the visual center
+  // rightward. Compensate by shifting the row left to center over the stand.
+  const hasAsymmetricSlots =
+    slotCount === 2 &&
+    stand.slots.some((s) => s.size === "LG") &&
+    stand.slots.some((s) => s.size === "SM");
+  const centeringOffset = hasAsymmetricSlots
+    ? ((slotWidths.lg - slotWidths.sm) * scale) / 4
+    : 0;
 
   return (
     <div
@@ -47,9 +79,15 @@ export function ArrangementCanvas({
       onClick={() => onSelectSlot(null)}
     >
       <div className="arrangement-group">
-        <div className="flowers-row">
+        <div
+          className="flowers-row"
+          style={
+            centeringOffset
+              ? { transform: `translateX(-${centeringOffset}px)` }
+              : undefined
+          }
+        >
           {(() => {
-            // For triple: reorder to SM, LG, SM (big flower in center)
             const slots = [...stand.slots];
             if (slots.length === 3) {
               const lg = slots.find((s) => s.size === "LG");
@@ -65,6 +103,8 @@ export function ArrangementCanvas({
               slot={slot}
               state={state}
               scale={scale}
+              slotWidths={slotWidths}
+              overlapMargin={overlapMargin}
               onSelectSlot={onSelectSlot}
               onRemoveFlower={onRemoveFlower}
             />
@@ -123,12 +163,16 @@ function SlotView({
   slot,
   state,
   scale,
+  slotWidths,
+  overlapMargin,
   onSelectSlot,
   onRemoveFlower,
 }: {
   slot: (typeof standConfigs)[0]["slots"][0];
   state: ArrangementState;
   scale: number;
+  slotWidths: { lg: number; sm: number };
+  overlapMargin: number;
   onSelectSlot: (key: string | null) => void;
   onRemoveFlower: (key: string) => void;
 }) {
@@ -137,13 +181,16 @@ function SlotView({
   const isSelected = state.selectedSlot === slot.key;
 
   const slotHeight = slot.flowerHeight * scale;
+  const slotWidth = (slot.size === "LG" ? slotWidths.lg : slotWidths.sm) * scale;
 
   return (
     <div
       className={`slot-area ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty-slot"}`}
       style={{
         height: slotHeight,
-        width: (slot.size === "LG" ? 135 : 81) * scale,
+        width: slotWidth,
+        marginLeft: overlapMargin || undefined,
+        marginRight: overlapMargin || undefined,
       }}
       onClick={(e) => {
         e.stopPropagation();

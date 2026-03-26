@@ -2,10 +2,12 @@ import type { StandConfig } from "../types/canvas";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0918/1478/9427/files";
 
-// Real-world reference: triple stand is ~4" wide
-// LG flowers are ~12" tall, ~6" wide
-// SM flowers are ~6" tall, ~3.6" wide
-// Using 90px = 4", so 1" = 22.5px (before responsive scaling)
+// Real-world reference (from DazzleUSA product specs):
+// SM single: 2.5" × 1.75" × 0.5"  → baseWidth 56px
+// LG single: 3.5" × 2.5" × 0.5"  → baseWidth 79px
+// Double:    4" × 3" × 0.5"       → baseWidth 90px
+// Triple:    4" × 3" × 0.5"       → baseWidth 90px
+// Using 1" ≈ 22.5px (before responsive scaling)
 
 export const standConfigs: StandConfig[] = [
   // --- Triple stands (1 LG back + 2 SM front) ---
@@ -84,7 +86,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468122423603",
     price: 23.85,
     image: `${CDN}/KHA-S008_Double_Stand.jpg`,
-    baseWidth: 80,
+    baseWidth: 90,
     slots: [
       {
         key: "left",
@@ -110,7 +112,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "52858369376563",
     price: 23.85,
     image: `${CDN}/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg`,
-    baseWidth: 80,
+    baseWidth: 90,
     slots: [
       {
         key: "left",
@@ -137,7 +139,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468139004211",
     price: 23.85,
     image: `${CDN}/KHA-S002_Single_Stand_LG_Leaf.jpg`,
-    baseWidth: 56,
+    baseWidth: 79,
     slots: [
       {
         key: "center",
@@ -155,7 +157,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468138905907",
     price: 23.85,
     image: `${CDN}/KHA-S004_Single_Stand_LG_Lotus.jpg`,
-    baseWidth: 56,
+    baseWidth: 79,
     slots: [
       {
         key: "center",
@@ -174,7 +176,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468138643763",
     price: 19.35,
     image: `${CDN}/KHA-S005_Single_Stand_SM.jpg`,
-    baseWidth: 45,
+    baseWidth: 56,
     slots: [
       {
         key: "center",
@@ -192,7 +194,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51468139594035",
     price: 19.35,
     image: `${CDN}/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg`,
-    baseWidth: 45,
+    baseWidth: 56,
     slots: [
       {
         key: "center",
@@ -210,7 +212,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51766600139059",
     price: 19.35,
     image: `${CDN}/1_Pine_Pattern_Stand-Small_Acrylic_Base_KHA-SO13.jpg`,
-    baseWidth: 45,
+    baseWidth: 56,
     slots: [
       {
         key: "center",
@@ -228,7 +230,7 @@ export const standConfigs: StandConfig[] = [
     variantId: "51778935816499",
     price: 23.85,
     image: `${CDN}/1_-_Pinecone_Holly_Large_Stand_KHA-S011_1.jpg`,
-    baseWidth: 56,
+    baseWidth: 79,
     slots: [
       {
         key: "center",

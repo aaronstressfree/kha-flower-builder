@@ -147,10 +147,7 @@
   justify-content: center;
 }
 
-.flowers-row > .slot-area {
-  margin-left: -58px;
-  margin-right: -58px;
-}
+/* Overlap margins are now applied inline, scaled per stand type */
 
 /* ---------- Stand Base ---------- */
 .stand-base {
@@ -292,7 +289,8 @@
 
 /* ---------- Empty Slot Placeholder ---------- */
 .slot-placeholder {
-  width: 80px;
+  width: 100%;
+  max-width: 80px;
   height: 100px;
   border: 2px dashed var(--color-border);
   border-radius: 50% 50% 6px 6px;
@@ -350,7 +348,7 @@
 @media (max-width: 768px) {
   /* Placeholders — touch-friendly */
   .slot-placeholder {
-    width: 72px;
+    max-width: 72px;
     height: 90px;
     gap: 3px;
   }
@@ -419,7 +417,7 @@
 
 @media (max-width: 480px) {
   .slot-placeholder {
-    width: 64px;
+    max-width: 64px;
     height: 82px;
   }
 
