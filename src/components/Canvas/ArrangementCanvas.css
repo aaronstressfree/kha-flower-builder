@@ -10,6 +10,12 @@
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .arrangement-canvas {
+    padding-bottom: 50px;
+  }
+}
+
 /* ---------- Floating Stand Picker ---------- */
 .stand-float {
   position: absolute;
@@ -282,7 +288,7 @@
 
 .slot-remove {
   position: absolute;
-  top: 8%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
   width: 34px;
