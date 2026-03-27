@@ -48,7 +48,7 @@ export function ArrangementCanvas({
       const reserved = vw <= 768 ? 65 : 75;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const s = (available * 0.93) / maxFlower;
+      const s = Math.min((available * 0.82) / maxFlower, 3.5);
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);
     };
