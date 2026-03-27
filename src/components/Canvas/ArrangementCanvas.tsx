@@ -72,6 +72,44 @@ export function ArrangementCanvas({
     ? ((slotWidths.lg - slotWidths.sm) * scale) / 4
     : 0;
 
+  const displaySlots = (() => {
+    const slots = [...stand.slots];
+    if (slots.length === 3) {
+      const lg = slots.find((s) => s.size === "LG");
+      const sms = slots.filter((s) => s.size === "SM");
+      if (lg && sms.length === 2) return [sms[0], lg, sms[1]];
+    }
+    return slots;
+  })();
+
+  const flowersRowRef = useRef<HTMLDivElement>(null);
+
+  const handleRowClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!flowersRowRef.current || displaySlots.length <= 1) {
+      if (displaySlots.length === 1) {
+        const key = displaySlots[0].key;
+        onSelectSlot(state.selectedSlot === key ? null : key);
+      }
+      return;
+    }
+
+    const rect = flowersRowRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const relX = x / rect.width;
+
+    if (displaySlots.length === 3) {
+      const sel =
+        relX < 0.33 ? displaySlots[0].key :
+        relX > 0.67 ? displaySlots[2].key :
+        displaySlots[1].key;
+      onSelectSlot(state.selectedSlot === sel ? null : sel);
+    } else {
+      const sel = relX < 0.5 ? displaySlots[0].key : displaySlots[1].key;
+      onSelectSlot(state.selectedSlot === sel ? null : sel);
+    }
+  };
+
   return (
     <div
       ref={canvasRef}
@@ -80,24 +118,16 @@ export function ArrangementCanvas({
     >
       <div className="arrangement-group">
         <div
+          ref={flowersRowRef}
           className="flowers-row"
+          onClick={handleRowClick}
           style={
             centeringOffset
               ? { transform: `translateX(-${centeringOffset}px)` }
               : undefined
           }
         >
-          {(() => {
-            const slots = [...stand.slots];
-            if (slots.length === 3) {
-              const lg = slots.find((s) => s.size === "LG");
-              const sms = slots.filter((s) => s.size === "SM");
-              if (lg && sms.length === 2) {
-                return [sms[0], lg, sms[1]];
-              }
-            }
-            return slots;
-          })().map((slot) => (
+          {displaySlots.map((slot) => (
             <SlotView
               key={slot.key}
               slot={slot}
@@ -195,13 +225,7 @@ function SlotView({
       }}
     >
       {product ? (
-        <div
-          className="slot-hit-target"
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelectSlot(isSelected ? null : slot.key);
-          }}
-        >
+        <div className="slot-hit-target">
           <img
             src={`/flowers/${product.id}.png`}
             alt={product.name}
@@ -223,13 +247,7 @@ function SlotView({
           )}
         </div>
       ) : (
-        <div
-          className={`slot-placeholder ${isSelected ? "active" : ""}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelectSlot(slot.key);
-          }}
-        >
+        <div className={`slot-placeholder ${isSelected ? "active" : ""}`}>
           <div className="slot-placeholder-icon">+</div>
           <span className="slot-placeholder-label">{slot.label}</span>
           <span className="slot-placeholder-size">{slot.size}</span>

@@ -229,24 +229,21 @@
 }
 
 .slot-hit-target {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 65%;
+  width: 100%;
   height: 100%;
-  cursor: pointer;
-  pointer-events: auto;
-  z-index: 1;
-  transition: filter 0.2s;
-}
-
-.slot-hit-target:hover {
-  filter: brightness(1.05);
+  position: relative;
+  pointer-events: none;
+  transition: filter 0.15s;
 }
 
 .slot-area.selected .slot-hit-target {
   filter: drop-shadow(0 0 12px rgba(184, 134, 11, 0.5));
+}
+
+/* Row handles clicks — show pointer and hover effect */
+.flowers-row {
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .slot-flower-img {
@@ -278,11 +275,11 @@
 
 .slot-remove {
   position: absolute;
-  top: 8%;
+  top: 5%;
   left: 50%;
-  transform: translateX(8px);
-  width: 32px;
-  height: 32px;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #e74c3c;
   color: white;
@@ -290,7 +287,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 2px solid white;
+  border: 2.5px solid white;
   z-index: 20;
   cursor: pointer;
   pointer-events: auto;
@@ -298,7 +295,7 @@
 
 .slot-remove:hover {
   background: #c0392b;
-  transform: translateX(8px) scale(1.15);
+  transform: translateX(-50%) scale(1.15);
 }
 
 /* ---------- Empty Slot Placeholder ---------- */
@@ -320,6 +317,8 @@
   margin-bottom: 10px;
   cursor: pointer;
   pointer-events: auto;
+  z-index: 5;
+  position: relative;
 }
 
 .slot-placeholder:hover,
@@ -389,7 +388,7 @@
   }
 
   .slot-hit-target {
-    width: 75%;
+    width: 50%;
   }
 
   .slot-flower-tag {
