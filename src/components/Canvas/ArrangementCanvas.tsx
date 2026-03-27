@@ -135,7 +135,6 @@ export function ArrangementCanvas({
               scale={scale}
               slotWidths={slotWidths}
               overlapMargin={overlapMargin}
-              onSelectSlot={onSelectSlot}
               onRemoveFlower={onRemoveFlower}
             />
           ))}
@@ -195,7 +194,6 @@ function SlotView({
   scale,
   slotWidths,
   overlapMargin,
-  onSelectSlot,
   onRemoveFlower,
 }: {
   slot: (typeof standConfigs)[0]["slots"][0];
@@ -203,7 +201,6 @@ function SlotView({
   scale: number;
   slotWidths: { lg: number; sm: number };
   overlapMargin: number;
-  onSelectSlot: (key: string | null) => void;
   onRemoveFlower: (key: string) => void;
 }) {
   const productId = state.flowers[slot.key];
