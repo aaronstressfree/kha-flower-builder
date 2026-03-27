@@ -217,6 +217,16 @@
   border-radius: 50%;
 }
 
+/*
+ * Z-INDEX LAYERS (within .arrangement-group):
+ *   1  — LG (back) flower slot
+ *   2  — SM (front) flower slots
+ *   5  — Stand base bar (covers flower stems)
+ *   6  — Empty slot "+" buttons (above stand so always clickable)
+ *  10  — Selected flower slot (above everything for remove button)
+ *  20  — Remove (X) button (within selected slot's stacking context)
+ */
+
 /* ---------- Flower Slots ---------- */
 .slot-area {
   position: relative;

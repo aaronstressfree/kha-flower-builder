@@ -218,7 +218,7 @@ function SlotView({
         width: slotWidth,
         marginLeft: overlapMargin || undefined,
         marginRight: overlapMargin || undefined,
-        zIndex: isSelected ? 10 : slot.size === "SM" ? 2 : 1,
+        zIndex: isSelected ? 10 : !product ? 6 : slot.size === "SM" ? 2 : 1,
       }}
     >
       {product ? (
