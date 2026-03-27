@@ -217,6 +217,19 @@
   border-radius: 50%;
 }
 
+/* Mask: hides any flower content that leaks below the stand bar.
+   Uses the canvas background gradient color at the bottom. */
+.stand-base::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: -600px;
+  right: -600px;
+  height: 200px;
+  background: #ede8e1;
+  z-index: 4;
+}
+
 /*
  * Z-INDEX LAYERS (within .arrangement-group):
  *   1  — LG (back) flower slot
