@@ -288,7 +288,7 @@
   object-fit: contain;
   object-position: bottom center;
   pointer-events: none;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25))
     drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.06)) saturate(1.25) brightness(1.08);
 }
 

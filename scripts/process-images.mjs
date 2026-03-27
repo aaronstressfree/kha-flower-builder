@@ -81,8 +81,27 @@ async function downloadImage(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
-async function removeWhiteBackground(inputBuffer, outputPath) {
-  // Resize to reasonable size first (max 800px)
+// Sample corner patches to detect the actual background color.
+function detectBackground(data, width, height, channels) {
+  const patchSize = Math.max(5, Math.round(Math.min(width, height) * 0.03));
+  const corners = [
+    [0, 0], [width - patchSize, 0],
+    [0, height - patchSize], [width - patchSize, height - patchSize],
+  ];
+  let rSum = 0, gSum = 0, bSum = 0, count = 0;
+  for (const [cx, cy] of corners) {
+    for (let dy = 0; dy < patchSize; dy++) {
+      for (let dx = 0; dx < patchSize; dx++) {
+        const idx = ((cy + dy) * width + (cx + dx)) * channels;
+        rSum += data[idx]; gSum += data[idx + 1]; bSum += data[idx + 2];
+        count++;
+      }
+    }
+  }
+  return { r: rSum / count, g: gSum / count, b: bSum / count };
+}
+
+async function removeBackground(inputBuffer, outputPath) {
   const resized = await sharp(inputBuffer)
     .resize(800, 800, { fit: "inside", withoutEnlargement: true })
     .ensureAlpha()
@@ -92,27 +111,92 @@ async function removeWhiteBackground(inputBuffer, outputPath) {
   const { data, info } = resized;
   const { width, height, channels } = info;
 
-  // Remove white/near-white pixels
-  for (let i = 0; i < data.length; i += channels) {
-    const r = data[i];
-    const g = data[i + 1];
-    const b = data[i + 2];
+  const bg = detectBackground(data, width, height, channels);
 
-    // Calculate "whiteness" — how close to pure white
-    const brightness = (r + g + b) / 3;
-    const maxChannel = Math.max(r, g, b);
-    const minChannel = Math.min(r, g, b);
-    const saturation = maxChannel > 0 ? (maxChannel - minChannel) / maxChannel : 0;
-
-    if (brightness > 240 && saturation < 0.08) {
-      // Pure white — fully transparent
-      data[i + 3] = 0;
-    } else if (brightness > 220 && saturation < 0.12) {
-      // Near-white — partial transparency for smooth edges
-      const alpha = Math.round(((240 - brightness) / 20) * 255);
-      data[i + 3] = Math.min(data[i + 3], Math.max(0, alpha));
+  // Pass 0: clear edge pixels (first/last 2 rows and columns).
+  // Many source images have a thin dark border from JPEG encoding
+  // that would otherwise block the flood fill.
+  const EDGE_CLEAR = 2;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (x < EDGE_CLEAR || x >= width - EDGE_CLEAR || y < EDGE_CLEAR || y >= height - EDGE_CLEAR) {
+        data[(y * width + x) * channels + 3] = 0;
+      }
     }
-    // Everything else keeps full opacity
+  }
+
+  // Pass 1: flood-fill from edges to remove connected background.
+  // Seeds from ALL edge-adjacent pixels (within EDGE_CLEAR+2 of borders)
+  // to handle images with dark borders and non-uniform backgrounds.
+  const visited = new Uint8Array(width * height);
+  const queue = [];
+  const bgBrightness = (bg.r + bg.g + bg.b) / 3;
+  const FILL_THRESHOLD = Math.min(90, 55 + Math.max(0, (245 - bgBrightness) * 1.5));
+  const seedBand = EDGE_CLEAR + 3;
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (x >= seedBand && x < width - seedBand && y >= seedBand && y < height - seedBand) continue;
+      const idx = (y * width + x) * channels;
+      if (data[idx + 3] === 0) continue;
+      const dist = Math.sqrt((data[idx]-bg.r)**2 + (data[idx+1]-bg.g)**2 + (data[idx+2]-bg.b)**2);
+      if (dist < FILL_THRESHOLD) queue.push(y * width + x);
+    }
+  }
+  while (queue.length > 0) {
+    const pos = queue.pop();
+    if (visited[pos]) continue;
+    visited[pos] = 1;
+
+    const idx = pos * channels;
+    const r = data[idx], g = data[idx+1], b = data[idx+2];
+    const dist = Math.sqrt((r - bg.r) ** 2 + (g - bg.g) ** 2 + (b - bg.b) ** 2);
+
+    if (dist < FILL_THRESHOLD) {
+      data[idx + 3] = dist < 25 ? 0 : Math.min(data[idx+3], Math.round(((dist - 25) / 30) * 255));
+
+      const x = pos % width, y = (pos - x) / width;
+      for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+        const nx = x+dx, ny = y+dy;
+        if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+          const npos = ny * width + nx;
+          if (!visited[npos]) queue.push(npos);
+        }
+      }
+    }
+  }
+
+  // Pass 2: defringe — erode remaining edge pixels near the background
+  // color that the flood-fill left behind at the transition boundary.
+  // Uses 5 passes to eat through thick JPEG compression fringes.
+  for (let pass = 0; pass < 5; pass++) {
+    const snapshot = Buffer.from(data);
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const idx = (y * width + x) * channels;
+        if (snapshot[idx + 3] === 0) continue;
+
+        let hasTransparentNeighbor = false;
+        for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || nx >= width || ny < 0 || ny >= height ||
+              snapshot[(ny * width + nx) * channels + 3] === 0) {
+            hasTransparentNeighbor = true;
+            break;
+          }
+        }
+        if (!hasTransparentNeighbor) continue;
+
+        const r = snapshot[idx], g = snapshot[idx+1], b = snapshot[idx+2];
+        const dist = Math.sqrt((r - bg.r) ** 2 + (g - bg.g) ** 2 + (b - bg.b) ** 2);
+
+        if (dist < FILL_THRESHOLD + 15) {
+          data[idx + 3] = 0;
+        } else if (dist < FILL_THRESHOLD + 35) {
+          data[idx + 3] = Math.min(data[idx + 3], Math.round(data[idx + 3] * 0.25));
+        }
+      }
+    }
   }
 
   await sharp(data, { raw: { width, height, channels } })
@@ -161,7 +245,7 @@ async function main() {
     if (existsSync(outPath)) { done++; continue; }
     try {
       const buf = await downloadImage(url);
-      await removeWhiteBackground(buf, outPath);
+      await removeBackground(buf, outPath);
       done++;
       process.stdout.write(`\r  Flowers: ${done}/${flowerImages.length}`);
     } catch (err) {

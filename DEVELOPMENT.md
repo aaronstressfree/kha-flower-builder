@@ -133,36 +133,64 @@ The `cutout` field in `catalog.ts` is the source of truth. Keep `process-images.
 
 To verify: open a flower PNG in `public/flowers/` — it should show a single flower on transparent background, no stand, no background artifacts, no measurement markings.
 
-## Image Processing Pipeline
+## Image Processing Pipeline (`scripts/process-images.mjs`)
 
-### Step 1: Download from Shopify CDN
-Source images are the UUID-suffixed clean cutout JPGs (e.g., `Flower_Name_UUID.jpg`). These show individual flowers on white backgrounds.
+The main script handles downloading and processing all flower and stand images.
 
-### Step 2: Background Removal (`scripts/final-clean.mjs`)
-Uses **flood-fill from edges** (not global threshold):
-1. Seed a BFS queue with all border pixels that look like background
-2. Spread to adjacent pixels matching background criteria (brightness > 185, saturation < 0.18)
-3. Set alpha to 0 for all connected background pixels
-4. One pass of edge softening (reduce alpha for pixels adjacent to transparent)
-5. Auto-trim transparent borders via `sharp.trim()`
+### Background Removal Algorithm
 
-This preserves light-colored petals that a global threshold would remove.
+Uses a 3-pass approach that works with any background color (white, grey, or colored):
 
-### Step 3: Center Stems (`scripts/center-stems.mjs`)
-1. Find the average X position of non-transparent pixels in the bottom 15% (the stem)
-2. Calculate horizontal shift needed to center the stem
-3. Physically shift all pixels in the image
+**Pass 0 — Edge clear:** Makes the outer 2px border fully transparent. Many Shopify source images have a thin dark border from JPEG encoding that would otherwise block the flood fill.
+
+**Pass 1 — Adaptive flood-fill:**
+1. **Detect background color** by sampling corner patches (3% of image dimension)
+2. **Calculate adaptive threshold** — higher for non-white backgrounds to handle gradients: `min(90, 55 + max(0, (245 - bgBrightness) * 1.5))`
+3. **Seed** from all edge-adjacent pixels (within 5px of borders) that match the background
+4. **BFS flood-fill** — spreads to adjacent pixels within threshold distance (RGB Euclidean). Close matches get `alpha=0`, borderline matches get proportional alpha.
+
+This handles white, grey, and colored backgrounds (like lavender-peony's blue-grey studio backdrop) because it adapts to the actual background color detected from corners.
+
+**Pass 2 — Defringe (5 passes):**
+Erodes remaining JPEG compression artifacts at flower edges:
+1. For each opaque pixel adjacent to a transparent pixel
+2. If its RGB distance from background < threshold+15 → fully transparent
+3. If distance < threshold+35 → alpha reduced to 25%
+4. Repeats 5 times to eat through thick fringes
+
+### Why This Approach Works
+
+Previous attempts used fixed brightness/saturation thresholds (e.g., `brightness > 220`), which only worked for pure white backgrounds. The adaptive approach:
+- **Detects** the actual background from corner samples
+- **Flood-fills** connected regions (only reaches background, not flower interiors)
+- **Defringe** removes JPEG compression blending at edges
+
+### Known Limitations
+
+- `lavender-peony` uses a product photo (no cutout URL available on Shopify CDN). Its blue-grey studio background with cast shadow is partially but not fully removed.
+- Flowers with very thin, wispy features may lose some edge detail from defringe passes.
+
+### CSS Edge Softening
+
+In addition to image processing, the rendered flowers get CSS filters:
+```css
+filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25))
+  drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.06))
+  saturate(1.25) brightness(1.08);
+```
+The subtle white glow softens remaining edge artifacts, while saturate/brightness enhance the painted look.
 
 ### Adding New Flowers
 1. Find the product on kimberlyhodges.com
-2. Get the UUID-suffixed cutout image URL (4th image on product page usually) — must be a **single flower on white background**, not a pair or lifestyle photo
+2. Get the UUID-suffixed cutout image URL — must be a **single flower on white background**, not a pair or lifestyle photo
 3. Get LG/No Stand and SM/No Stand variant IDs from the page source
    - If the product only has LG (no SM variant), omit `sm` from the `variants` object — the app will restrict it to LG-only slots
    - If the product only has SM (no LG variant), omit `lg` — it will be restricted to SM-only slots
-4. Add to `scripts/final-clean.mjs` flowers array with `{ id, url }` and run it
-5. Run `node scripts/center-stems.mjs` to center the stem
-6. Add entry to `src/data/catalog.ts` with appropriate category
-7. Verify the PNG looks good: `open public/flowers/new-flower.png`
+4. Add to `scripts/process-images.mjs` flowerImages array with `{ id, url }` and delete the existing PNG
+5. Run `node scripts/process-images.mjs`
+6. Optionally run `node scripts/center-stems.mjs` to center the stem
+7. Add entry to `src/data/catalog.ts` with appropriate category
+8. Verify the PNG looks good: `open public/flowers/new-flower.png`
 
 **Categories:** peony, dahlia, zinnia, poppy, hydrangea, fern, blossom, amaryllis, holiday, other
 
@@ -211,7 +239,7 @@ The project uses prebuilt deployment (build locally, deploy artifacts) because t
 
 ## Key CSS Techniques
 
-- **`mix-blend-mode: multiply`** on flower images — eliminates any remaining gray edge artifacts by blending them into the background
+- **Adaptive background removal + defringe** in image processing — handles white, grey, and colored backgrounds from source photos
 - **Negative margins** on flower slots — creates tight overlapping arrangement
 - **Backdrop blur** on floating stand picker — glass-like appearance
 - **`object-position: bottom center`** on flower images — anchors flowers to the bottom of their containers so stems align with the base
