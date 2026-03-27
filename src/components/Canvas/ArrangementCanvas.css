@@ -257,30 +257,13 @@
     drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.06)) saturate(1.25) brightness(1.08);
 }
 
-.slot-flower-tag {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.92);
-  padding: 4px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-text);
-  white-space: nowrap;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  pointer-events: none;
-  z-index: 10;
-}
-
 .slot-remove {
   position: absolute;
-  top: 5%;
+  top: 8%;
   left: 50%;
   transform: translateX(-50%);
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #e74c3c;
   color: white;
@@ -299,97 +282,75 @@
   transform: translateX(-50%) scale(1.15);
 }
 
-/* ---------- Empty Slot Placeholder ---------- */
-.slot-placeholder {
-  width: 100%;
-  max-width: 80px;
-  height: 100px;
+/* ---------- Empty Slot — compact add button ---------- */
+.slot-add-btn {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   border: 2px dashed var(--color-border);
-  border-radius: 50% 50% 6px 6px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(4px);
-  transition: all 0.25s;
-  margin-top: auto;
-  margin-bottom: 10px;
+  gap: 1px;
   cursor: pointer;
   pointer-events: auto;
-  z-index: 5;
-  position: relative;
+  z-index: 6;
+  transition: all 0.2s;
 }
 
-.slot-placeholder:hover,
-.slot-placeholder.active {
+.slot-add-btn:hover,
+.slot-add-btn.active {
   border-color: var(--color-accent);
-  background: rgba(184, 134, 11, 0.06);
+  background: rgba(255, 255, 255, 0.92);
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 2px 12px rgba(184, 134, 11, 0.2);
 }
 
-.slot-placeholder.active {
+.slot-add-btn.active {
   border-style: solid;
-  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+  border-color: var(--color-accent);
 }
 
-.slot-placeholder-icon {
-  font-size: 20px;
+.slot-add-icon {
+  font-size: 18px;
   font-weight: 300;
   color: var(--color-text-light);
-  opacity: 0.5;
   line-height: 1;
 }
 
-.slot-placeholder.active .slot-placeholder-icon {
+.slot-add-btn:hover .slot-add-icon,
+.slot-add-btn.active .slot-add-icon {
   color: var(--color-accent);
-  opacity: 1;
 }
 
-.slot-placeholder-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-light);
-}
-
-.slot-placeholder-size {
-  font-size: 12px;
+.slot-add-size {
+  font-size: 8px;
   font-weight: 700;
   color: var(--color-accent);
-  background: rgba(184, 134, 11, 0.1);
-  padding: 0 4px;
-  border-radius: 3px;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 768px) {
-  /* Placeholders — touch-friendly */
-  .slot-placeholder {
-    max-width: 72px;
-    height: 90px;
-    gap: 3px;
+  .slot-add-btn {
+    width: 36px;
+    height: 36px;
+    bottom: 14px;
   }
 
-  .slot-placeholder-icon {
-    font-size: 24px;
+  .slot-add-icon {
+    font-size: 16px;
   }
 
-  .slot-placeholder-label {
-    font-size: 11px;
-  }
-
-  .slot-placeholder-size {
-    font-size: 10px;
-    padding: 1px 6px;
-  }
-
-  /* Flower slot controls */
   .slot-remove {
     width: 28px;
     height: 28px;
-  }
-
-  .slot-hit-target {
-    width: 50%;
   }
 
   .slot-flower-tag {
@@ -436,21 +397,18 @@
 }
 
 @media (max-width: 480px) {
-  .slot-placeholder {
-    max-width: 64px;
-    height: 82px;
+  .slot-add-btn {
+    width: 32px;
+    height: 32px;
+    bottom: 12px;
   }
 
-  .slot-placeholder-icon {
-    font-size: 22px;
+  .slot-add-icon {
+    font-size: 14px;
   }
 
-  .slot-placeholder-label {
-    font-size: 10px;
-  }
-
-  .slot-placeholder-size {
-    font-size: 9px;
+  .slot-add-size {
+    font-size: 7px;
   }
 
   .stand-float {

@@ -17,7 +17,7 @@ function getOverlapMargin(
   wide: boolean,
 ): number {
   if (slotCount === 1) return 0;
-  if (slotCount === 2) return -(wide ? 40 : 18) * scale;
+  if (slotCount === 2) return -(wide ? 50 : 22) * scale;
   return -(wide ? 55 : 25) * scale;
 }
 
@@ -229,25 +229,21 @@ function SlotView({
             className="slot-flower-img"
           />
           {isSelected && (
-            <>
-              <button
-                className="slot-remove"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRemoveFlower(slot.key);
-                }}
-              >
-                <X size={14} />
-              </button>
-              <span className="slot-flower-tag">{product.name}</span>
-            </>
+            <button
+              className="slot-remove"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemoveFlower(slot.key);
+              }}
+            >
+              <X size={14} />
+            </button>
           )}
         </div>
       ) : (
-        <div className={`slot-placeholder ${isSelected ? "active" : ""}`}>
-          <div className="slot-placeholder-icon">+</div>
-          <span className="slot-placeholder-label">{slot.label}</span>
-          <span className="slot-placeholder-size">{slot.size}</span>
+        <div className={`slot-add-btn ${isSelected ? "active" : ""}`}>
+          <span className="slot-add-icon">+</span>
+          <span className="slot-add-size">{slot.size}</span>
         </div>
       )}
     </div>
