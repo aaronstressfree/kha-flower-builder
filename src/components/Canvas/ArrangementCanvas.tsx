@@ -41,9 +41,11 @@ export function ArrangementCanvas({
   const [canvasWidth, setCanvasWidth] = useState(800);
 
   useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+
     const measure = () => {
-      if (!canvasRef.current) return;
-      const h = canvasRef.current.clientHeight;
+      const h = el.clientHeight;
       const vw = window.innerWidth;
       const mobile = vw <= 768;
       const compact = mobile || h < 500;
@@ -55,9 +57,11 @@ export function ArrangementCanvas({
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);
     };
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
     measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    return () => ro.disconnect();
   }, [stand]);
 
   const isWide = canvasWidth > 768;
