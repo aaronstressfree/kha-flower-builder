@@ -145,7 +145,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: -10px;
+  margin-bottom: -14px;
 }
 
 /* Overlap margins are now applied inline, scaled per stand type */
@@ -161,8 +161,8 @@
 }
 
 .stand-constructed {
-  height: 30px;
-  border-radius: 15px;
+  height: 34px;
+  border-radius: 17px;
   background: linear-gradient(180deg, #e8e3db 0%, #d5cfc5 100%);
   box-shadow:
     0 2px 0 rgba(0, 0, 0, 0.08),
@@ -295,7 +295,7 @@
 /* ---------- Empty Slot — compact add button ---------- */
 .slot-add-btn {
   position: absolute;
-  bottom: 18px;
+  bottom: 22px;
   left: 50%;
   transform: translateX(-50%);
   width: 40px;

@@ -7,7 +7,7 @@ import { X } from "lucide-react";
 import "./ArrangementCanvas.css";
 
 function getSlotWidths(viewportWidth: number) {
-  if (viewportWidth <= 768) return { lg: 100, sm: 60 };
+  if (viewportWidth <= 768) return { lg: 120, sm: 72 };
   return { lg: 160, sm: 96 };
 }
 
@@ -45,10 +45,12 @@ export function ArrangementCanvas({
       if (!canvasRef.current) return;
       const h = canvasRef.current.clientHeight;
       const vw = window.innerWidth;
-      const reserved = vw <= 768 ? 65 : 75;
+      const mobile = vw <= 768;
+      const reserved = mobile ? 60 : 75;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const s = Math.min((available * 0.82) / maxFlower, 3.5);
+      const fillFactor = mobile ? 0.9 : 0.82;
+      const s = Math.min((available * fillFactor) / maxFlower, 3.5);
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);
     };
