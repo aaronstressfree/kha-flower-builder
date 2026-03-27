@@ -45,10 +45,10 @@ export function ArrangementCanvas({
       if (!canvasRef.current) return;
       const h = canvasRef.current.clientHeight;
       const vw = window.innerWidth;
-      const reserved = vw <= 768 ? 70 : 80;
+      const reserved = vw <= 768 ? 65 : 75;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const s = Math.min((available * 0.95) / maxFlower, 2.5);
+      const s = (available * 0.93) / maxFlower;
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);
     };
@@ -191,14 +191,17 @@ function SlotView({
         width: slotWidth,
         marginLeft: overlapMargin || undefined,
         marginRight: overlapMargin || undefined,
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        onSelectSlot(slot.key);
+        zIndex: isSelected ? 10 : undefined,
       }}
     >
       {product ? (
-        <>
+        <div
+          className="slot-hit-target"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectSlot(isSelected ? null : slot.key);
+          }}
+        >
           <img
             src={`/flowers/${product.id}.png`}
             alt={product.name}
@@ -213,14 +216,20 @@ function SlotView({
                   onRemoveFlower(slot.key);
                 }}
               >
-                <X size={12} />
+                <X size={14} />
               </button>
               <span className="slot-flower-tag">{product.name}</span>
             </>
           )}
-        </>
+        </div>
       ) : (
-        <div className={`slot-placeholder ${isSelected ? "active" : ""}`}>
+        <div
+          className={`slot-placeholder ${isSelected ? "active" : ""}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectSlot(slot.key);
+          }}
+        >
           <div className="slot-placeholder-icon">+</div>
           <span className="slot-placeholder-label">{slot.label}</span>
           <span className="slot-placeholder-size">{slot.size}</span>

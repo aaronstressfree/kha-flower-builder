@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 80px;
+  padding-bottom: 70px;
   background: linear-gradient(180deg, #faf8f5 0%, #ede8e1 100%);
   overflow: hidden;
   position: relative;
@@ -219,24 +219,33 @@
 /* ---------- Flower Slots ---------- */
 .slot-area {
   position: relative;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition:
-    filter 0.2s,
-    transform 0.2s;
   flex-shrink: 0;
   overflow: visible;
   background: transparent;
+  pointer-events: none;
 }
 
-.slot-area.has-flower:hover {
+.slot-hit-target {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65%;
+  height: 100%;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1;
+  transition: filter 0.2s;
+}
+
+.slot-hit-target:hover {
   filter: brightness(1.05);
-  transform: scale(1.03);
 }
 
-.slot-area.selected {
+.slot-area.selected .slot-hit-target {
   filter: drop-shadow(0 0 12px rgba(184, 134, 11, 0.5));
 }
 
@@ -253,6 +262,8 @@
 .slot-flower-tag {
   position: absolute;
   bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.92);
   padding: 4px 12px;
   border-radius: 10px;
@@ -267,24 +278,27 @@
 
 .slot-remove {
   position: absolute;
-  top: 10%;
-  right: -4px;
-  width: 28px;
-  height: 28px;
+  top: 8%;
+  left: 50%;
+  transform: translateX(8px);
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #e74c3c;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   border: 2px solid white;
   z-index: 20;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .slot-remove:hover {
   background: #c0392b;
-  transform: scale(1.15);
+  transform: translateX(8px) scale(1.15);
 }
 
 /* ---------- Empty Slot Placeholder ---------- */
@@ -304,6 +318,8 @@
   transition: all 0.25s;
   margin-top: auto;
   margin-bottom: 10px;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .slot-placeholder:hover,
@@ -368,8 +384,12 @@
 
   /* Flower slot controls */
   .slot-remove {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .slot-hit-target {
+    width: 75%;
   }
 
   .slot-flower-tag {
