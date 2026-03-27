@@ -110,3 +110,45 @@
     display: none;
   }
 }
+
+/* Short phones (iPhone SE, older devices) */
+@media (max-width: 768px) and (max-height: 700px) {
+  .app-sidebar {
+    max-height: 32vh;
+  }
+}
+
+/* Landscape phones — force mobile stacked layout */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-body {
+    flex-direction: column-reverse;
+  }
+
+  .app-sidebar {
+    width: 100%;
+    max-height: 35vh;
+    border-right: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .app-canvas {
+    min-height: 0;
+    flex: 1;
+  }
+
+  .app-header {
+    padding: 4px 12px;
+  }
+
+  .app-title {
+    font-size: 14px;
+  }
+
+  .app-subtitle {
+    display: none;
+  }
+
+  .app-cart-bar {
+    height: auto;
+  }
+}

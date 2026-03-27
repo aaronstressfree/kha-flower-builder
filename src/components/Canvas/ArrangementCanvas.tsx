@@ -46,10 +46,11 @@ export function ArrangementCanvas({
       const h = canvasRef.current.clientHeight;
       const vw = window.innerWidth;
       const mobile = vw <= 768;
-      const reserved = mobile ? 50 : 75;
+      const compact = mobile || h < 500;
+      const reserved = compact ? 45 : 75;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const fillFactor = mobile ? 0.95 : 0.82;
+      const fillFactor = compact ? 0.95 : 0.82;
       const s = Math.min((available * fillFactor) / maxFlower, 3.5);
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);

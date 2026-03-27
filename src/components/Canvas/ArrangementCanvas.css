@@ -454,3 +454,31 @@
     height: 40px;
   }
 }
+
+/* Landscape / very short screens — compact stand picker */
+@media (max-height: 500px) {
+  .arrangement-canvas {
+    padding-bottom: 40px;
+  }
+
+  .stand-float {
+    bottom: 4px;
+    padding: 5px 10px;
+    gap: 4px;
+    border-radius: 10px;
+  }
+
+  .stand-float-pick {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+  }
+
+  .stand-float-label {
+    font-size: 10px;
+  }
+
+  .stand-float-preview {
+    display: none !important;
+  }
+}
