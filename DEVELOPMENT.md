@@ -118,6 +118,21 @@ The `useCart` hook:
 | Single LG: stand + 1 LG | $23.85 + $37.35 = $61.20 |
 | Single SM: stand + 1 SM | $19.35 + $19.35 = $38.70 |
 
+## Image Rules (IMPORTANT)
+
+**Always use the clean single-flower cutout image** — the UUID-suffixed URL from Shopify CDN. Never use:
+- Thumbnail/product photos (flower shown on a stand)
+- Pair photos (LG + SM shown together)
+- Dimension-annotated images (with ruler markings)
+- Lifestyle photos (flower in a room setting)
+
+The correct URL pattern: `Flower_Name_UUID.jpg` (e.g., `Red_Iceland_Poppy_SM_KHA-141_f57c4930-...jpg`)
+The wrong URL pattern: `Flower_Name.jpg` or `FlowerName-SmallAcrylicSingleFlower-KHA-054.jpg`
+
+The `cutout` field in `catalog.ts` is the source of truth. Keep `process-images.mjs` in sync with it.
+
+To verify: open a flower PNG in `public/flowers/` — it should show a single flower on transparent background, no stand, no background artifacts, no measurement markings.
+
 ## Image Processing Pipeline
 
 ### Step 1: Download from Shopify CDN
@@ -159,11 +174,27 @@ This preserves light-colored petals that a global threshold would remove.
 
 ## Responsive Scaling
 
-The canvas component measures its own height and computes a scale factor:
+The canvas component measures height and viewport width to compute a scale factor:
 ```
-scale = min((availableHeight * 0.85) / maxFlowerHeight, 1.8)
+desktop: scale = min((available * 0.82) / maxFlowerHeight, 3.5)
+mobile:  scale = min((available * 0.95) / maxFlowerHeight, 3.5)
 ```
-All flower heights, widths, and base widths are multiplied by this scale. This ensures the arrangement fills the canvas proportionally on any screen size.
+
+Slot widths are viewport-responsive (using `window.innerWidth`, not canvas element width):
+- Desktop (>768px): LG=160px, SM=96px
+- Mobile (≤768px): LG=120px, SM=72px
+
+### Z-Index Layers (within arrangement-group)
+| z-index | Element | Purpose |
+|---------|---------|---------|
+| 1 | LG (back) flower slot | Behind front flowers |
+| 2 | SM (front) flower slots | In front of LG, creates depth |
+| 5 | Stand base bar | Covers flower stems (plugged-in look) |
+| 6 | Empty slot "+" buttons | Always visible above stand |
+| 10 | Selected flower slot | Pops above everything for interaction |
+| 20 | Remove (X) button | Always on top within selected slot |
+
+A `::after` mask on the stand-base (z-index 4) hides any flower content below the stand.
 
 ## Deployment
 
