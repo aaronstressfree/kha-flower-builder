@@ -154,6 +154,12 @@
   margin-bottom: -14px;
 }
 
+@media (max-width: 768px) {
+  .flowers-row {
+    margin-bottom: -4px;
+  }
+}
+
 /* Overlap margins are now applied inline, scaled per stand type */
 
 /* ---------- Stand Base ---------- */
@@ -367,10 +373,15 @@
 }
 
 @media (max-width: 768px) {
+  .stand-constructed {
+    height: 24px;
+    border-radius: 12px;
+  }
+
   .slot-add-btn {
     width: 36px;
     height: 36px;
-    bottom: 14px;
+    bottom: 10px;
   }
 
   .slot-add-icon {
