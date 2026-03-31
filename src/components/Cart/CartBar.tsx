@@ -1,4 +1,4 @@
-import { ShoppingCart, Trash2 } from "lucide-react";
+import { ShoppingCart, Trash2, Camera } from "lucide-react";
 import "./CartBar.css";
 
 interface Props {
@@ -6,9 +6,10 @@ interface Props {
   total: number;
   onCheckout: () => void;
   onClear: () => void;
+  onOpenGallery: () => void;
 }
 
-export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
+export function CartBar({ itemCount, total, onCheckout, onClear, onOpenGallery }: Props) {
   return (
     <div className="cart-bar">
       <div className="cart-info">
@@ -19,9 +20,15 @@ export function CartBar({ itemCount, total, onCheckout, onClear }: Props) {
         <span className="cart-total">${total.toFixed(2)}</span>
       </div>
       <div className="cart-actions">
-        <span className="cart-disclaimer">
-          Simulation only. Actual product may vary. <a href="https://www.kimberlyhodges.com" target="_blank" rel="noopener noreferrer">kimberlyhodges.com</a>
-        </span>
+        <div className="cart-meta">
+          <button className="cart-gallery-trigger" onClick={onOpenGallery}>
+            <Camera size={14} />
+            <span>See real arrangements</span>
+          </button>
+          <span className="cart-disclaimer">
+            Simulation only. Actual product may vary. <a href="https://www.kimberlyhodges.com" target="_blank" rel="noopener noreferrer">kimberlyhodges.com</a>
+          </span>
+        </div>
         {itemCount > 0 && (
           <button className="cart-clear" onClick={onClear}>
             <Trash2 size={14} />

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { AppLayout } from "./components/Layout/AppLayout";
 import { CatalogPanel } from "./components/Catalog/CatalogPanel";
 import { ArrangementCanvas } from "./components/Canvas/ArrangementCanvas";
 import { CartBar } from "./components/Cart/CartBar";
+import { GalleryModal } from "./components/Gallery/GalleryModal";
 import { useArrangement } from "./hooks/useArrangement";
 import { useCart } from "./hooks/useCart";
 
@@ -17,42 +19,50 @@ export default function App() {
   } = useArrangement();
 
   const { total, filledCount, checkout } = useCart(state, stand);
+  const [galleryOpen, setGalleryOpen] = useState(false);
 
   return (
-    <AppLayout
-      sidebar={
-        <CatalogPanel
-          onAddFlower={placeFlower}
-          selectedSlotLabel={
-            state.selectedSlot
-              ? stand.slots.find((s) => s.key === state.selectedSlot)?.label ?? null
-              : null
-          }
-          selectedSlotSize={
-            state.selectedSlot
-              ? stand.slots.find((s) => s.key === state.selectedSlot)?.size ?? null
-              : null
-          }
-          availableSizes={stand.slots.map((s) => s.size)}
-        />
-      }
-      canvas={
-        <ArrangementCanvas
-          state={state}
-          stand={stand}
-          onSelectSlot={selectSlot}
-          onRemoveFlower={removeFlower}
-          onChangeStand={setStandIndex}
-        />
-      }
-      cartBar={
-        <CartBar
-          itemCount={filledCount}
-          total={total}
-          onCheckout={checkout}
-          onClear={clearAll}
-        />
-      }
-    />
+    <>
+      <AppLayout
+        sidebar={
+          <CatalogPanel
+            onAddFlower={placeFlower}
+            selectedSlotLabel={
+              state.selectedSlot
+                ? stand.slots.find((s) => s.key === state.selectedSlot)?.label ?? null
+                : null
+            }
+            selectedSlotSize={
+              state.selectedSlot
+                ? stand.slots.find((s) => s.key === state.selectedSlot)?.size ?? null
+                : null
+            }
+            availableSizes={stand.slots.map((s) => s.size)}
+          />
+        }
+        canvas={
+          <ArrangementCanvas
+            state={state}
+            stand={stand}
+            onSelectSlot={selectSlot}
+            onRemoveFlower={removeFlower}
+            onChangeStand={setStandIndex}
+          />
+        }
+        cartBar={
+          <CartBar
+            itemCount={filledCount}
+            total={total}
+            onCheckout={checkout}
+            onClear={clearAll}
+            onOpenGallery={() => setGalleryOpen(true)}
+          />
+        }
+      />
+      <GalleryModal
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+      />
+    </>
   );
 }
