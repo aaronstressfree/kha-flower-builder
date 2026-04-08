@@ -167,8 +167,8 @@ export const flowers: FlowerProduct[] = [
     },
     dimensions: { height: 8.88, width: 6.49 },
     images: {
-      thumbnail: `${CDN}/Lavender_Peony.jpg`,
-      cutout: `${CDN}/Lavender_Peony.jpg`,
+      thumbnail: `${CDN}/Lavender_Peony_d5512f67-dda9-4d3d-b786-a2ea4d517f03.jpg`,
+      cutout: `${CDN}/Lavender_Peony_d5512f67-dda9-4d3d-b786-a2ea4d517f03.jpg`,
     },
   },
   {

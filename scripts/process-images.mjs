@@ -30,7 +30,7 @@ const flowerImages = [
   { id: "green-leaves", url: `${CDN}/Green_Leaves_076ae0ec-eb81-4ff9-93e8-ccd804926ca0.jpg` },
   { id: "hydrangea-light", url: `${CDN}/Hydrangea_Light_e1649a33-e3a0-4c91-9876-1cf8f3955760.jpg` },
   { id: "hydrangea-royal-blue", url: `${CDN}/Hydrangea_Royal_Blue_db80a37c-84ae-4c35-a2dd-8a86009166ef.jpg` },
-  { id: "lavender-peony", url: `${CDN}/Lavender_Peony.jpg` },
+  { id: "lavender-peony", url: `${CDN}/Lavender_Peony_d5512f67-dda9-4d3d-b786-a2ea4d517f03.jpg` },
   { id: "lotus-flower", url: `${CDN}/Lotus_Flower_LG_KHA-145_c20b38a1-af2f-4577-9ecb-0ea9db2bc54e.jpg` },
   { id: "magnolia", url: `${CDN}/Magnolia_e4fa9f35-8097-4955-895e-d1362b7edc1b.jpg` },
   { id: "magenta-anemone", url: `${CDN}/Magenta_Anemone_740b178e-f826-458b-b9ef-4f513dfd85a1.jpg` },
