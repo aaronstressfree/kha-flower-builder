@@ -59,6 +59,16 @@ const flowerImages = [
   { id: "brewer-spruce", url: `${CDN}/KHA-188_Brewer_Spruce_d13b16ee-a3b2-4dca-9455-089b009d6b85.jpg` },
   { id: "hellebore-flower", url: `${CDN}/KHA-168_Hellebore_Flower_eecfa4cd-f918-42f4-b9d9-d9b575e4a400.jpg` },
   { id: "cardinal-with-pine-cones", url: `${CDN}/Cardinal_with_Pine_Cones_LG_KHA-210_e2143269-79e9-44f9-8bdf-7306604e50db.jpg` },
+  // Animals collection
+  { id: "bluebird-of-happiness", url: `${CDN}/KHA-539_Bluebird_of_Happiness_SM_3fd11dec-7d6b-4d2c-9740-b0832e3fb798.jpg` },
+  { id: "spring-cardinal", url: `${CDN}/KHA-541_Spring_Cardinal_SM_c4d0f76e-863f-4031-8bbe-77e8faa532bf.jpg` },
+  { id: "hummingbird", url: `${CDN}/KHA-605_Hummingbird_LG_e45e6ebe-3cfd-4003-9f15-08503f90f482.jpg` },
+  { id: "indigo-bunting-with-clover", url: `${CDN}/KHA-535_Indigo_Bunting_with_Clover_SM_c18ddb1b-1501-43c6-9e34-8185a7e8b685.jpg` },
+  { id: "running-rabbit", url: `${CDN}/KHA-597_Running_Rabbit_LG_0e71fe30-1098-40c6-83bf-5d325ebaa48c.jpg` },
+  { id: "chickadee-and-forget-me-nots", url: `${CDN}/KHA-542_Chicakadee_and_Forget_me_Nots_SM_c28bd420-0cd0-44b8-96dd-53f24ac94f72.jpg` },
+  { id: "purple-poppy-mallow-warbler", url: `${CDN}/KHA-537_Purple_Poppy_Mallow_Warbler_SM_f57722dc-617a-4acc-8e37-8a5a483a29a7.jpg` },
+  { id: "chipping-sparrow-with-daffodils", url: `${CDN}/KHA-546_Chipping_Sparrow_with_Daffodils_SM_40b738d9-b4a7-4c73-952c-6cb069a73703.jpg` },
+  { id: "robin-and-nasturtiums", url: `${CDN}/KHA-544_Robin_and_Nasturtiums_SM_8e98aba4-574b-4cd6-a8f0-774112262bde.jpg` },
 ];
 
 const standImages = [

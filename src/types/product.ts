@@ -8,6 +8,7 @@ export type FlowerCategory =
   | "blossom"
   | "amaryllis"
   | "holiday"
+  | "animal"
   | "other";
 
 export interface FlowerProduct {

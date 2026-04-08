@@ -666,6 +666,133 @@ export const flowers: FlowerProduct[] = [
       cutout: `${CDN}/Cardinal_with_Pine_Cones_LG_KHA-210_e2143269-79e9-44f9-8bdf-7306604e50db.jpg`,
     },
   },
+  // Animals collection
+  {
+    id: "bluebird-of-happiness",
+    name: "Bluebird of Happiness",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858356728115", price: 37.35 },
+      sm: { variantId: "52858356760883", price: 19.35 },
+    },
+    dimensions: { height: 8.0, width: 4.5 },
+    images: {
+      thumbnail: `${CDN}/KHA-539_Bluebird_of_Happiness_SM.jpg`,
+      cutout: `${CDN}/KHA-539_Bluebird_of_Happiness_SM_3fd11dec-7d6b-4d2c-9740-b0832e3fb798.jpg`,
+    },
+  },
+  {
+    id: "spring-cardinal",
+    name: "Spring Cardinal",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858356990259", price: 37.35 },
+      sm: { variantId: "52858356957491", price: 19.35 },
+    },
+    dimensions: { height: 8.0, width: 5.75 },
+    images: {
+      thumbnail: `${CDN}/KHA-541_Spring_Cardinal_SM.jpg`,
+      cutout: `${CDN}/KHA-541_Spring_Cardinal_SM_c4d0f76e-863f-4031-8bbe-77e8faa532bf.jpg`,
+    },
+  },
+  {
+    id: "hummingbird",
+    name: "Hummingbird",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858376585523", price: 37.35 },
+      sm: { variantId: "52858376618291", price: 19.35 },
+    },
+    dimensions: { height: 6.5, width: 8.0 },
+    images: {
+      thumbnail: `${CDN}/KHA-604_Hummingbird_SM.jpg`,
+      cutout: `${CDN}/KHA-605_Hummingbird_LG_e45e6ebe-3cfd-4003-9f15-08503f90f482.jpg`,
+    },
+  },
+  {
+    id: "indigo-bunting-with-clover",
+    name: "Indigo Bunting with Clover",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858357252403", price: 37.35 },
+      sm: { variantId: "52858357285171", price: 19.35 },
+    },
+    dimensions: { height: 8.0, width: 3.75 },
+    images: {
+      thumbnail: `${CDN}/KHA-535_Indigo_Bunting_with_Clover_SM.jpg`,
+      cutout: `${CDN}/KHA-535_Indigo_Bunting_with_Clover_SM_c18ddb1b-1501-43c6-9e34-8185a7e8b685.jpg`,
+    },
+  },
+  {
+    id: "running-rabbit",
+    name: "Running Rabbit",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858370326835", price: 37.35 },
+      sm: { variantId: "52858370359603", price: 19.35 },
+    },
+    dimensions: { height: 14.0, width: 7.0 },
+    images: {
+      thumbnail: `${CDN}/KHA-596_Running_Rabbit_SM.jpg`,
+      cutout: `${CDN}/KHA-597_Running_Rabbit_LG_0e71fe30-1098-40c6-83bf-5d325ebaa48c.jpg`,
+    },
+  },
+  {
+    id: "chickadee-and-forget-me-nots",
+    name: "Chickadee and Forget Me Nots",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858356597043", price: 37.35 },
+      sm: { variantId: "52858356629811", price: 19.35 },
+    },
+    dimensions: { height: 7.25, width: 6.75 },
+    images: {
+      thumbnail: `${CDN}/KHA-542_Chicakadee_and_Forget_me_Nots_SM.jpg`,
+      cutout: `${CDN}/KHA-542_Chicakadee_and_Forget_me_Nots_SM_c28bd420-0cd0-44b8-96dd-53f24ac94f72.jpg`,
+    },
+  },
+  {
+    id: "purple-poppy-mallow-warbler",
+    name: "Purple Poppy Mallow Warbler",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858357121331", price: 37.35 },
+      sm: { variantId: "52858357154099", price: 19.35 },
+    },
+    dimensions: { height: 8.0, width: 7.25 },
+    images: {
+      thumbnail: `${CDN}/KHA-537_Purple_Poppy_Mallow_Warbler_SM.jpg`,
+      cutout: `${CDN}/KHA-537_Purple_Poppy_Mallow_Warbler_SM_f57722dc-617a-4acc-8e37-8a5a483a29a7.jpg`,
+    },
+  },
+  {
+    id: "chipping-sparrow-with-daffodils",
+    name: "Chipping Sparrow with Daffodils",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858355876147", price: 37.35 },
+      sm: { variantId: "52858355908915", price: 19.35 },
+    },
+    dimensions: { height: 8.0, width: 5.75 },
+    images: {
+      thumbnail: `${CDN}/KHA-546_Chipping_Sparrow_with_Daffodils_SM.jpg`,
+      cutout: `${CDN}/KHA-546_Chipping_Sparrow_with_Daffodils_SM_40b738d9-b4a7-4c73-952c-6cb069a73703.jpg`,
+    },
+  },
+  {
+    id: "robin-and-nasturtiums",
+    name: "Robin and Nasturtiums",
+    category: "animal",
+    variants: {
+      lg: { variantId: "52858356171059", price: 37.35 },
+      sm: { variantId: "52858356203827", price: 19.35 },
+    },
+    dimensions: { height: 14.0, width: 7.0 },
+    images: {
+      thumbnail: `${CDN}/KHA-544_Robin_and_Nasturtiums_SM.jpg`,
+      cutout: `${CDN}/KHA-544_Robin_and_Nasturtiums_SM_8e98aba4-574b-4cd6-a8f0-774112262bde.jpg`,
+    },
+  },
 ];
 
 export const stands: StandProduct[] = [
@@ -736,7 +863,7 @@ export const stands: StandProduct[] = [
 ];
 
 export const categoryLabels: Record<string, string> = {
-  all: "All Flowers",
+  all: "All",
   peony: "Peonies",
   dahlia: "Dahlias",
   zinnia: "Zinnias",
@@ -746,5 +873,6 @@ export const categoryLabels: Record<string, string> = {
   blossom: "Blossoms",
   amaryllis: "Amaryllis",
   holiday: "Holiday",
+  animal: "Animals",
   other: "Other",
 };
