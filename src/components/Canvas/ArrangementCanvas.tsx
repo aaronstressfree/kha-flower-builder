@@ -52,7 +52,7 @@ export function ArrangementCanvas({
       const reserved = compact ? 45 : 75;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const fillFactor = compact ? 0.95 : 0.82;
+      const fillFactor = compact ? 0.95 : 1.05;
       const s = Math.min((available * fillFactor) / maxFlower, 3.5);
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);
