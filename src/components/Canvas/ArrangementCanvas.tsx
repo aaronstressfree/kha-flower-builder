@@ -8,7 +8,7 @@ import "./ArrangementCanvas.css";
 
 function getSlotWidths(viewportWidth: number) {
   if (viewportWidth <= 768) return { lg: 120, sm: 72 };
-  return { lg: 160, sm: 96 };
+  return { lg: 200, sm: 120 };
 }
 
 function getOverlapMargin(
@@ -52,7 +52,7 @@ export function ArrangementCanvas({
       const reserved = compact ? 45 : 75;
       const available = h - reserved;
       const maxFlower = Math.max(...stand.slots.map((s) => s.flowerHeight));
-      const fillFactor = compact ? 0.95 : 1.05;
+      const fillFactor = compact ? 0.95 : 0.93;
       const s = Math.min((available * fillFactor) / maxFlower, 3.5);
       setScale(Math.max(s, 0.5));
       setCanvasWidth(vw);
