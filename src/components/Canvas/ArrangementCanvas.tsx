@@ -250,9 +250,9 @@ function MobileCanvas({
   const flowerArea = effectiveH - 44 - standBarHeight;
   // Flower PNGs are square (800×800) — container width determines visible height
   // via object-fit:contain. Make containers wide enough to fill the vertical space.
-  const lgWidth = Math.min(flowerArea * 0.58, vw * 0.52);
+  const lgWidth = Math.min(flowerArea * 0.7, vw * 0.68);
   const lgHeight = flowerArea * 0.96;
-  const smWidth = lgWidth * 0.58;
+  const smWidth = lgWidth * 0.55;
   const smHeight = lgHeight * 0.52;
 
   // How deep flowers sink into the stand (overlap with stand bar)
@@ -308,6 +308,24 @@ function MobileCanvas({
   const handleSlotTap = (key: string, e: React.MouseEvent) => {
     e.stopPropagation();
     onSelectSlot(state.selectedSlot === key ? null : key);
+  };
+
+  // Long-press preview for stand thumbnails
+  const [previewStand, setPreviewStand] = useState<number | null>(null);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleStandTouchStart = (index: number) => {
+    longPressTimer.current = setTimeout(() => {
+      setPreviewStand(index);
+    }, 300);
+  };
+
+  const handleStandTouchEnd = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    setPreviewStand(null);
   };
 
   return (
@@ -396,12 +414,34 @@ function MobileCanvas({
               key={sc.id}
               className={`stand-float-pick ${state.standIndex === i ? "active" : ""}`}
               onClick={() => onChangeStand(i)}
+              onTouchStart={() => handleStandTouchStart(i)}
+              onTouchEnd={handleStandTouchEnd}
+              onTouchCancel={handleStandTouchEnd}
             >
               <img src={`/stands/${sc.id}.png`} alt={sc.name} />
             </button>
           ))}
         </div>
       </div>
+
+      {/* Long-press stand preview */}
+      {previewStand !== null && (
+        <div className="mobile-stand-preview-overlay" onTouchEnd={handleStandTouchEnd}>
+          <div className="mobile-stand-preview">
+            <img
+              src={`/stands/${standConfigs[previewStand].id}.png`}
+              alt={standConfigs[previewStand].name}
+            />
+            <span className="mobile-stand-preview-name">
+              {standConfigs[previewStand].name}
+            </span>
+            <span className="mobile-stand-preview-slots">
+              {standConfigs[previewStand].slots.filter((s) => s.size === "LG").length} Large +{" "}
+              {standConfigs[previewStand].slots.filter((s) => s.size === "SM").length} Small
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
