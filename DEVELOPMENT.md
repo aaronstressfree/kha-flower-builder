@@ -192,7 +192,9 @@ The subtle white glow softens remaining edge artifacts, while saturate/brightnes
 7. Add entry to `src/data/catalog.ts` with appropriate category
 8. Verify the PNG looks good: `open public/flowers/new-flower.png`
 
-**Categories:** peony, dahlia, zinnia, poppy, hydrangea, fern, blossom, amaryllis, holiday, other
+**Categories:** popular (cross-cutting flag), orchid, wildflower, peony, dahlia, zinnia, poppy, hydrangea, fern, blossom, amaryllis, holiday, animal, other
+
+"Popular" is a `popular: true` boolean on the FlowerProduct, not a category value. The CatalogPanel filters on this flag when the Popular chip is selected. A flower can be Popular AND belong to another category (e.g., orchid).
 
 ### Adding New Stands
 1. Get the stand product image URL and variant ID from the site
@@ -200,29 +202,75 @@ The subtle white glow softens remaining edge artifacts, while saturate/brightnes
 3. Add to `src/data/stands.ts` with slot definitions
 4. Define `baseWidth` and `slots` array with proper sizes
 
-## Responsive Scaling
+## Rendering Architecture
 
-The canvas component measures height and viewport width to compute a scale factor:
+Desktop (>768px) and mobile (≤768px) use **completely separate rendering paths** in `ArrangementCanvas.tsx`. The `isMobile` flag branches to `MobileCanvas` — a different component with its own layout logic and CSS classes. This avoids the complexity of making one layout work at both sizes.
+
+### Flower Positioning Principles
+
+The goal is to make flowers look like they're **planted in the stand**:
+
+1. **Stem tip inserted into the stand** — flowers overlap the stand bar by a "sink depth" so the bottom of each flower disappears into the stand base
+2. **Horizontally centered over the stand** — flowers should be evenly distributed across the stand bar, not hanging off the sides
+3. **LG behind, SM in front** — creates depth via z-index layering (LG=1, SM=2)
+4. **Flowers should fill the available space** — don't leave large empty areas above or beside the arrangement
+
+### Desktop Layout
+
+Uses a **flex row with negative margins** for flower overlap:
+
 ```
-desktop: scale = min((available * 0.82) / maxFlowerHeight, 3.5)
-mobile:  scale = min((available * 0.95) / maxFlowerHeight, 3.5)
+fillFactor: 0.93 (scales flowers to 93% of available canvas height)
+slotWidths: LG=200px, SM=120px (base widths before scale multiplier)
+overlapMargin: doubles=-62*scale, triples=-72*scale (pulls flowers together)
 ```
 
-Slot widths are viewport-responsive (using `window.innerWidth`, not canvas element width):
-- Desktop (>768px): LG=160px, SM=96px
-- Mobile (≤768px): LG=120px, SM=72px
+The scale factor is computed from available canvas height:
+```
+scale = min((canvasHeight - reserved) * fillFactor / maxFlowerHeight, 3.5)
+```
 
-### Z-Index Layers (within arrangement-group)
+Everything scales proportionally — flower widths, heights, stand bar width, and overlap margins all multiply by the same scale factor.
+
+**If you change slot widths, you must also adjust overlap margins** proportionally, or flowers will spread off the stand. The ratio should be roughly: `overlapMargin ≈ slotWidth * 0.35`.
+
+### Mobile Layout
+
+Uses **absolute positioning** relative to the stand center — no flex rows, no scale factors:
+
+```
+Container widths: lgWidth = min(flowerArea * 0.7, vw * 0.68)
+Container heights: lgHeight = flowerArea * 0.96
+SM sizes: smWidth = lgWidth * 0.55, smHeight = lgHeight * 0.52
+Sink depth: standBarHeight * 0.55
+```
+
+Flower PNGs are square (800×800). Because `object-fit: contain` is used, the **container width determines the visible flower height**. A narrow container will show a small flower even if the container is very tall. This is why `lgWidth` is based on `flowerArea` — wider containers = visually bigger flowers.
+
+Slot positions are computed as x-offsets from stand center:
+- **Double (LG+SM):** LG at -22% of stand width, SM at +22%
+- **Triple (SM+LG+SM):** SM at -30%, LG at center, SM at +30%
+
+Mobile also has a **long-press preview** on stand thumbnails (300ms hold shows a popup with larger image + name).
+
+### Z-Index Layers (both layouts)
 | z-index | Element | Purpose |
 |---------|---------|---------|
 | 1 | LG (back) flower slot | Behind front flowers |
 | 2 | SM (front) flower slots | In front of LG, creates depth |
-| 5 | Stand base bar | Covers flower stems (plugged-in look) |
+| 4-5 | Stand base bar + mask | Covers flower stems (planted look) |
 | 6 | Empty slot "+" buttons | Always visible above stand |
 | 10 | Selected flower slot | Pops above everything for interaction |
 | 20 | Remove (X) button | Always on top within selected slot |
 
-A `::after` mask on the stand-base (z-index 4) hides any flower content below the stand.
+A mask element below the stand bar (z-index 4) hides any flower content that leaks below.
+
+### Common Pitfalls
+
+- **Flowers too small on mobile:** Increase `lgWidth` cap (the vw multiplier). Container width drives visible flower size because PNGs are square.
+- **Flowers off the stand on desktop:** Overlap margins are too small for the slot widths. Increase overlap margin proportionally.
+- **Stand hidden behind picker:** `fillFactor` is too high. Keep it ≤0.95 or the arrangement overflows the available space.
+- **Flowers beside the stand on mobile:** Increase the x-offset spread values or the sink depth so flowers overlap the stand bar more.
 
 ## Deployment
 
@@ -235,14 +283,26 @@ vercel build --prod
 vercel deploy --prebuilt --prod
 ```
 
-The project uses prebuilt deployment (build locally, deploy artifacts) because the `playwright` dev dependency caused npm install failures on Vercel's build servers.
+The project uses prebuilt deployment (build locally, deploy artifacts) because npm install crashes on Vercel's build VMs. Do NOT rely on Vercel's GitHub auto-build — it will fail.
+
+`sharp` and `playwright` are NOT in package.json — install them locally when needed:
+```bash
+npm install --no-save sharp playwright   # for image processing / screenshots
+```
+
+Git push requires the personal SSH key (not the squareup cert):
+```bash
+GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" git push origin main
+```
 
 ## Key CSS Techniques
 
 - **Adaptive background removal + defringe** in image processing — handles white, grey, and colored backgrounds from source photos
-- **Negative margins** on flower slots — creates tight overlapping arrangement
+- **Negative margins** on flower slots (desktop) — creates tight overlapping arrangement
+- **Absolute positioning** (mobile) — pixel-perfect flower placement relative to stand center
 - **Backdrop blur** on floating stand picker — glass-like appearance
 - **`object-position: bottom center`** on flower images — anchors flowers to the bottom of their containers so stems align with the base
+- **`object-fit: contain`** — square PNGs scale to fit container while maintaining aspect ratio; container WIDTH controls visible flower size
 
 ## File Size Budget
 
