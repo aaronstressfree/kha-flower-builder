@@ -117,6 +117,21 @@ export function ArrangementCanvas({
     }
   };
 
+  const isMobile = canvasWidth <= 768;
+
+  if (isMobile) {
+    return (
+      <MobileCanvas
+        canvasRef={canvasRef}
+        state={state}
+        stand={stand}
+        onSelectSlot={onSelectSlot}
+        onRemoveFlower={onRemoveFlower}
+        onChangeStand={onChangeStand}
+      />
+    );
+  }
+
   return (
     <div
       ref={canvasRef}
@@ -187,6 +202,202 @@ export function ArrangementCanvas({
                       " Small"}
                 </span>
               </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Mobile-only canvas: absolute positioning relative to stand center.
+ * Completely independent from desktop layout.
+ */
+function MobileCanvas({
+  canvasRef,
+  state,
+  stand,
+  onSelectSlot,
+  onRemoveFlower,
+  onChangeStand,
+}: {
+  canvasRef: React.RefObject<HTMLDivElement | null>;
+  state: ArrangementState;
+  stand: StandConfig;
+  onSelectSlot: (key: string | null) => void;
+  onRemoveFlower: (key: string) => void;
+  onChangeStand: (index: number) => void;
+}) {
+  // Mobile uses viewport-relative sizing — no complex scale math
+  const vw = typeof window !== "undefined" ? window.innerWidth : 390;
+
+  // Measure the actual canvas height to fill it well
+  const [canvasHeight, setCanvasHeight] = useState(300);
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const measure = () => setCanvasHeight(el.clientHeight);
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    measure();
+    return () => ro.disconnect();
+  }, [canvasRef]);
+
+  // Stand bar sizing
+  const standBarWidth = Math.min(vw * 0.55, 220);
+  const standBarHeight = 24;
+
+  // Use available canvas height (minus stand picker ~60px) to size flowers
+  const availableHeight = canvasHeight - 65;
+  const lgHeight = Math.min(availableHeight * 0.92, vw * 0.85, 360);
+  const lgWidth = lgHeight * 0.48;
+  const smHeight = lgHeight * 0.58;
+  const smWidth = smHeight * 0.52;
+
+  // How deep flowers sink into the stand (overlap with stand bar)
+  const sinkDepth = standBarHeight * 0.55;
+
+  // Build slot positions: absolute x/y relative to stand center
+  type SlotPos = {
+    slot: (typeof stand.slots)[0];
+    x: number; // center offset from stand center (px)
+    width: number;
+    height: number;
+    z: number;
+  };
+
+  const positions: SlotPos[] = (() => {
+    const slots = stand.slots;
+    const lgSlots = slots.filter((s) => s.size === "LG");
+    const smSlots = slots.filter((s) => s.size === "SM");
+
+    if (slots.length === 2 && lgSlots.length === 1 && smSlots.length === 1) {
+      // Double: LG slightly left, SM slightly right and in front
+      const spread = standBarWidth * 0.22;
+      return [
+        { slot: lgSlots[0], x: -spread, width: lgWidth, height: lgHeight, z: 1 },
+        { slot: smSlots[0], x: spread, width: smWidth, height: smHeight, z: 2 },
+      ];
+    }
+
+    if (slots.length === 3 && lgSlots.length === 1 && smSlots.length === 2) {
+      // Triple: SM left, LG center, SM right
+      const spread = standBarWidth * 0.3;
+      return [
+        { slot: smSlots[0], x: -spread, width: smWidth, height: smHeight, z: 2 },
+        { slot: lgSlots[0], x: 0, width: lgWidth, height: lgHeight, z: 1 },
+        { slot: smSlots[1], x: spread, width: smWidth, height: smHeight, z: 2 },
+      ];
+    }
+
+    // Fallback: evenly distribute
+    const step = standBarWidth / (slots.length + 1);
+    return slots.map((slot, i) => {
+      const isLg = slot.size === "LG";
+      return {
+        slot,
+        x: (i + 1) * step - standBarWidth / 2,
+        width: isLg ? lgWidth : smWidth,
+        height: isLg ? lgHeight : smHeight,
+        z: isLg ? 1 : 2,
+      };
+    });
+  })();
+
+  const handleSlotTap = (key: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    onSelectSlot(state.selectedSlot === key ? null : key);
+  };
+
+  return (
+    <div
+      ref={canvasRef}
+      className="arrangement-canvas mobile-canvas"
+      onClick={() => onSelectSlot(null)}
+    >
+      {/* Arrangement: positioned relative to this container */}
+      <div
+        className="mobile-arrangement"
+        style={{ height: lgHeight + standBarHeight - sinkDepth }}
+      >
+        {/* Flowers — absolutely positioned relative to stand */}
+        {positions.map(({ slot, x, width, height, z }) => {
+          const productId = state.flowers[slot.key];
+          const product = productId
+            ? catalog.find((f) => f.id === productId)
+            : null;
+          const isSelected = state.selectedSlot === slot.key;
+
+          return (
+            <div
+              key={slot.key}
+              className={`mobile-slot ${isSelected ? "selected" : ""} ${product ? "has-flower" : "empty"}`}
+              style={{
+                width,
+                height,
+                left: `calc(50% + ${x}px - ${width / 2}px)`,
+                bottom: standBarHeight - sinkDepth,
+                zIndex: isSelected ? 10 : !product ? 6 : z,
+              }}
+              onClick={(e) => handleSlotTap(slot.key, e)}
+            >
+              {product ? (
+                <>
+                  <img
+                    src={`/flowers/${product.id}.png`}
+                    alt={product.name}
+                    className="mobile-flower-img"
+                  />
+                  {isSelected && (
+                    <button
+                      className="mobile-remove"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemoveFlower(slot.key);
+                      }}
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
+                </>
+              ) : (
+                <div className={`mobile-add-btn ${isSelected ? "active" : ""}`}>
+                  <span className="mobile-add-icon">+</span>
+                  <span className="mobile-add-size">{slot.size}</span>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Stand bar */}
+        <div
+          className="mobile-stand-bar"
+          style={{ width: standBarWidth, height: standBarHeight }}
+        >
+          <div className="stand-slots-indicator">
+            {stand.slots.map((s) => (
+              <div key={s.key} className="stand-slot-mark" />
+            ))}
+          </div>
+        </div>
+        <div className="mobile-stand-shadow" style={{ width: standBarWidth * 0.9 }} />
+        {/* Mask below stand */}
+        <div className="mobile-stand-mask" />
+      </div>
+
+      {/* Stand picker */}
+      <div className="stand-float" onClick={(e) => e.stopPropagation()}>
+        <span className="stand-float-label">Stand</span>
+        <div className="stand-float-options">
+          {standConfigs.map((sc, i) => (
+            <button
+              key={sc.id}
+              className={`stand-float-pick ${state.standIndex === i ? "active" : ""}`}
+              onClick={() => onChangeStand(i)}
+            >
+              <img src={`/stands/${sc.id}.png`} alt={sc.name} />
             </button>
           ))}
         </div>
