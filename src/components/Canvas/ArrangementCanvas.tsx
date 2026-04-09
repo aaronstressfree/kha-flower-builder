@@ -17,8 +17,8 @@ function getOverlapMargin(
   wide: boolean,
 ): number {
   if (slotCount === 1) return 0;
-  if (slotCount === 2) return -(wide ? 50 : 22) * scale;
-  return -(wide ? 55 : 25) * scale;
+  if (slotCount === 2) return -(wide ? 50 : 38) * scale;
+  return -(wide ? 55 : 40) * scale;
 }
 
 interface Props {
