@@ -229,31 +229,31 @@ function MobileCanvas({
   onRemoveFlower: (key: string) => void;
   onChangeStand: (index: number) => void;
 }) {
-  // Mobile uses viewport-relative sizing — no complex scale math
-  const vw = typeof window !== "undefined" ? window.innerWidth : 390;
-
-  // Measure the actual canvas height to fill it well
-  const [canvasHeight, setCanvasHeight] = useState(300);
+  // Measure canvas height — use state + ResizeObserver so we re-render on resize
+  const [canvasH, setCanvasH] = useState(0);
   useEffect(() => {
     const el = canvasRef.current;
     if (!el) return;
-    const measure = () => setCanvasHeight(el.clientHeight);
+    const measure = () => setCanvasH(el.clientHeight);
+    measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
-    measure();
     return () => ro.disconnect();
   }, [canvasRef]);
 
-  // Stand bar sizing
-  const standBarWidth = Math.min(vw * 0.55, 220);
-  const standBarHeight = 24;
+  const vw = typeof window !== "undefined" ? window.innerWidth : 390;
+  const effectiveH = canvasH || (canvasRef.current?.clientHeight ?? 400);
+  const standBarWidth = Math.min(vw * 0.5, 200);
+  const standBarHeight = 22;
 
-  // Use available canvas height (minus stand picker ~60px) to size flowers
-  const availableHeight = canvasHeight - 65;
-  const lgHeight = Math.min(availableHeight * 0.92, vw * 0.85, 360);
-  const lgWidth = lgHeight * 0.48;
-  const smHeight = lgHeight * 0.58;
-  const smWidth = smHeight * 0.52;
+  // Fill the canvas: subtract stand picker (44px) and stand bar, use the rest
+  const flowerArea = effectiveH - 44 - standBarHeight;
+  // Flower PNGs are square (800×800) — container width determines visible height
+  // via object-fit:contain. Make containers wide enough to fill the vertical space.
+  const lgWidth = Math.min(flowerArea * 0.58, vw * 0.52);
+  const lgHeight = flowerArea * 0.96;
+  const smWidth = lgWidth * 0.58;
+  const smHeight = lgHeight * 0.52;
 
   // How deep flowers sink into the stand (overlap with stand bar)
   const sinkDepth = standBarHeight * 0.55;
