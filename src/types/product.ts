@@ -9,6 +9,8 @@ export type FlowerCategory =
   | "amaryllis"
   | "holiday"
   | "animal"
+  | "orchid"
+  | "wildflower"
   | "other";
 
 export interface FlowerProduct {
@@ -28,6 +30,7 @@ export interface FlowerProduct {
     height: number;
     width: number;
   };
+  popular?: boolean;
 }
 
 export interface StandProduct {

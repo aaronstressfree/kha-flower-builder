@@ -69,6 +69,18 @@ const flowerImages = [
   { id: "purple-poppy-mallow-warbler", url: `${CDN}/KHA-537_Purple_Poppy_Mallow_Warbler_SM_f57722dc-617a-4acc-8e37-8a5a483a29a7.jpg` },
   { id: "chipping-sparrow-with-daffodils", url: `${CDN}/KHA-546_Chipping_Sparrow_with_Daffodils_SM_40b738d9-b4a7-4c73-952c-6cb069a73703.jpg` },
   { id: "robin-and-nasturtiums", url: `${CDN}/KHA-544_Robin_and_Nasturtiums_SM_8e98aba4-574b-4cd6-a8f0-774112262bde.jpg` },
+  // Wildflower collection
+  { id: "delphine-flower", url: `${CDN}/KHA-509_Delphine_Flower_SM_ffdab3c3-c10e-4d6d-9b49-34e73978286a.jpg` },
+  { id: "eden-flower", url: `${CDN}/KHA-512_Eden_Flower_LG_b62d7d6c-ffe2-48e5-b021-27697a0e7352.jpg` },
+  { id: "meadow-flower", url: `${CDN}/KHA-513_Meadow_Flower_SM_6c667589-d961-4d1b-8b06-1908805431b0.jpg` },
+  // Orchid collection
+  { id: "cattleya-orchid", url: `${CDN}/KHA-483_Cattleya_Orchid_LG_8718ef6b-618b-4616-bf11-2dc33cd2dfc8.jpg` },
+  { id: "coral-orchid", url: `${CDN}/KHA-484_Coral_Orchid_SM_e0a3eb8a-6f6a-4293-8521-0857cf80c5ec.jpg` },
+  { id: "leopard-orchid", url: `${CDN}/KHA-487_Leopard_Orchid_LG_168e4e0d-1df7-4509-90e3-10ee0ea0cff7.jpg` },
+  { id: "pink-stripe-orchid", url: `${CDN}/KHA-492_Pink_Stripe_Orchid_SM_680ad2e5-4bd0-473d-9f3e-0a964182b313.jpg` },
+  { id: "yellow-king-orchid", url: `${CDN}/KHA-496_Yellow_King_Orchid_SM_2f825380-2981-4afc-a1b7-063ec28567f6.jpg` },
+  // Core additions
+  { id: "sunflower", url: `${CDN}/Sunflower_617f9248-0be1-4fd7-905a-d33cf7a86cfc.jpg` },
 ];
 
 const standImages = [
@@ -76,13 +88,7 @@ const standImages = [
   { id: "triple-clear", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S007_Triple_Stand.jpg" },
   { id: "grasses-double", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S008_Double_Stand.jpg" },
   { id: "clover-moss-double", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg" },
-  { id: "lg-leaf", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S002_Single_Stand_LG_Leaf.jpg" },
-  { id: "lg-lotus", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S004_Single_Stand_LG_Lotus.jpg" },
-  { id: "sm-clear", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S005_Single_Stand_SM.jpg" },
-  { id: "sm-spiral-vine", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/KHA-S001_Single_Stand_SM_Spiral_Vine.jpg" },
-  // Holiday stands
-  { id: "sm-pine-pattern", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/1_Pine_Pattern_Stand-Small_Acrylic_Base_KHA-SO13.jpg" },
-  { id: "lg-pinecone-holly", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/1_-_Pinecone_Holly_Large_Stand_KHA-S011_1.jpg" },
+  { id: "poinsettia-double", url: "https://cdn.shopify.com/s/files/1/0918/1478/9427/files/1_-_Poinsettia_Pattern_Double_Stand_KHA-S012.jpg" },
 ];
 
 async function downloadImage(url) {

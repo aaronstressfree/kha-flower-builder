@@ -175,6 +175,7 @@ export const flowers: FlowerProduct[] = [
     id: "maidenhair-fern",
     name: "Maidenhair Fern",
     category: "fern",
+    popular: true,
     variants: {
       lg: { variantId: "52558790492467", price: 37.35 },
       sm: { variantId: "52558868021555", price: 19.35 },
@@ -314,7 +315,8 @@ export const flowers: FlowerProduct[] = [
   {
     id: "aphrodite-orchid",
     name: "Aphrodite Orchid",
-    category: "other",
+    category: "orchid",
+    popular: true,
     variants: {
       lg: { variantId: "52858353058099", price: 37.35 },
       sm: { variantId: "52858353090867", price: 19.35 },
@@ -484,6 +486,7 @@ export const flowers: FlowerProduct[] = [
     id: "purple-clematis",
     name: "Purple Clematis",
     category: "blossom",
+    popular: true,
     variants: {
       lg: { variantId: "52558792622387", price: 37.35 },
       sm: { variantId: "52558872641843", price: 19.35 },
@@ -508,15 +511,141 @@ export const flowers: FlowerProduct[] = [
       cutout: `${CDN}/Red_Iceland_Poppy_SM_KHA-141_f57c4930-9a3f-40f9-bfcb-2bc93da5c1d8.jpg`,
     },
   },
-  // NOTE: scarlet-mauve-peony, small-iceland-poppy, sonic-bloom-dahlia, tulips
-  // omitted — only pair product photos available, no clean single-flower cutouts.
-  // Also omitted: strawflower, tall-magenta-peony, striped-anemone, yellow-ranunculus
-  // omitted — Shopify only has dimension-annotated or stand product photos,
-  // no clean single-flower cutouts. Re-add when UUID cutouts are uploaded.
+  // NOTE: scarlet-mauve-peony, small-iceland-poppy, sonic-bloom-dahlia, tulips,
+  // spotted-dahlia, strawberry-stalk, strawflower, striped-anemone, sweet-pink-peony,
+  // tall-magenta-peony, yellow-ranunculus, moon-orchid, pansy-orchid
+  // omitted — Shopify only has product photos or pair photos, no clean UUID cutouts.
+  // Re-add when UUID cutouts are uploaded.
+  // Wildflower collection
+  {
+    id: "delphine-flower",
+    name: "Delphine Flower",
+    category: "wildflower",
+    popular: true,
+    variants: {
+      lg: { variantId: "52858358104371", price: 37.35 },
+      sm: { variantId: "52858358137139", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/KHA-509.jpg`,
+      cutout: `${CDN}/KHA-509_Delphine_Flower_SM_ffdab3c3-c10e-4d6d-9b49-34e73978286a.jpg`,
+    },
+  },
+  {
+    id: "eden-flower",
+    name: "Eden Flower",
+    category: "wildflower",
+    popular: true,
+    variants: {
+      lg: { variantId: "52858357973299", price: 37.35 },
+      sm: { variantId: "52858358006067", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/KHA-511.jpg`,
+      cutout: `${CDN}/KHA-512_Eden_Flower_LG_b62d7d6c-ffe2-48e5-b021-27697a0e7352.jpg`,
+    },
+  },
+  {
+    id: "meadow-flower",
+    name: "Meadow Flower",
+    category: "wildflower",
+    popular: true,
+    variants: {
+      lg: { variantId: "52858357842227", price: 37.35 },
+      sm: { variantId: "52858357874995", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/KHA-513.jpg`,
+      cutout: `${CDN}/KHA-513_Meadow_Flower_SM_6c667589-d961-4d1b-8b06-1908805431b0.jpg`,
+    },
+  },
+  // Orchid collection
+  {
+    id: "cattleya-orchid",
+    name: "Cattleya Orchid",
+    category: "orchid",
+    variants: {
+      lg: { variantId: "52858353549619", price: 37.35 },
+      sm: { variantId: "52858353582387", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Cattleya_Orchid_LG_KHA-483.jpg`,
+      cutout: `${CDN}/KHA-483_Cattleya_Orchid_LG_8718ef6b-618b-4616-bf11-2dc33cd2dfc8.jpg`,
+    },
+  },
+  {
+    id: "coral-orchid",
+    name: "Coral Orchid",
+    category: "orchid",
+    variants: {
+      lg: { variantId: "52858353844531", price: 37.35 },
+      sm: { variantId: "52858353877299", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Coral_Orchid_LG_KHA-485.jpg`,
+      cutout: `${CDN}/KHA-484_Coral_Orchid_SM_e0a3eb8a-6f6a-4293-8521-0857cf80c5ec.jpg`,
+    },
+  },
+  {
+    id: "leopard-orchid",
+    name: "Leopard Orchid",
+    category: "orchid",
+    variants: {
+      lg: { variantId: "52858354041139", price: 37.35 },
+      sm: { variantId: "52858354073907", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Leopard_Orchid_LG_KHA-487.jpg`,
+      cutout: `${CDN}/KHA-487_Leopard_Orchid_LG_168e4e0d-1df7-4509-90e3-10ee0ea0cff7.jpg`,
+    },
+  },
+  {
+    id: "pink-stripe-orchid",
+    name: "Pink Stripe Orchid",
+    category: "orchid",
+    popular: true,
+    variants: {
+      lg: { variantId: "52858354499891", price: 37.35 },
+      sm: { variantId: "52858354532659", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Pink_Stripe_Orchid_LG_KHA-493.jpg`,
+      cutout: `${CDN}/KHA-492_Pink_Stripe_Orchid_SM_680ad2e5-4bd0-473d-9f3e-0a964182b313.jpg`,
+    },
+  },
+  {
+    id: "yellow-king-orchid",
+    name: "Yellow King Orchid",
+    category: "orchid",
+    variants: {
+      lg: { variantId: "52858354827571", price: 37.35 },
+      sm: { variantId: "52858354860339", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Yellow_King_Orchid_LG_KHA-497.jpg`,
+      cutout: `${CDN}/KHA-496_Yellow_King_Orchid_SM_2f825380-2981-4afc-a1b7-063ec28567f6.jpg`,
+    },
+  },
+  // Core collection additions
+  {
+    id: "sunflower",
+    name: "Sunflower",
+    category: "blossom",
+    popular: true,
+    variants: {
+      lg: { variantId: "52558795243827", price: 37.35 },
+      sm: { variantId: "52558870511923", price: 19.35 },
+    },
+    images: {
+      thumbnail: `${CDN}/Sunflower.jpg`,
+      cutout: `${CDN}/Sunflower_617f9248-0be1-4fd7-905a-d33cf7a86cfc.jpg`,
+    },
+  },
   {
     id: "foxglove-flower",
     name: "Foxglove Flower",
-    category: "blossom",
+    category: "wildflower",
+    popular: true,
     variants: {
       lg: { variantId: "52858357514547", price: 37.35 },
       sm: { variantId: "52858357547315", price: 19.35 },
@@ -530,7 +659,7 @@ export const flowers: FlowerProduct[] = [
   {
     id: "vanda-orchid",
     name: "Vanda Orchid",
-    category: "other",
+    category: "orchid",
     variants: {
       lg: { variantId: "52858354663731", price: 37.35 },
       sm: { variantId: "52858354696499", price: 19.35 },
@@ -671,6 +800,7 @@ export const flowers: FlowerProduct[] = [
     id: "bluebird-of-happiness",
     name: "Bluebird of Happiness",
     category: "animal",
+    popular: true,
     variants: {
       lg: { variantId: "52858356728115", price: 37.35 },
       sm: { variantId: "52858356760883", price: 19.35 },
@@ -685,6 +815,7 @@ export const flowers: FlowerProduct[] = [
     id: "spring-cardinal",
     name: "Spring Cardinal",
     category: "animal",
+    popular: true,
     variants: {
       lg: { variantId: "52858356990259", price: 37.35 },
       sm: { variantId: "52858356957491", price: 19.35 },
@@ -797,27 +928,6 @@ export const flowers: FlowerProduct[] = [
 
 export const stands: StandProduct[] = [
   {
-    id: "sm-clear",
-    name: "SM Single Stand Clear",
-    variantId: "51468138643763",
-    price: 19.35,
-    image: `${CDN}/KHA-S005_Single_Stand_SM.jpg`,
-  },
-  {
-    id: "lg-leaf",
-    name: "LG Single Stand Leaf",
-    variantId: "51468139004211",
-    price: 23.85,
-    image: `${CDN}/KHA-S002_Single_Stand_LG_Leaf.jpg`,
-  },
-  {
-    id: "lg-lotus",
-    name: "LG Single Stand Lotus",
-    variantId: "51468138905907",
-    price: 23.85,
-    image: `${CDN}/KHA-S004_Single_Stand_LG_Lotus.jpg`,
-  },
-  {
     id: "triple-green-lotus",
     name: "Triple Stand Green Lotus",
     variantId: "51468138742067",
@@ -845,25 +955,20 @@ export const stands: StandProduct[] = [
     price: 23.85,
     image: `${CDN}/KHA-548_Double_Stand_Pattern_Clover_and_Moss_8b0fac9d-ff2a-4562-ab41-ba62db36815a.jpg`,
   },
-  // Holiday stands
   {
-    id: "sm-pine-pattern",
-    name: "Pine Pattern SM Stand",
-    variantId: "51766600139059",
-    price: 19.35,
-    image: `${CDN}/1_Pine_Pattern_Stand-Small_Acrylic_Base_KHA-SO13.jpg`,
-  },
-  {
-    id: "lg-pinecone-holly",
-    name: "Pinecone & Holly LG Stand",
-    variantId: "51778935816499",
+    id: "poinsettia-double",
+    name: "Poinsettia Double Stand",
+    variantId: "51778935783731",
     price: 23.85,
-    image: `${CDN}/1_-_Pinecone_Holly_Large_Stand_KHA-S011_1.jpg`,
+    image: `${CDN}/1_-_Poinsettia_Pattern_Double_Stand_KHA-S012.jpg`,
   },
 ];
 
 export const categoryLabels: Record<string, string> = {
   all: "All",
+  popular: "Popular",
+  orchid: "Orchids",
+  wildflower: "Wildflowers",
   peony: "Peonies",
   dahlia: "Dahlias",
   zinnia: "Zinnias",

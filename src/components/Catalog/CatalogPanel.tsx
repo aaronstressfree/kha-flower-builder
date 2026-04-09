@@ -36,12 +36,14 @@ export function CatalogPanel({
 }: Props) {
   const [category, setCategory] = useState<string>("all");
 
-  const categories = ["all", ...new Set(flowers.map((f) => f.category))];
+  const categories = ["all", ...Object.keys(categoryLabels).filter((k) => k !== "all" && flowers.some((f) => f.category === k || (k === "popular" && f.popular)))];
 
   const filtered =
     category === "all"
       ? flowers
-      : flowers.filter((f) => f.category === category);
+      : category === "popular"
+        ? flowers.filter((f) => f.popular)
+        : flowers.filter((f) => f.category === category);
 
   return (
     <div className="catalog-panel">
