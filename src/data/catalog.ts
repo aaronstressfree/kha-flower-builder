@@ -3,6 +3,7 @@ import type { FlowerProduct, StandProduct } from "../types/product";
 const CDN = "https://cdn.shopify.com/s/files/1/0918/1478/9427/files";
 
 // Only flowers with clean single-flower cutout images (no pair photos)
+// Last updated: 2026-04-09
 export const flowers: FlowerProduct[] = [
   {
     id: "aqua-blossoms",
